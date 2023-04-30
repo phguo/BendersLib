@@ -1,3 +1,10 @@
+.. image:: BendersLib.svg
+   :scale: 100%
+   :align: left
+
+|
+|
+
 BendersLib Documentation
 ===================================
 

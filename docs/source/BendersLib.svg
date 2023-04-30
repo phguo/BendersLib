@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:dc="http://purl.org/dc/elements/1.1/" version="1.1" xmlns:xl="http://www.w3.org/1999/xlink" viewBox="194 287 636 230" width="636" height="230">
+  <defs>
+    <font-face font-family="Source Han Sans SC VF" font-size="62" panose-1="2 11 2 0 0 0 0 0 0 0" units-per-em="1000" underline-position="-125" underline-thickness="50" slope="0" x-height="543" cap-height="733" ascent="1160.0037" descent="-287.9944" font-weight="500">
+      <font-face-src>
+        <font-face-name name="SourceHanSansSCVF-Medium"/>
+      </font-face-src>
+    </font-face>
+    <font-face font-family="Source Han Sans SC VF" font-size="62" panose-1="2 11 2 0 0 0 0 0 0 0" units-per-em="1000" underline-position="-125" underline-thickness="50" slope="0" x-height="543" cap-height="733" ascent="1160.0037" descent="-287.9944" font-weight="300">
+      <font-face-src>
+        <font-face-name name="SourceHanSansSCVF-ExtraLight"/>
+      </font-face-src>
+    </font-face>
+  </defs>
+  <metadata> Produced by OmniGraffle 7.18.1\n2023-04-30 22:12:42 +0000</metadata>
+  <g id="Canvas_1" stroke-opacity="1" stroke-dasharray="none" fill-opacity="1" fill="none" stroke="none">
+    <title>Canvas 1</title>
+    <rect fill="white" x="194" y="287" width="636" height="230"/>
+    <g id="Canvas_1_Layer_1">
+      <title>Layer 1</title>
+      <g id="Group_37">
+        <g id="Graphic_36">
+          <rect x="194" y="287.68887" width="636" height="228.62226" fill="white"/>
+        </g>
+        <g id="Graphic_3">
+          <ellipse cx="326.375" cy="402" rx="97.6251559951726" ry="54.0000862867024" stroke="#1d2088" stroke-linecap="round" stroke-linejoin="round" stroke-width="15"/>
+        </g>
+        <g id="Graphic_10">
+          <circle cx="326.375" cy="348" r="26.0000415454493" fill="white"/>
+          <circle cx="326.375" cy="348" r="26.0000415454493" stroke="#1d2088" stroke-linecap="round" stroke-linejoin="round" stroke-width="15"/>
+        </g>
+        <g id="Graphic_11">
+          <circle cx="326.375" cy="455.5" r="26.0000415454493" fill="white"/>
+          <circle cx="326.375" cy="455.5" r="26.0000415454493" stroke="#1d2088" stroke-linecap="round" stroke-linejoin="round" stroke-width="15"/>
+        </g>
+        <g id="Graphic_14">
+          <rect x="452" y="357" width="348" height="90" fill="white"/>
+          <text transform="translate(452 357)" fill="black">
+            <tspan font-family="Source Han Sans SC VF" font-size="62" font-weight="500" fill="black" x="10.411539" y="72">Benders</tspan>
+            <tspan font-family="Source Han Sans SC VF" font-size="62" font-weight="300" fill="black" y="72">Lib</tspan>
+          </text>
+        </g>
+        <g id="Graphic_20">
+          <rect x="284.32143" y="315.061" width="35.25" height="70.60001" fill="white"/>
+        </g>
+        <g id="Graphic_21">
+          <rect x="333.17857" y="418" width="35.25" height="70.60001" fill="white"/>
+        </g>
+        <g id="Graphic_28">
+          <ellipse cx="326.375" cy="402" rx="97.6251559951726" ry="54.0000862867024" stroke="#1d2088" stroke-linecap="round" stroke-linejoin="round" stroke-width="15"/>
+        </g>
+        <g id="Graphic_30">
+          <ellipse cx="336.15" cy="348" rx="9.15001718976665" ry="12.3000172446718" fill="white"/>
+        </g>
+        <g id="Graphic_31">
+          <ellipse cx="316.75" cy="455.375" rx="9.15001718976667" ry="12.3000172446717" fill="white"/>
+        </g>
+        <g id="Graphic_33">
+          <rect x="314.85" y="445.52225" width="11.05" height="19.955503" fill="white"/>
+        </g>
+        <g id="Graphic_34">
+          <rect x="327" y="338.02225" width="11.05" height="19.955503" fill="white"/>
+        </g>
+      </g>
+    </g>
+  </g>
+</svg>
