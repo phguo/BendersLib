@@ -2,16 +2,9 @@
 <!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
 <svg xmlns="http://www.w3.org/2000/svg" xmlns:dc="http://purl.org/dc/elements/1.1/" version="1.1" xmlns:xl="http://www.w3.org/1999/xlink" viewBox="194 287 636 230" width="636" height="230">
   <defs>
-    <font-face font-family="Source Han Sans SC VF" font-size="62" panose-1="2 11 2 0 0 0 0 0 0 0" units-per-em="1000" underline-position="-125" underline-thickness="50" slope="0" x-height="543" cap-height="733" ascent="1160.0037" descent="-287.9944" font-weight="500">
-      <font-face-src>
-        <font-face-name name="SourceHanSansSCVF-Medium"/>
-      </font-face-src>
-    </font-face>
-    <font-face font-family="Source Han Sans SC VF" font-size="62" panose-1="2 11 2 0 0 0 0 0 0 0" units-per-em="1000" underline-position="-125" underline-thickness="50" slope="0" x-height="543" cap-height="733" ascent="1160.0037" descent="-287.9944" font-weight="300">
-      <font-face-src>
-        <font-face-name name="SourceHanSansSCVF-ExtraLight"/>
-      </font-face-src>
-    </font-face>
+    <style>
+      @import url("https://fonts.googleapis.com/css2?family=Source+Sans+Pro:wght@200;600&amp;display=swap");
+    </style>
   </defs>
   <metadata> Produced by OmniGraffle 7.18.1\n2023-04-30 22:12:42 +0000</metadata>
   <g id="Canvas_1" stroke-opacity="1" stroke-dasharray="none" fill-opacity="1" fill="none" stroke="none">
@@ -37,8 +30,8 @@
         <g id="Graphic_14">
           <rect x="452" y="357" width="348" height="90" fill="white"/>
           <text transform="translate(452 357)" fill="black">
-            <tspan font-family="Source Han Sans SC VF" font-size="62" font-weight="500" fill="black" x="10.411539" y="72">Benders</tspan>
-            <tspan font-family="Source Han Sans SC VF" font-size="62" font-weight="300" fill="black" y="72">Lib</tspan>
+            <tspan font-family="Source Sans Pro" font-size="62" font-weight="600" fill="black" x="10.411539" y="72">Benders</tspan>
+            <tspan font-family="Source Sans Pro" font-size="62" font-weight="200" fill="black" y="72">Lib</tspan>
           </text>
         </g>
         <g id="Graphic_20">
