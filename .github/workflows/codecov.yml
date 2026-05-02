@@ -2,9 +2,7 @@ name: Test Coverage
 
 on:
   push:
-    branches: [ develop, main ]
   pull_request:
-    branches: [ develop, main ]
 
 jobs:
   test:
@@ -30,7 +28,7 @@ jobs:
 
       - name: Run tests and generate coverage report
         run: |
-          pytest --cov --cov-report=xml
+          pytest --cov=./benderslib --cov-report=xml
 
       - name: Upload coverage to Codecov
         uses: codecov/codecov-action@v5
