@@ -26,9 +26,15 @@ jobs:
           python -m pip install --upgrade pip
           pip install ".[dev]"
 
+      - name: Show project structure and installed packages
+        run: |
+          pwd
+          ls -R
+          pip list
+
       - name: Run tests and generate coverage report
         run: |
-          pytest --cov=./benderslib --cov-report=xml
+          pytest --cov=benderslib --cov-report=xml
 
       - name: Upload coverage to Codecov
         uses: codecov/codecov-action@v5
