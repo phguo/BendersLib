@@ -63,29 +63,17 @@ doc = [
     "sphinx-tags>=0.4.0",
     "sphinx_contributors>=0.2.7",
     "sphinx-sitemap>=2.9.0",
-    "matplotlib>=3.10.5",
+    "benderslib[plot]",
 ]
+
 copt = ["coptpy>=8.0.2"]
 cplex = ["cplex>=22.1.2"]
 cplexcp = ["docplex>=2.31.254"]
-gurobi = [
-    "gurobipy>=12.0.0",
-    "gurobipy[matrixapi]",
-]
+gurobi = ["gurobipy[matrixapi]>=12.0.0"]
 ortools = ["ortools>=9.15.6755"]
 pyomo = ["pyomo>=6.9.5"]
 scip = ["pyscipopt>=6.0.0"]
-
-all-solvers = [
-    "coptpy>=8.0.2",
-    "cplex>=22.1.2",
-    "docplex>=2.31.254",
-    "gurobipy>=12.0.0",
-    "gurobipy[matrixapi]",
-    "ortools>=9.15.6755",
-    "pyomo>=6.9.5",
-    "pyscipopt>=6.0.0",
-]
+all-solvers = ["benderslib[copt,cplex,cplexcp,gurobi,ortools,pyomo,scip]"]
 
 test = [
     "pytest>=8.4.2",
@@ -94,31 +82,7 @@ test = [
     "tox-conda>=0.10.2",
 ]
 dev = [
+    "benderslib[test,doc,all-solvers]",
     "build",
     "twine",
-    # 'test'
-    "pytest>=8.4.2",
-    "pytest-cov>=7.0.0",
-    "tox>=3.28.0",
-    "tox-conda>=0.10.2",
-    # 'doc'
-    "sphinx>=8.2.3",
-    "furo>=2025.9.25",
-    "sphinx-copybutton>=0.5.2",
-    "sphinx-gallery>=0.19.0",
-    "sphinxcontrib-mermaid>=1.0.0",
-    "sphinx_inline_tabs>=2025.12.21.14",
-    "sphinx-tags>=0.4.0",
-    "sphinx_contributors>=0.2.7",
-    "sphinx-sitemap>=2.9.0",
-    "matplotlib>=3.10.5",
-    # 'all-solvers'
-    "coptpy>=8.0.2",
-    "cplex>=22.1.2",
-    "docplex>=2.31.254",
-    "gurobipy>=12.0.0",
-    "gurobipy[matrixapi]",
-    "ortools>=9.15.6755",
-    "pyomo>=6.9.5",
-    "pyscipopt>=6.0.0",
 ]
