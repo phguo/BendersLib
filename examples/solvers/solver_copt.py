@@ -18,8 +18,13 @@ from benderslib.utils import draw_curve
 import inspect
 from pathlib import Path
 
-from coptpy import COPT
-import coptpy
+try:
+    from coptpy import COPT
+    import coptpy
+
+    copt_available = True
+except ImportError:
+    copt_available = False
 
 
 def make_original_problem():
@@ -36,6 +41,10 @@ def make_original_problem():
 
 
 if __name__ == '__main__':
+    if not copt_available:
+        print("COPT is not available.")
+        exit(1)
+
     model, complicating_vars = make_original_problem()
     model_copy = model.clone()
     model.solve()

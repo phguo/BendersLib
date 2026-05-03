@@ -16,8 +16,13 @@ Copt IIS
 
 from benderslib.solvers import Copt
 
-import coptpy as cp
-from coptpy import COPT
+try:
+    import coptpy as cp
+    from coptpy import COPT
+
+    copt_available = True
+except ImportError:
+    copt_available = False
 
 
 def make_sub_problem():
@@ -35,6 +40,10 @@ def make_sub_problem():
 
 
 if __name__ == '__main__':
+    if not copt_available:
+        print("COPT is not available.")
+        exit(1)
+
     sub = make_sub_problem()
 
     # For simplicity, we directly use the Copt solver interface from BendersLib.
