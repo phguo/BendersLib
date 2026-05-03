@@ -1,6 +1,13 @@
+![benderslib.png](https://raw.githubusercontent.com/phguo/BendersLib/397a53a490f2bbee0cccb3af39d4ee4e9d567301/docs/source/_static/benderslib.png)
+
 # BendersLib: A Benders Decomposition Library in Python
 
-![benderslib.png](https://raw.githubusercontent.com/phguo/BendersLib/397a53a490f2bbee0cccb3af39d4ee4e9d567301/docs/source/_static/benderslib.png)
+[![Repo Status](https://www.repostatus.org/badges/latest/active.svg)](https://www.repostatus.org/#active)
+[![PyPI version](https://img.shields.io/pypi/v/benderslib.svg)](https://pypi.org/project/benderslib/)
+[![PyPI downloads](https://img.shields.io/pypi/dm/benderslib.svg)](https://pypi.org/project/benderslib/)
+[![Documentation Status](https://readthedocs.org/projects/benderslib/badge/?version=latest)](https://benders.dev)
+[![tests](https://github.com/phguo/BendersLib/actions/workflows/codecov.yml/badge.svg)](https://github.com/phguo/BendersLib/actions/workflows/codecov.yml)
+[![codecov](https://codecov.io/gh/phguo/BendersLib/branch/develop/graph/badge.svg)](https://codecov.io/gh/phguo/BendersLib)
 
 **BendersLib** ([benders.dev](https://benders.dev)) is a Python library that supports a range of Benders decomposition variants, including **Classical Benders Decomposition**, **Combinatorial Benders Decomposition**, **L-shaped Method**, **Integer L-shaped Method**, **Generalized Benders Decomposition**, and **Logic-based Benders Decomposition**. While BendersLib provides built-in implementations of these methods, it is designed to be extensible. Users can implement custom Benders decomposition methods by customizing **subproblem solvers** and **cut generators**, and defining **callback functions** for enhancement strategies. BendersLib is solver agnostic and has built-in interfaces for popular Mathematical Programming and Constraint Programming solvers. Its support for rapid prototyping and high extensibility are designed to meet the needs of both researchers and practitioners in Operations Research and related fields.
 
