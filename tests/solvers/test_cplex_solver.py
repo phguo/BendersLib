@@ -24,26 +24,12 @@ class TestCplex(BaseTestSolver):
     @pytest.fixture
     def solver_instance(self):
         model = cplex.Cplex()
-
-        # Suppress CPLEX output
-        model.set_results_stream(None)
-        model.set_warning_stream(None)
-        model.set_error_stream(None)
-        model.set_log_stream(None)
-
         model.read(LP_FILE)
         return Cplex(model)
 
     @pytest.fixture
     def infeasible_solver_instance(self):
         model = cplex.Cplex()
-
-        # Suppress CPLEX output
-        model.set_results_stream(None)
-        model.set_warning_stream(None)
-        model.set_error_stream(None)
-        model.set_log_stream(None)
-
         model.read(LP_FILE)
 
         # c3: x1 + x2 <= 3
@@ -59,12 +45,5 @@ class TestCplex(BaseTestSolver):
     @pytest.fixture
     def unbounded_solver_instance(self):
         model = cplex.Cplex()
-
-        # Suppress CPLEX output
-        model.set_results_stream(None)
-        model.set_warning_stream(None)
-        model.set_error_stream(None)
-        model.set_log_stream(None)
-
         model.read(UBD_LP_FILE)
         return Cplex(model)

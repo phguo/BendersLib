@@ -36,12 +36,6 @@ def make_sub_problem():
         names=['c1', 'c2', 'c3']
     )
 
-    # Suppress CPLEX output
-    model.set_results_stream(None)
-    model.set_warning_stream(None)
-    model.set_error_stream(None)
-    model.set_log_stream(None)
-
     return model
 
 
