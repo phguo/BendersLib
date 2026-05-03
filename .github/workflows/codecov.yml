@@ -43,11 +43,14 @@ jobs:
         run: |
           pytest --cov=benderslib --cov-report=xml
 
+      - name: Rename coverage report
+        run: mv coverage.xml coverage-${{ matrix.python-version }}.xml
+
       - name: Upload coverage report
         uses: actions/upload-artifact@v4
         with:
           name: coverage-report-${{ matrix.python-version }}
-          path: coverage.xml
+          path: coverage-${{ matrix.python-version }}.xml
           retention-days: 1
 
   upload-coverage:
@@ -66,9 +69,10 @@ jobs:
           merge-multiple: true
 
       - name: Upload merged coverage to Codecov
-        uses: codecov/codecov-action@v5
+        uses: codecov/codecov-action@v4
         with:
           token: ${{ secrets.CODECOV_TOKEN }}
           directory: ./coverage-reports/
+          flags: unittests
           fail_ci_if_error: true
           verbose: true
