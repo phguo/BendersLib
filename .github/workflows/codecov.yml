@@ -34,6 +34,11 @@ jobs:
           ls -R
           pip list
 
+      - name: Display CPU information
+        run: |
+          lscpu
+          cat /proc/cpuinfo
+
       - name: Run tests and generate coverage report
         run: |
           pytest --cov=benderslib --cov-report=xml
