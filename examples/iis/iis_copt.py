@@ -40,20 +40,17 @@ def make_sub_problem():
 
 
 if __name__ == '__main__':
-    if not copt_available:
-        print("COPT is not available.")
-        exit(1)
+    if copt_available:
+        sub = make_sub_problem()
 
-    sub = make_sub_problem()
+        # For simplicity, we directly use the Copt solver interface from BendersLib.
+        # Typically, this should be wrapped in the SubProblem class like SubProblem(Copt(...)).
+        sub_problem_solver = Copt(sub)
 
-    # For simplicity, we directly use the Copt solver interface from BendersLib.
-    # Typically, this should be wrapped in the SubProblem class like SubProblem(Copt(...)).
-    sub_problem_solver = Copt(sub)
-
-    sub_problem_solver.solve()
-    print("Optimization status :", sub_problem_solver.status)
-    iis_vars = sub_problem_solver.compute_iis()
-    print("Variables in the IIS:", iis_vars)
+        sub_problem_solver.solve()
+        print("Optimization status :", sub_problem_solver.status)
+        iis_vars = sub_problem_solver.compute_iis()
+        print("Variables in the IIS:", iis_vars)
 
 # %%
 #

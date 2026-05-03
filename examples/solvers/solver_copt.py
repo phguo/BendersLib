@@ -41,22 +41,19 @@ def make_original_problem():
 
 
 if __name__ == '__main__':
-    if not copt_available:
-        print("COPT is not available.")
-        exit(1)
+    if copt_available:
+        model, complicating_vars = make_original_problem()
+        model_copy = model.clone()
+        model.solve()
 
-    model, complicating_vars = make_original_problem()
-    model_copy = model.clone()
-    model.solve()
+        BD = AnnotatedBenders(model, solver=Copt, complicating_vars=complicating_vars, benders=ClassicalBenders)
+        BD.solve()
 
-    BD = AnnotatedBenders(model, solver=Copt, complicating_vars=complicating_vars, benders=ClassicalBenders)
-    BD.solve()
+        BD = AnnotatedBenders(model_copy, solver=Copt, complicating_vars=complicating_vars, benders=ClassicalBenders)
+        BD.params.use_bnc = True
+        BD.solve()
 
-    BD = AnnotatedBenders(model_copy, solver=Copt, complicating_vars=complicating_vars, benders=ClassicalBenders)
-    BD.params.use_bnc = True
-    BD.solve()
-
-    draw_curve(BD.result)
+        draw_curve(BD.result)
 
 # %%
 #
