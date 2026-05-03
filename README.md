@@ -107,7 +107,7 @@ Solution: {'x': 15.0, 'y': 0.0}
 
 ## License
 
-- BendersLib's source code is licensed under the [Apache-2.0 License](https://github.com/phguo/BendersLib?tab=Apache-2.0-1-ov-file).
+BendersLib's source code is licensed under the [Apache-2.0 License](https://github.com/phguo/BendersLib?tab=Apache-2.0-1-ov-file).
 
 ## References
 
