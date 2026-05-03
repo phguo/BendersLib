@@ -4,6 +4,7 @@
 
 import pytest
 import os
+import sys
 from .test_solver_base import BaseTestSolver
 
 try:
@@ -16,6 +17,11 @@ except ImportError:
 
 LP_FILE = os.path.join(os.path.dirname(__file__), "lp.lp")
 UBD_LP_FILE = os.path.join(os.path.dirname(__file__), "lp_ubd.lp")
+
+pytestmark = pytest.mark.skipif(
+    sys.version_info >= (3, 13) and sys.version_info < (3, 14),
+    reason="GitHub Actions failed with CPLEX on Python 3.13."
+)
 
 
 @pytest.mark.skipif(not cplex_available, reason="CPLEX is not installed")
