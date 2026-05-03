@@ -23,7 +23,6 @@ classifiers = [
     "Programming Language :: Python :: 3.12",
     "Programming Language :: Python :: 3.13",
     "Programming Language :: Python :: 3.14",
-    "License :: OSI Approved :: Apache Software License",
     "Natural Language :: English",
     "Intended Audience :: Science/Research",
     "Intended Audience :: Education",
@@ -73,7 +72,6 @@ ortools = ["ortools>=9.15.6755"]
 pyomo = ["pyomo>=6.9.5"]
 scip = ["pyscipopt>=6.0.0"]
 all-solvers = ["benderslib[copt,cplex,cplexcp,gurobi,ortools,pyomo,scip]"]
-
 test = [
     "pytest>=8.4.2",
     "pytest-cov>=7.0.0",
