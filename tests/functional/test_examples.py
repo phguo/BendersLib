@@ -10,8 +10,8 @@ import pytest
 EXAMPLES_DIR = Path(__file__).parent.parent.parent / "examples"
 example_files = [f for f in EXAMPLES_DIR.glob("**/*.py") if f.name != "__init__.py"]
 
-is_py13 = sys.version_info >= (3, 13) and sys.version_info < (3, 14)
-example_files = [f for f in example_files if not 'scip' in f.name or not is_py13]
+if sys.version_info >= (3, 13) and sys.version_info < (3, 14):
+    example_files = [f for f in example_files if not 'scip' in f.name]
 
 
 @pytest.mark.parametrize(
