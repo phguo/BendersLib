@@ -92,7 +92,7 @@ def deterministic_equivalent_model(n_plants, scenarios, probs, penalty):
 # Data
 random.seed(1)
 n_plants = 7
-n_scenarios = 18
+n_scenarios = 5
 penalty = 10
 scenarios = [[random.choice([0, 1]) for _ in range(n_plants)] for _ in range(n_scenarios)]
 probs = [1.3 for _ in range(n_scenarios)]
@@ -119,9 +119,33 @@ L = IntegerLShaped.from_models(
     prob=probs,
 )
 
-# L.params.multi_opti_cut = True
 # This example works well with the Branch-and-check method, try it!
-# L.params.use_bnc = True
+L.params.use_bnc = True
+L.params.parallel_sub = True
+
+L.solve()
+draw_curve(L.result)
+
+# %%
+# Solve the problem using the multi-cut integer L-shaped method.
+
+# Solver models
+master_model, complicating_vars = first_stage_model(n_plants)
+sub_models = second_stage_model(n_plants, scenarios, penalty)
+
+# Integer L-shaped solver
+L = IntegerLShaped.from_models(
+    master_model=master_model,
+    master_solver=Gurobi,
+    sub_model=sub_models,
+    sub_solver=Gurobi,
+    complicating_vars=complicating_vars,
+    prob=probs,
+)
+
+L.params.multi_opti_cut = True
+# This example works well with the Branch-and-check method, try it!
+L.params.use_bnc = True
 L.params.parallel_sub = True
 
 L.solve()

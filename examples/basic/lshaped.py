@@ -101,20 +101,27 @@ print(f"Deterministic Equivalent Obj: {de_model.ObjVal:.4f}")
 # %%
 # Solve the problem using the single-cut L-shaped method.
 
+# Create L-shaped solver
 master_model, complicating_vars = first_stage_model(n_plants)
 sub_models = second_stage_model(n_plants, scenarios, total_capacity)
 
-# # Create L-shaped solver
-# master_problem = MasterProblem(solver_backend=Gurobi(master_model))
-# sub_problems = (SubProblem(solver_backend=Gurobi(sub_model)) for sub_model in sub_models)
-# sub_problems = SubProblems(sub_problems, prob=probs)
-# L = LShaped(
-#     master_problem=master_problem,
-#     sub_problem=sub_problems,
-#     complicating_vars=complicating_vars,
-# )
+master_problem = MasterProblem(solver_backend=Gurobi(master_model))
+sub_problems = (SubProblem(solver_backend=Gurobi(sub_model)) for sub_model in sub_models)
+sub_problems = SubProblems(sub_problems, prob=probs)
+
+L = LShaped(
+    master_problem=master_problem,
+    sub_problem=sub_problems,
+    complicating_vars=complicating_vars,
+)
+L.params.multi_opti_cut = True
+# L.params.multi_feas_cut = True
+L.solve()
 
 # Another way to create L-shaped solver
+master_model, complicating_vars = first_stage_model(n_plants)
+sub_models = second_stage_model(n_plants, scenarios, total_capacity)
+
 L = LShaped.from_models(
     master_model=master_model,
     master_solver=Gurobi,
@@ -124,8 +131,6 @@ L = LShaped.from_models(
     prob=probs,
 )
 
-# L.params.multi_opti_cut = True
-# L.params.multi_feas_cut = True
 # This example works well with the Branch-and-check method, try it!
 # L.params.use_bnc = True
 L.params.parallel_sub = True

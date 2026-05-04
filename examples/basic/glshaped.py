@@ -92,7 +92,7 @@ def deterministic_equivalent_model(n_plants, scenarios, probs):
 # Data
 random.seed(1)
 n_plants = 5
-n_scenarios = 20
+n_scenarios = 10
 scenarios = [[random.randint(10, 220) for _ in range(n_plants)] for _ in range(n_scenarios)]
 probs = [1 / n_scenarios for _ in range(n_scenarios)]
 
@@ -105,13 +105,32 @@ sub_problems = SubProblems([Gurobi(m) for m in ss_models], prob=probs)
 
 L = GeneLShaped(master_problem, sub_problems, complicating_vars)
 
-# L.params.multi_opti_cut = True
 # This example works well with the Branch-and-check method, try it!
-# L.params.use_bnc = True
-# L.params.parallel_sub = True
+L.params.use_bnc = True
+L.params.parallel_sub = True
 
 L.solve()
 draw_curve(L.result)
+
+# %%
+# Solve the problem using the multi-cut Generalized L-shaped method.
+
+# Master and subproblems
+fs_model, complicating_vars = first_stage_model(n_plants)
+ss_models = list(second_stage_model(n_plants, scenarios))
+
+master_problem = MasterProblem(Gurobi(fs_model))
+sub_problems = SubProblems([Gurobi(m) for m in ss_models], prob=probs)
+
+LL = GeneLShaped(master_problem, sub_problems, complicating_vars)
+
+LL.params.multi_opti_cut = True
+# This example works well with the Branch-and-check method, try it!
+LL.params.use_bnc = True
+LL.params.parallel_sub = True
+
+LL.solve()
+draw_curve(LL.result)
 
 # %%
 # Solve the deterministic equivalent problem for verification.
@@ -120,7 +139,8 @@ de_model = deterministic_equivalent_model(n_plants, scenarios, probs)
 de_model.optimize()
 
 print(f"Deterministic Equivalent Obj: {de_model.ObjVal:.4f}")
-print(f"Benders Decomposition    Obj: {L.result.obj:.4f}")
+print(f"Single-cut L-shaped      Obj: {L.result.obj:.4f}")
+print(f"Multi-cut L-shaped       Obj: {LL.result.obj:.4f}")
 
 # %%
 #
