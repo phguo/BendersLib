@@ -131,8 +131,8 @@ BD_no_tr = AnnotatedBenders(
     benders=ClassicalBenders
 )
 
-BD_no_tr.solve()
-draw_curve(BD_no_tr.result)
+# BD_no_tr.solve()
+# draw_curve(BD_no_tr.result)
 
 # %%
 # .. seealso::

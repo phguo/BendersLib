@@ -60,7 +60,7 @@ BD = AnnotatedBenders(model, solver=Gurobi, complicating_vars=complicating_vars,
 # BD = ClassicalBenders.from_models(master_model, Gurobi, sub_model, Gurobi, complicating_vars=complicating_vars)
 
 # This example works well with the Branch-and-check method, try it!
-# BD.params.use_bnc = True
+BD.params.use_bnc = True
 
 BD.solve()
 

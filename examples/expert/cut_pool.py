@@ -142,8 +142,8 @@ BD_no_cm = AnnotatedBenders(
     benders=ClassicalBenders
 )
 
-BD_no_cm.solve()
-draw_curve(BD_no_cm.result)
+# BD_no_cm.solve()
+# draw_curve(BD_no_cm.result)
 
 # %%
 # .. seealso::

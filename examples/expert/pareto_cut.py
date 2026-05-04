@@ -138,8 +138,8 @@ BD = AnnotatedBenders(
     benders=ClassicalBenders
 )
 
-BD.solve()
-draw_curve(BD.result)
+# BD.solve()
+# draw_curve(BD.result)
 
 # %%
 # .. seealso::
