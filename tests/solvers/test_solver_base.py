@@ -42,7 +42,6 @@ class BaseTestSolver:
         assert approx(x1_value, 2.0, atol=1e-6)
         assert approx(x2_value, 2.0, atol=1e-6)
 
-    @pytest.mark.skipif_cp_solver
     def test_add_estimators(self, solver_instance):
         solver_instance.add_estimators(["theta"], prob=[1.0], lb=0.0)
         solver_instance.add_estimators(["theta1", "theta2"], prob=[0.5, 0.5], lb=0.0)
@@ -61,7 +60,6 @@ class BaseTestSolver:
         assert approx(x1_value, 2.0, atol=1e-6)
         assert approx(solver_instance.get_obj(), 12.0, atol=1e-6)
 
-    @pytest.mark.skipif_cp_solver
     def test_add_remove_cut(self, solver_instance):
         from benderslib import OptimalityCut, FeasibilityCut
 
@@ -85,17 +83,14 @@ class BaseTestSolver:
         solver_instance.solve()
         assert approx(solver_instance.get_obj(), 12.0, atol=1e-6)
 
-    @pytest.mark.skipif_cp_solver
     def test_get_var_coefs(self, solver_instance):
         coefs = solver_instance.get_var_coefs()
         assert coefs == {'x1': [1.0, 2.0, 1.0, 0.0], 'x2': [2.0, 1.0, 0.0, 1.0]}
 
-    @pytest.mark.skipif_cp_solver
     def test_get_rhs(self, solver_instance):
         rhs = solver_instance.get_rhs()
         assert rhs == [6.0, 6.0, 100.0, 100.0]
 
-    @pytest.mark.skipif_cp_solver
     def test_get_dual_values(self, solver_instance):
         solver_instance.solve()
         duals = solver_instance.get_dual_values()
@@ -104,7 +99,6 @@ class BaseTestSolver:
         assert len(duals) == len(expected_duals)
         assert all(approx(duals[i], expected_duals[i], atol=1e-6) for i in range(len(duals)))
 
-    @pytest.mark.skipif_cp_solver
     def test_get_extreme_ray(self, infeasible_solver_instance):
         infeasible_solver_instance.solve()
         assert infeasible_solver_instance.status == CST.INFEASIBLE
@@ -121,12 +115,10 @@ class BaseTestSolver:
         iis = infeasible_solver_instance.compute_iis()
         assert iis == {'x1', 'x2'}
 
-    @pytest.mark.skipif_cp_solver
     def test_make_master_problem(self, solver_instance):
         master_problem = solver_instance.make_master_problem(solver_instance.model, ["x1"])
         assert type(master_problem) == type(solver_instance.model)
 
-    @pytest.mark.skipif_cp_solver
     def test_make_sub_problem(self, solver_instance):
         sub_problem = solver_instance.make_sub_problem(solver_instance.model, ["x1"])
         assert type(sub_problem) == type(solver_instance.model)
@@ -142,38 +134,29 @@ class BaseTestCPSolver(BaseTestSolver):
     The tests that are not applicable to CP solvers are skipped.
     """
 
-    @pytest.mark.skip(reason="CP solvers do not support estimators.")
     def test_add_estimators(self, solver_instance):
         pass
 
-    @pytest.mark.skip(reason="CP solvers do not support adding/removing cuts in the same way.")
     def test_add_remove_cut(self, solver_instance):
         pass
 
-    @pytest.mark.skip(reason="CP solvers may not provide constraint coefficients in this format.")
     def test_get_var_coefs(self, solver_instance):
         pass
 
-    @pytest.mark.skip(reason="CP solvers may not provide RHS of constraints in this format.")
     def test_get_rhs(self, solver_instance):
         pass
 
-    @pytest.mark.skip(reason="CP solvers do not provide dual values.")
     def test_get_dual_values(self, solver_instance):
         pass
 
-    @pytest.mark.skip(reason="CP solvers do not provide extreme rays.")
     def test_get_extreme_ray(self, infeasible_solver_instance):
         pass
 
-    @pytest.mark.skip(reason="make_master_problem is not applicable to CP solvers in this context.")
     def test_make_master_problem(self, solver_instance):
         pass
 
-    @pytest.mark.skip(reason="make_sub_problem is not applicable to CP solvers in this context.")
     def test_make_sub_problem(self, solver_instance):
         pass
 
-    @pytest.mark.skip(reason="CP solvers cannot determine unboundedness.")
-    def test_unbounded_solution(self, unbounded_solver_instance):
+    def test_unbounded_solution(self, solver_instance):
         pass
