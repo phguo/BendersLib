@@ -69,7 +69,7 @@ model.freeTransform()
 
 model, master_vars = make_original_problem()
 BD = AnnotatedBenders(model, solver=Scip, complicating_vars=master_vars, benders=ClassicalBenders)
-BD.bnc_solve()
+BD.solve()
 draw_curve(BD.result)
 
 # %%
@@ -81,7 +81,7 @@ model.freeTransform()
 
 BD = AnnotatedBenders(model, solver=Scip, complicating_vars=master_vars, benders=CombinatorialBenders)
 BD.params.use_iis_cut = True
-BD.solve()
+BD.bnc_solve()
 
 # %%
 #
