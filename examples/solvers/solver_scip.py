@@ -63,18 +63,13 @@ def make_combination_problem():
 # %%
 # Classical Benders decomposition.
 
-model, master_vars = make_original_problem()
+model, _ = make_original_problem()
 model.optimize()
 model.freeTransform()
 
+model, master_vars = make_original_problem()
 BD = AnnotatedBenders(model, solver=Scip, complicating_vars=master_vars, benders=ClassicalBenders)
-BD.solve()
-
-# model, master_vars = make_original_problem()
-# BD = AnnotatedBenders(model, solver=Scip, complicating_vars=master_vars, benders=ClassicalBenders)
-# BD.params.use_bnc = True
-# BD.solve()
-
+BD.bnc_solve()
 draw_curve(BD.result)
 
 # %%
@@ -87,12 +82,6 @@ model.freeTransform()
 BD = AnnotatedBenders(model, solver=Scip, complicating_vars=master_vars, benders=CombinatorialBenders)
 BD.params.use_iis_cut = True
 BD.solve()
-
-# model, master_vars = make_combination_problem()
-# BD = AnnotatedBenders(model, solver=Scip, complicating_vars=master_vars, benders=CombinatorialBenders)
-# BD.params.use_bnc = True
-# BD.params.use_iis_cut = True
-# BD.solve()
 
 # %%
 #

@@ -14,7 +14,7 @@ import math
 
 from benderslib import AnnotatedBenders, ClassicalBenders, CallbackBase
 from benderslib.solvers import Gurobi
-from benderslib.utils import draw_curve
+from benderslib.utils import draw_curve, normalize_cut
 
 from gurobipy import Model, GRB
 
@@ -62,23 +62,22 @@ class CutNormalization(CallbackBase):
             self._normalize(cut)
 
     def _normalize(self, cut):
+        normalize_cut(cut, max_norm=1e5)
 
-        MAX_NORM = 1e5
-
-        # Extract coefficients and constant term
-        a = cut.coefs
-
-        # Calculate L2 norm
-        norm = math.sqrt(sum(c * c for c in a))
-
-        if norm > MAX_NORM:
-            scale = MAX_NORM / norm
-
-            # Modify the cut
-            cut.coefs = [c * scale for c in cut.coefs]
-            cut.rhs *= scale
-
-            # print(f"{cut.name} normalized with scale {scale}.")
+        # MAX_NORM = 1e5
+        #
+        # # Extract coefficients and constant term
+        # a = cut.coefs
+        #
+        # # Calculate L2 norm
+        # norm = math.sqrt(sum(c * c for c in a))
+        #
+        # if norm > MAX_NORM:
+        #     scale = MAX_NORM / norm
+        #
+        #     # Modify the cut
+        #     cut.coefs = [c * scale for c in cut.coefs]
+        #     cut.rhs *= scale
 
 
 # %%

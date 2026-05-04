@@ -9,7 +9,7 @@ import pytest
 EXAMPLES_DIR = Path(__file__).parent.parent.parent / "examples"
 example_files = [f for f in EXAMPLES_DIR.glob("**/*.py") if f.name != "__init__.py"]
 
-example_files = [f for f in example_files if "scip" not in f.name]
+# example_files = [f for f in example_files if "scip" not in f.name]
 
 @pytest.mark.parametrize(
     "example_file",
