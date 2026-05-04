@@ -70,7 +70,7 @@ cplexcp = ["docplex>=2.31.254"]
 gurobi = ["gurobipy[matrixapi]>=12.0.0"]
 ortools = ["ortools>=9.15.6755"]
 pyomo = ["pyomo>=6.9.5"]
-scip = ["pyscipopt>=6.0.0"]
+scip = ["pyscipopt==6.0.0"]
 all-solvers = ["benderslib[copt,cplex,cplexcp,gurobi,ortools,pyomo,scip]"]
 test = [
     "pytest>=8.4.2",
