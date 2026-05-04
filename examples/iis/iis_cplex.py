@@ -41,16 +41,15 @@ def make_sub_problem():
 
 
 if __name__ == '__main__':
-    if not sys.version_info >= (3, 13) and sys.version_info < (3, 14):
-        sub = make_sub_problem()
+    sub = make_sub_problem()
 
-        # For simplicity, we directly use the Cplex solver interface from BendersLib.
-        # Typically, this should be wrapped in the SubProblem class like SubProblem(Cplex(...)).
-        sub_problem_solver = Cplex(sub)
+    # For simplicity, we directly use the Cplex solver interface from BendersLib.
+    # Typically, this should be wrapped in the SubProblem class like SubProblem(Cplex(...)).
+    sub_problem_solver = Cplex(sub)
 
-        sub_problem_solver.solve()
-        iis_vars = sub_problem_solver.compute_iis()
-        print("Variables involved in the IIS:", iis_vars)
+    sub_problem_solver.solve()
+    iis_vars = sub_problem_solver.compute_iis()
+    print("Variables involved in the IIS:", iis_vars)
 
 # %%
 #
