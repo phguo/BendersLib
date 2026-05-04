@@ -460,41 +460,41 @@ class SolverCPBase(SolverBase):
     # Using CP solver for master problem is not common, so these functions are left unimplemented.
 
     def add_estimators(self, estimators: list[str], prob: list[float] = None, lb: float = 0) -> None:
-        raise BendersNotImplementedError(
+        raise BendersNotImplementedError(  # pragma: no cover
             "Not support for a Constraint Programming solver.", func=self.add_estimators.__name__)
 
     def add_cut(self, cut, name=None) -> None:
-        raise BendersNotImplementedError(
+        raise BendersNotImplementedError(  # pragma: no cover
             "Not support for a Constraint Programming solver.", func=self.add_cut.__name__)
 
     def remove_cut(self, cut_name: str) -> None:
-        raise BendersNotImplementedError(
+        raise BendersNotImplementedError(  # pragma: no cover
             "Not support for a Constraint Programming solver.", func=self.remove_cut.__name__)
 
     # Below are not technically available for a CP solver.
 
     def get_var_coefs(self, vars: list[str] | None = None) -> dict[str, list]:
-        raise BendersNotImplementedError(
+        raise BendersNotImplementedError(  # pragma: no cover
             "Not support for a Constraint Programming solver.", func=self.get_var_coefs.__name__)
 
     def get_rhs(self) -> list[float]:
-        raise BendersNotImplementedError(
+        raise BendersNotImplementedError(  # pragma: no cover
             "Not support for a Constraint Programming solver.", func=self.get_rhs.__name__)
 
     def get_dual_values(self) -> list[float]:
-        raise BendersNotImplementedError(
+        raise BendersNotImplementedError(  # pragma: no cover
             "Not support for a Constraint Programming solver.", func=self.get_dual_values.__name__)
 
     def get_extreme_ray(self) -> list[float]:
-        raise BendersNotImplementedError(
+        raise BendersNotImplementedError(  # pragma: no cover
             "Not support for a Constraint Programming solver.", func=self.get_extreme_ray.__name__)
 
     @staticmethod
     def make_master_problem(original_model, master_vars: list[str]):
-        raise BendersNotImplementedError(
+        raise BendersNotImplementedError(  # pragma: no cover
             "Not support for a Constraint Programming solver.", func="make_master_problem")
 
     @staticmethod
     def make_sub_problem(original_model, master_vars: list[str]):
-        raise BendersNotImplementedError(
+        raise BendersNotImplementedError(  # pragma: no cover
             "Not support for a Constraint Programming solver.", func="make_sub_problem")
