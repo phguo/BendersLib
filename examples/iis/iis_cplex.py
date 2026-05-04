@@ -13,8 +13,6 @@ CPLEX IIS
 # %%
 # Using :meth:`Cplex.compute_iis` to compute conflicting variables.
 
-import sys
-
 from benderslib.solvers import Cplex
 
 import cplex
