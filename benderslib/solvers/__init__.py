@@ -44,37 +44,37 @@ def _create_placeholder_solver(name: str, install_message: str):
 
 try:
     from ._gurobi import Gurobi
-except ImportError:
+except ImportError:  # pragma: no cover
     Gurobi = _create_placeholder_solver("Gurobi", "Install it via 'pip install gurobipy'.")
 
 try:
     from ._copt import Copt
-except ImportError:
+except ImportError:  # pragma: no cover
     Copt = _create_placeholder_solver("Copt", "Install it via 'pip install coptpy'.")
 
 try:
     from ._pyomo import Pyomo
-except ImportError:
+except ImportError:  # pragma: no cover
     Pyomo = _create_placeholder_solver("Pyomo", "Install it via 'pip install pyomo'.")
 
 try:
     from ._scip import Scip
-except ImportError:
+except ImportError:  # pragma: no cover
     Scip = _create_placeholder_solver("Scip", "Install it via 'pip install pyscipopt'.")
 
 try:
     from ._cplex import Cplex
-except ImportError:
+except ImportError:  # pragma: no cover
     Cplex = _create_placeholder_solver("Cplex", "Install it via 'pip install cplex'.")
 
 try:
     from ._ortools import Ortools
-except ImportError:
+except ImportError:  # pragma: no cover
     Ortools = _create_placeholder_solver("Ortools", "Install it via 'pip install ortools'.")
 
 try:
     from ._cplexcp import CplexCP
-except ImportError:
+except ImportError:  # pragma: no cover
     CplexCP = _create_placeholder_solver("CplexCP", "Install it via 'pip install docplex'.")
 
 __all__ = [
