@@ -12,6 +12,13 @@ Release Notes
     - **Major version zero (0.y.z) is for beta releases. Anything may change at any time.
       The public API should not be considered stable till version 1.y.z.**
 
+Version 0.6.0 (Beta) - Forthcoming
+------------------------------------
+
+.. rubric:: Changed
+
+*   Remove ``PyYAML>=6.0.0`` dependency by replacing ``config.yaml`` with ``config.py``.
+
 Version 0.5.1 (Beta) - 2026-04-29
 -------------------------------------
 

@@ -32,7 +32,6 @@ classifiers = [
 ]
 dependencies = [
     "numpy>=2.0.0",
-    "PyYAML>=6.0.0",
 ]
 
 [project.urls]
@@ -45,7 +44,7 @@ include = ["benderslib*"]
 exclude = ["docs*", "examples*", "tests*"]
 
 [tool.setuptools]
-package-data = { "benderslib" = ["config.yaml"] }
+package-data = { "benderslib" = [] }
 
 [tool.coverage.run]
 source = ["benderslib"]

@@ -70,7 +70,7 @@ STATUS_CODES:
   'ORTOOLS':
     4: 'OPTIMAL'
     3: 'INFEASIBLE'
-    2: ‘OPTIMAL'              # FEASIBLE
+    2: 'OPTIMAL'              # FEASIBLE
 
   'SCIP':
     'optimal': 'OPTIMAL'

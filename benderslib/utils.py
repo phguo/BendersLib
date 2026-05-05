@@ -2,9 +2,9 @@
 # SPDX-License-Identifier: Apache-2.0
 # Copyright (c) 2021-2026 Peng-Hui Guo <m@guo.ph>
 
-import os
-import yaml
 import math
+
+from .config import config as benders_config
 
 
 def draw_curve(result: 'BendersResult') -> None:
@@ -77,32 +77,10 @@ def draw_curve(result: 'BendersResult') -> None:
     plt.close(fig)
 
 
-def _load_config(section: str = None, file='config.yaml') -> dict:
-    def convert_strings(data):
-        if isinstance(data, dict):
-            return {k: convert_strings(v) for k, v in data.items()}
-        elif isinstance(data, list):
-            return [convert_strings(v) for v in data]
-        elif isinstance(data, str):
-            if data == "True":
-                return True
-            elif data == "False":
-                return False
-            elif data == "None":
-                return None
-        return data
-
-    current_dir = os.path.dirname(os.path.abspath(__file__))
-    config_path = os.path.join(current_dir, file)
-
-    with open(config_path, 'r', encoding='utf-8') as f:
-        config = yaml.safe_load(f)
-
-    config = convert_strings(config)
-
+def _load_config(section: str = None) -> dict:
     if section:
-        return config.get(section, {}) or {}
-    return config
+        return benders_config.get(section, {}) or {}
+    return benders_config
 
 
 def is_all_integer(vals: list[float], tol=1e-5) -> bool:
