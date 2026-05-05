@@ -90,7 +90,7 @@ config = {
             'optimal': 'OPTIMAL',
             'infeasible': 'INFEASIBLE',
             'unbounded': 'UNBOUNDED',
-            'infeasibleOrUnbounded': 'UNBOUNDED',  # Treat 'infeasibleOrUnbounded as 'UNBOUNDED'
+            'infeasibleOrUnbounded': 'UNBOUNDED',  # Treat 'infeasibleOrUnbounded' as 'UNBOUNDED'
         },
     },
 }
