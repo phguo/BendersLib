@@ -3,6 +3,7 @@
 # Copyright (c) 2021-2026 Peng-Hui Guo <m@guo.ph>
 
 from abc import ABC, abstractmethod
+from copy import deepcopy
 
 from ..consts import BendersConsts as CST
 from ..config import config as solver_config
@@ -46,7 +47,7 @@ class SolverBase(ABC):
             would impact convergence of Benders decomposition.
         """
 
-        self._options = solver_config
+        self._options = deepcopy(solver_config)
         """A dictionary of solver-specific options loaded from the configuration file."""
 
         # Attributes to be set in the subclass
