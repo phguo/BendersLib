@@ -4,8 +4,6 @@
 
 import math
 
-from .config import config as benders_config
-
 
 def draw_curve(result: 'BendersResult') -> None:
     """Draw the convergence curve of the Benders algorithm.
@@ -75,12 +73,6 @@ def draw_curve(result: 'BendersResult') -> None:
     plt.tight_layout()
     plt.show()
     plt.close(fig)
-
-
-def _load_config(section: str = None) -> dict:
-    if section:
-        return benders_config.get(section, {}) or {}
-    return benders_config
 
 
 def is_all_integer(vals: list[float], tol=1e-5) -> bool:

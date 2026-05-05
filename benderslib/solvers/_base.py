@@ -5,7 +5,7 @@
 from abc import ABC, abstractmethod
 
 from ..consts import BendersConsts as CST
-from ..utils import _load_config
+from ..config import config as solver_config
 from ..errors import BendersNotImplementedError
 
 
@@ -46,7 +46,7 @@ class SolverBase(ABC):
             would impact convergence of Benders decomposition.
         """
 
-        self._options = _load_config()
+        self._options = solver_config
         """A dictionary of solver-specific options loaded from the configuration file."""
 
         # Attributes to be set in the subclass
