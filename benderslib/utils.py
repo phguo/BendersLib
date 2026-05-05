@@ -37,7 +37,7 @@ def draw_curve(result: 'BendersResult') -> None:
 
     try:
         import matplotlib.pyplot as plt
-    except ImportError:
+    except ImportError:  # pragma: no cover
         raise ImportError("matplotlib is not installed. Please install it with: pip install benderslib[plot]")
 
     plt.style.use('seaborn-v0_8')
