@@ -40,6 +40,7 @@ from Nanjing University of Aeronautics and Astronautics (NUAA), China.
 .. contributors:: phguo/BendersLib
     :avatars:
     :limit: 100
+    :exclude: copilot-swe-agent, Copilot
 
 ------
 
