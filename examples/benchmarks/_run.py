@@ -20,7 +20,7 @@ except NameError:
 from linear import run as run1
 from integer import run as run2
 from lbbd_location import run as run3
-from _utils import draw
+# from _utils import draw
 
 # %%
 # Solve the benchmark problems using BendersLib.
