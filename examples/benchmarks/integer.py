@@ -25,8 +25,8 @@ try:
 except NameError:
     sys.path.insert(0, os.path.abspath("."))
 
-from _utils import SMPSReader, first_stage_model, second_stage_model, deterministic_equivalent_model, collect_data, \
-    draw, limit_memory
+# from _utils import SMPSReader, first_stage_model, second_stage_model, deterministic_equivalent_model, collect_data, \
+#     draw, limit_memory
 
 
 # %%

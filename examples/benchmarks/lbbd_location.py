@@ -38,7 +38,7 @@ try:
 except NameError:
     sys.path.insert(0, os.path.abspath("."))
 
-from _utils import draw, collect_data, limit_memory
+# from _utils import draw, collect_data, limit_memory
 
 
 # %%
