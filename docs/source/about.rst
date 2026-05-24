@@ -96,5 +96,5 @@ Logo
 
 .. image:: _static/benderslib_v.png
    :align: center
-   :height: 350px
-   :width: 350px
+   :height: 380px
+   :width: 380px
