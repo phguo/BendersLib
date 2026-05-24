@@ -1,3 +1,7 @@
+.. only:: not html and not latex and not epub
+
+    You are viewing the source file for documentation. For the rendered version, visit https://benders.dev/about.html
+
 About
 ================================
 
@@ -86,11 +90,11 @@ Logo
 .. rubric:: Logo (horizontal)
 
 .. image:: _static/benderslib.png
-   :align: left
+   :align: center
 
 .. rubric:: Logo (vertical)
 
 .. image:: _static/benderslib_v.png
-   :align: left
+   :align: center
    :height: 350px
    :width: 350px

@@ -46,48 +46,48 @@ table.docutils {
 }
 
 /* Customize font sizes */
-body {
-    font-size: 16px; /* Base font size */
-}
+/*body {*/
+/*    font-size: 16px; !* Base font size *!*/
+/*}*/
 
-h1 {
-    font-size: 2em; /* 32px */
-    font-weight: bold;
-    margin-top: 1.5em;
-}
+/*h1 {*/
+/*    font-size: 2em; !* 32px *!*/
+/*    font-weight: bold;*/
+/*    margin-top: 1.5em;*/
+/*}*/
 
-h2 {
-    font-size: 1.5em; /* 24px */
-    font-weight: bold;
-    margin-top: 1.3em;
-}
+/*h2 {*/
+/*    font-size: 1.5em; !* 24px *!*/
+/*    font-weight: bold;*/
+/*    margin-top: 1.3em;*/
+/*}*/
 
-h3 {
-    font-size: 1.25em; /* 20px */
-    font-weight: bold;
-    /*color: var(--color-foreground-secondary); !* lighter in light-mode, darker in dark-mode *!*/
-    margin-top: 1.1em;
-}
+/*h3 {*/
+/*    font-size: 1.25em; !* 20px *!*/
+/*    font-weight: bold;*/
+/*    !*color: var(--color-foreground-secondary); !* lighter in light-mode, darker in dark-mode *!*!*/
+/*    margin-top: 1.1em;*/
+/*}*/
 
-h4 {
-    font-size: 1.17em; /* 18.72px */
-    font-weight: 600;
-    /*color: var(--color-foreground-secondary); !* lighter in light-mode, darker in dark-mode *!*/
-    margin-top: 1.0em;
-}
+/*h4 {*/
+/*    font-size: 1.17em; !* 18.72px *!*/
+/*    font-weight: 600;*/
+/*    !*color: var(--color-foreground-secondary); !* lighter in light-mode, darker in dark-mode *!*!*/
+/*    margin-top: 1.0em;*/
+/*}*/
 
-h5 {
-    font-size: 1em; /* 16px */
-    font-weight: 600;
-    /*color: var(--color-foreground-secondary); !* lighter in light-mode, darker in dark-mode *!*/
-    margin-top: 1.0em;
-}
+/*h5 {*/
+/*    font-size: 1em; !* 16px *!*/
+/*    font-weight: 600;*/
+/*    !*color: var(--color-foreground-secondary); !* lighter in light-mode, darker in dark-mode *!*!*/
+/*    margin-top: 1.0em;*/
+/*}*/
 
-h2::before {
-    content: "\25B8";
-    margin-right: 0.2em;
-    /*color: var(--color-link);*/
-}
+/*h2::before {*/
+/*    content: "\25B8";*/
+/*    margin-right: 0.2em;*/
+/*    !*color: var(--color-link);*!*/
+/*}*/
 
 /* Customize font sizes */
 
