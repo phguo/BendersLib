@@ -214,6 +214,7 @@ sitemap_show_lastmod = True
 sitemap_url_scheme = "{link}"
 
 html_theme = "shibuya"
+html_title = "BendersLib"
 # html_baseurl = "https://benders.dev/"
 # html_logo = '_static/benderslib.png'
 html_favicon = '_static/icon.ico'
