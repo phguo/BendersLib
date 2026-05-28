@@ -3,7 +3,7 @@
 # Copyright (c) 2021-2026 Peng-Hui Guo <m@guo.ph>
 
 """
-Benchmark (Integer Recourse)
+Integer Recourse
 =======================================================
 """
 

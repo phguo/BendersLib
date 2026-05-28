@@ -3,7 +3,7 @@
 # Copyright (c) 2021-2026 Peng-Hui Guo <m@guo.ph>
 
 """
-Benchmark (Facility Location)
+Facility Location
 =======================================================
 
 This example implements the Capacity- and Distance-Constrained Plant Location Problem. The problem
