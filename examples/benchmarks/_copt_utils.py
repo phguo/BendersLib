@@ -159,9 +159,11 @@ def second_stage_model(data):
 
     models = []
     probs = []
+    env = cp.Envr()
+
     for scenario_name, s_data in data['scenarios'].items():
         probs.append(s_data['prob'])
-        model = _new_copt_model(f"{data['model_name']}_{scenario_name}")
+        model = env.createModel(f"{data['model_name']}_{scenario_name}")
 
         # First-stage variables (as continuous)
         x = {}
