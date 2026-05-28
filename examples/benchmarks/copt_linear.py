@@ -101,13 +101,9 @@ class InOut(CallbackBase):
 
             # Add cuts
             expr = _cut_expr(self.master_linear, cut)
-            if cut.sense == CST.LE:
-                cons = self.master_linear.addConstr(expr <= cut.rhs)
-            elif cut.sense == CST.GE:
-                cons = self.master_linear.addConstr(expr >= cut.rhs)
-            else:
-                assert cut.sense == CST.EQ
-                cons = self.master_linear.addConstr(expr == cut.rhs)
+            # LShapedOCGen returns only >= cuts.
+            assert cut.sense == CST.GE
+            cons = self.master_linear.addConstr(expr >= cut.rhs)
             constrs.append(cons)
             cuts.append(cut)
 
