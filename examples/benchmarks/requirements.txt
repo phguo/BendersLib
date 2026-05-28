@@ -1,5 +1,7 @@
 benderslib==0.5.1
 gurobipy==12.0.0
+ortools==9.15.6755
+coptpy==8.0.4
 numpy==2.3.3
 scipy==1.16.1
 matplotlib==3.10.5

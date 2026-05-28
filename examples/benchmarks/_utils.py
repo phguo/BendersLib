@@ -12,24 +12,6 @@ This file contains utility functions for :doc:`../benchmarks/index`.
 import collections
 import random
 import json
-import matplotlib.pyplot as plt
-from matplotlib.lines import Line2D
-
-PLT_PARAM = {
-    "font.family": "Arial",
-
-    "font.size": 7,
-    "axes.titlesize": 7,
-
-    "ytick.major.size": 2,
-    "ytick.major.width": .5,
-    "ytick.labelsize": 7,
-
-    "xtick.major.size": 2,
-    "xtick.major.width": .5,
-    "xtick.labelsize": 7,
-}
-plt.rcParams.update(PLT_PARAM)
 
 import gurobipy as gp
 from gurobipy import GRB
@@ -732,3 +714,25 @@ def collect_data(ins_names, de_files, bd_files, ins_classes, sample_nums):
 
 def draw(all_data_points, titles=None):
     ...
+
+
+# %% Send notification to cellphone.
+
+def bark(title, content, bark_key=None):
+    if bark_key is None:
+        try:
+            from os import getenv
+            from dotenv import load_dotenv
+
+            load_dotenv()
+            bark_key = getenv("BARK_KEY")
+
+        except:
+            return
+
+    if bark_key:
+        import requests
+        from requests.utils import requote_uri
+
+        url = requote_uri("https://api.day.app/{}/{}/{}".format(bark_key, title, content))
+        return requests.get(url).content
