@@ -259,9 +259,8 @@ def solve(meta_data, time_limit, solve_methods):
     if "de" in solve_methods:
         model = deterministic_equivalent_model(instance_data)
         model.setParam('TimeLimit', time_limit)
-        time_start = time.perf_counter()
         model.solve()
-        save_copt_result(model, f"./_copt_sol/{instance_name}_de.json", time.perf_counter() - time_start)
+        save_copt_result(model, f"./_copt_sol/{instance_name}_de.json")
         bark(f"{instance_name}", f"Solved using 'de' and COPT.")
 
     # Solve using Logic-based Benders Decomposition
