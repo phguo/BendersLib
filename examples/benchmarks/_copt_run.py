@@ -41,11 +41,11 @@ from _utils import draw
 # %%
 # Collect the data and draw the results.
 
-res1 = run1(dry_run=True)
-res2 = run2(dry_run=True)
-res3 = run3(dry_run=True)
-draw(
-    [res1, res2, res3],
-    ['Linear Subproblems', 'Integer Subproblems', 'Custom Solver and Cut'],
-    figure_name="copt"
-)
+# res1 = run1(dry_run=True)
+# res2 = run2(dry_run=True)
+# res3 = run3(dry_run=True)
+# draw(
+#     [res1, res2, res3],
+#     ['Linear Subproblems', 'Integer Subproblems', 'Custom Solver and Cut'],
+#     figure_name="copt"
+# )

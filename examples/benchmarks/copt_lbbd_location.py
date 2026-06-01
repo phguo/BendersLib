@@ -307,7 +307,8 @@ def run(solve_methods=None, draw_result=False, dry_run=True):
 
 
 if __name__ == "__main__":
-    run(solve_methods=['bd'], draw_result=False, dry_run=False)
+    ...
+    # run(solve_methods=['bd'], draw_result=False, dry_run=False)
 
 # %%
 #
