@@ -18,10 +18,9 @@ Facility Location (COPT)
 import json
 import os
 import sys
-import time
 from itertools import product
 
-from benderslib import LogicBasedBenders, MasterProblem, CST, CombinatorialOCGen, LogicBasedSubProblem
+from benderslib import LogicBasedBenders, MasterProblem
 from benderslib.solvers import Copt
 
 try:
@@ -31,7 +30,7 @@ except NameError:
 
 from _utils import draw, collect_data, limit_memory, bark
 from _copt_utils import save_copt_result, _new_copt_model
-from lbbd_location import _bin_packing_ffd, _bin_packing_cp, feasibility_cut_generator, generate_instance_data
+from lbbd_location import feasibility_cut_generator, generate_instance_data, SubProblemSolver
 
 from coptpy import COPT, LinExpr
 
@@ -182,54 +181,13 @@ def make_master_problem(instance_data, sub_relaxation=True):
 
 
 # %%
-# Define the **subproblem** solver for Logic-based Benders decomposition.
-
-class SubProblemSolver(LogicBasedSubProblem):
-    def __init__(self, complicating_vars, instance_data):
-        super().__init__(complicating_vars)
-
-        self.instance_data = instance_data
-
-    def solve(self):
-        I = self.instance_data["client_indices"]
-        J = self.instance_data["facility_indices"]
-        vehicle_max_distance = self.instance_data["max_vehicle_distance"]
-        travel_distances = self.instance_data["travel_distances"]
-        k_bar = self.instance_data["max_vehicles_per_facility"]
-
-        # Retrieve master problem solution
-        facility_vehicle_num = {j: int(self.complicating_var_values[f"V[{j}]"]) for j in J}
-        facility_clients = {j: [] for j in J}
-        for i, j in product(I, J):
-            if self.complicating_var_values[f"x[{i},{j}]"] > 0.5:
-                facility_clients[j].append(i)
-
-        # Determine the number of vehicles required for each facility
-        facility_vehicle_num_req = {j: k_bar for j in J}
-        for j in J:
-            capacity = vehicle_max_distance
-            items = [travel_distances[f"{i},{j}"] for i in facility_clients[j]]
-
-            bin_num_ffd = _bin_packing_ffd(capacity, items)
-            if bin_num_ffd > facility_vehicle_num[j]:
-                bin_num_exact = _bin_packing_cp(capacity, items)
-                if bin_num_exact > facility_vehicle_num[j]:
-                    facility_vehicle_num_req[j] = bin_num_exact
-                else:
-                    facility_vehicle_num_req[j] = facility_vehicle_num[j]
-            else:
-                facility_vehicle_num_req[j] = facility_vehicle_num[j]
-
-            if facility_vehicle_num_req[j] > facility_vehicle_num[j]:
-                # ``facility_vehicle_num_req`` can be retrieved in the cut generator via ``sub_problem.var_values``
-                self.status, self.obj, self.var_values = CST.INFEASIBLE, None, facility_vehicle_num_req
-                return
-        self.status, self.obj, self.var_values = CST.OPTIMAL, 0, facility_vehicle_num_req
-        return
-
-
-# %%
 # Solve the instances using different methods and save the results.
+#
+# .. note::
+#
+#     There are several implementation differences to :doc:`lbbd_location` for better performance:
+#
+#     - Do not generate optimality cuts, instead of using ``CombinatorialOCGen``.
 
 @limit_memory(limit_gb=14.5)
 def solve(meta_data, time_limit, solve_methods):
@@ -276,7 +234,7 @@ def solve(meta_data, time_limit, solve_methods):
             feasibility_cut=feasibility_cut_generator,
             # Optimality cut is required for the Branch-and-check method,
             # as the subproblem can be feasible for some master node solutions.
-            optimality_cut=CombinatorialOCGen,
+            optimality_cut=lambda mp, sp: []
         )
         BD.params.use_bnc = True
         BD.solve()

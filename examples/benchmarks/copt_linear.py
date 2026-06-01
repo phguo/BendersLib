@@ -129,6 +129,13 @@ class InOut(CallbackBase):
 
 # %%
 # Solve the instances using different methods and save the results.
+#
+# .. note::
+#
+#     There are several implementation differences to :doc:`linear` for better performance:
+#
+#     - The branch-and-check option is turned off.
+#     - Do not require the constraint slack to be negative to add the cut.
 
 @limit_memory(limit_gb=14.5)
 def solve(smps_files, instance_name, sample_num, time_limit, solve_methods, seed=1024):
@@ -161,7 +168,7 @@ def solve(smps_files, instance_name, sample_num, time_limit, solve_methods, seed
         )
         BD.register(InOut(lambda_=0.2, alpha=0.3, n=5, m=30))
         BD.params.parallel_sub = True
-        BD.params.use_bnc = True
+        # BD.params.use_bnc = True
         BD.params.time_limit = time_limit
         BD.params.theta_lb = 0
         BD.solve()
@@ -186,9 +193,9 @@ def run(solve_methods=None, draw_result=False, dry_run=True):
 
         # Source: https://pages.cs.wisc.edu/~swright/stochastic/sampling/
 
-        "storm": (_dir + "/storm/storm.cor", _dir + "/storm/storm.tim", _dir + "/storm/storm.sto"),
         "lands": (_dir + "/lands/lands.cor", _dir + "/lands/lands.tim", _dir + "/lands/lands.sto"),
         "gbd": (_dir + "/gbd/gbd.cor", _dir + "/gbd/gbd.tim", _dir + "/gbd/gbd.sto"),
+        "storm": (_dir + "/storm/storm.cor", _dir + "/storm/storm.tim", _dir + "/storm/storm.sto"),
 
         # Note: *cargo* and *storm* were originated from the same problem, but the data is different.
     }

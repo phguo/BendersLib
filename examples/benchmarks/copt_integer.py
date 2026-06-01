@@ -79,7 +79,7 @@ class InOut(CallbackBase):
 
             # Set theta_lb based on linear relaxation of the subproblems
             theta_lb = 0
-            for sub in self.sub_linear:
+            for sub in context.sub_problem:
                 sub.model.solve()
                 theta_lb += sub.model.objval
 
@@ -109,15 +109,13 @@ class InOut(CallbackBase):
         self._add_stabilization_cuts(context, m=self.m)
 
     def on_opti_cut_generated(self, context: BendersContext):
-        if context.benders.result.gap < 0.005:
-            return
-
         t_ = time.perf_counter()
 
         self.sub_linear.fix_vars(context.current_comp_vals)
         self.sub_linear.prl_solve()
         cut = self.cut_generator.generate()[0]
-        context.current_opti_cuts.append(cut)
+        if not cut in context.master_problem.optimality_cuts:
+            context.current_opti_cuts.append(cut)
 
         self.classical_cut_time += time.perf_counter() - t_
 
@@ -151,7 +149,7 @@ class InOut(CallbackBase):
             # The complicating variables are binary, i.e, x \in [0, 1] and integer.
             # COPT will raise an error if attempting to fix x \in [0, 1] to a value
             # greater than 1 (like 1.00001), so we must cap the point values at 1.
-            point = {var_name: min(val, 1) for var_name, val in point.items()}
+            point = {var_name: min(round(val, 1), 1) for var_name, val in point.items()}
 
             self.sub_linear.fix_vars(point)
             self.sub_linear.prl_solve()
@@ -176,7 +174,7 @@ class InOut(CallbackBase):
         # Add cut without positive slack to the master problem
         cut_added_num = 0
         for cons, cut in zip(constrs, cuts):
-            if cons.Slack <= 0 and not cut in context.master_problem.optimality_cuts:
+            if cons.Slack <= float('inf') and not cut in context.master_problem.optimality_cuts:
                 context.master_problem.add_cut(cut)
                 cut_added_num += 1
             else:
@@ -188,6 +186,16 @@ class InOut(CallbackBase):
 
 # %%
 # Solve the instances using different methods and save the results.
+#
+# .. note::
+#
+#     There are several implementation differences to :doc:`integer` for better performance:
+#
+#     - The estimator's lower bound is computed using the subproblem, rather than its linear relaxation.
+#     - Classical cuts are added even when the gap is less than 0.005 in the callback.
+#     - Values of complicating variables are processed by ``min(round(val, 1), 1)`` in the callback.
+#     - Do not require the constraint slack to be negative to add the cut.
+#     - The branch-and-check option is turned off for instances *sslp*.
 
 @limit_memory(limit_gb=14.5)
 def solve(smps_files, instance_name, time_limit, solve_methods):
@@ -227,10 +235,11 @@ def solve(smps_files, instance_name, time_limit, solve_methods):
             BD.register(InOut(lambda_=0.2, alpha=0.3, delta=0.2, n=5, m=100, integer=True))
 
         if "smkp" in instance_name:
+            BD.params.use_bnc = True
             BD.register(InOut(lambda_=0.2, alpha=0.3, delta=0.2, n=5, m=100))
 
         BD.params.parallel_sub = True
-        BD.params.use_bnc = True
+        # BD.params.use_bnc = True
         BD.params.time_limit = time_limit
         BD.solve()
         BD.save(f"./_copt_sol/{instance_name}_bd.json")
