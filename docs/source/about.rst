@@ -49,30 +49,6 @@ applied Benders decomposition to humanitarian logistics and supply chain managem
 
 ------
 
-Citing BendersLib
---------------------------------
-
-    Guo, P. (2026). BendersLib: A Benders Decomposition Library in Python (Version 0.5.1) [Computer software]. https://github.com/phguo/BendersLib
-
-.. code-block:: bibtex
-
-    @software{GuoBendersLib2026,
-        author = {Guo, Penghui},
-        license = {Apache-2.0},
-        month = apr,
-        title = {{BendersLib: A Benders Decomposition Library in Python}},
-        url = {https://github.com/phguo/BendersLib},
-        version = {0.5.1},
-        year = {2026}
-    }
-
-.. rubric:: Papers Citing BendersLib
-
-*We update this list regularly. If you have a paper citing
-BendersLib and would like it listed here, please let us know!*
-
-------
-
 License
 -----------------------------------
 

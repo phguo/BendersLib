@@ -121,14 +121,7 @@ Install BendersLib and a solver of your choice (e.g., Gurobi) using pip.
 
     pip install "benderslib[gurobi]"
 
-Test whether the installation is successful.
-
-.. code-block:: python
-
-    import benderslib as bd
-
-    print(bd.__url__)
-
+    python -c "import benderslib as bd; print(bd.__url__)"
     # Should output "https://benders.dev"
 
 BendersLib enables switching from a standard Mathematical Programming model
@@ -204,25 +197,6 @@ The output will be similar to the following, showing the Benders decomposition p
     ====================================================================================
     Objective: 45.0
     Solution: {'x': 15.0, 'y': 0.0}
-
-Citing BendersLib
------------------------------------
-
-If you use BendersLib in your research, please cite it as follows.
-
-    Guo, P. (2026). BendersLib: A Benders Decomposition Library in Python (Version 0.5.1) [Computer software]. https://github.com/phguo/BendersLib
-
-.. code-block:: bibtex
-
-    @software{GuoBendersLib2026,
-        author = {Guo, Penghui},
-        license = {Apache-2.0},
-        month = apr,
-        title = {{BendersLib: A Benders Decomposition Library in Python}},
-        url = {https://github.com/phguo/BendersLib},
-        version = {0.5.1},
-        year = {2026}
-    }
 
 License
 -----------------------------------
