@@ -1,6 +1,5 @@
 # coding:utf-8
 # SPDX-License-Identifier: Apache-2.0
-# Author: Xiao Tan <ctanxiao@163.com>
 # Copyright (c) 2021-2026 Peng-Hui Guo <m@guo.ph>
 
 """
