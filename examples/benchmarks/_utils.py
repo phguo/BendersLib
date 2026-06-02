@@ -860,7 +860,7 @@ def draw(all_data_points, titles=None, figure_name="figure"):
             )
             ax2.annotate(
                 f'{avg_time2 / avg_time1:.1f}x',
-                xy=(avg_time2, 0.9) if 'copt' in figure_name and i in [1] else (avg_time2, 0.25),
+                xy=(avg_time2, 0.93) if 'copt' in figure_name and i in [1] else (avg_time2, 0.25),
                 fontsize=7, horizontalalignment='right', verticalalignment='center', color='C0',
                 fontweight='bold')
 
