@@ -9,7 +9,7 @@ Supported Solvers
 .. attention::
 
    BendersLib will **NOT** install any solver to your environment automatically.
-   You need to :ref:`install the solvers <solver-installation-table>` separately based on your needs.
+   You need to :ref:`install the solvers <manual_installing_solver>` separately based on your needs.
 
 BendersLib supports the following solvers.
 The features listed in the table are essential for Benders decomposition.
