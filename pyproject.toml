@@ -52,7 +52,7 @@ source = ["benderslib"]
 [project.optional-dependencies]
 plot = ["matplotlib>=3.10.5"]
 doc = [
-    "sphinx>=8.2.3",
+    "sphinx>=9.0.0",
     "furo>=2025.9.25",
     "sphinx-copybutton>=0.5.2",
     "sphinx-gallery>=0.19.0",
