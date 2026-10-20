@@ -23,8 +23,8 @@ for BendersLib before installing it.
 
 .. code-block:: bash
 
-    # Create a new conda environment named "bendersenv" with Python 3.9 or higher
-    conda create -n bendersenv python=3.9
+    # Create a new conda environment named "bendersenv" with Python 3.10 or higher
+    conda create -n bendersenv python=3.10
 
     # Activate the new environment
     conda activate bendersenv
@@ -76,28 +76,6 @@ If you see the version number printed without any errors, the installation was s
 Installing Solvers
 ------------------------------------
 
-.. tab:: specific
-
-    .. code-block:: bash
-
-        # Install only needed solvers
-
-        pip install "benderslib[copt]"
-        pip install "benderslib[cplex]"
-        pip install "benderslib[cplexcp]"
-        pip install "benderslib[gurobi]"
-        pip install "benderslib[ortools]"
-        pip install "benderslib[pyomo]"
-        pip install "benderslib[scip]"
-
-.. tab:: all
-
-    .. code-block:: bash
-
-        # Install all supported solvers
-
-        pip install "benderslib[all-solvers]"
-
 .. attention::
 
    BendersLib will **NOT** install any solver to your environment automatically.
@@ -106,6 +84,22 @@ Installing Solvers
 BendersLib supports several popular optimization solvers.
 You can install these solvers individually based on your needs. Installing all of them is not necessary.
 Please refer to :ref:`solver-table` for solver features and license requirements
+
+.. code-block:: bash
+
+    # Install only needed solvers
+    pip install "benderslib[copt]"
+    pip install "benderslib[cplex]"
+    pip install "benderslib[cplexcp]"
+    pip install "benderslib[gurobi]"
+    pip install "benderslib[ortools]"
+    pip install "benderslib[pyomo]"
+    pip install "benderslib[scip]"
+
+    # Install all supported solvers
+    pip install "benderslib[all-solvers]"
+
+You can also install solvers via ``conda``. Please refer to the table below for the specific commands.
 
 .. list-table:: Installing Solvers
     :widths: auto
@@ -179,8 +173,8 @@ Please refer to :ref:`solver-table` for solver features and license requirements
 
 .. [1] *Previous commands install only the Python API. You still need to install the solver engine separately.*
 .. [2]  *Pyomo is a modeling language. Supported solvers must be installed separately, see*
-        `installation instruction <https://pyomo.readthedocs.io/en/stable/getting_started/solvers.html>`_ *(by Pyomo)*
-        *and* `supported solvers <https://github.com/Pyomo/pyomo/tree/main/pyomo/solvers/plugins/solvers>`_.
+        `installation instruction <https://pyomo.readthedocs.io/en/stable/getting_started/solvers.html>`_ *and*
+        `supported solvers <https://github.com/Pyomo/pyomo/tree/main/pyomo/solvers/plugins/solvers>`_ *(by Pyomo)*.
 
 Troubleshooting
 ------------------------------------
