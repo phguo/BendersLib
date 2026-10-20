@@ -67,7 +67,7 @@ doc = [
 copt = ["coptpy>=8.0.2; python_version<='3.13'"]
 cplex = ["cplex>=22.1.2; python_version<='3.14'"]
 cplexcp = ["docplex>=2.31.254"]
-gurobi = ["gurobipy[matrixapi]>=12.0.0"]
+gurobi = ["gurobipy[matrixapi]>=12.0.0; python_version<='3.14'"]
 ortools = ["ortools>=9.15.6755"]
 pyomo = ["pyomo>=6.9.5"]
 scip = ["pyscipopt>=6.0.0"]
