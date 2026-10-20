@@ -21,7 +21,13 @@ Version 0.6.0 (Beta) - Forthcoming
 
 **Changed**
 
--   Remove ``PyYAML>=6.0.0`` dependency by replacing ``config.yaml`` with ``config.py`` (`#9 <https://github.com/phguo/BendersLib/pull/9>`_).
+-   Remove ``PyYAML>=6.0.0`` dependency by replacing ``config.yaml`` with ``config.py``
+    (`#9 <https://github.com/phguo/BendersLib/pull/9>`_).
+-   Bump ``sphinx>=8.2.3`` dependency to ``sphinx>=9.0.0``
+    (`#17 <https://github.com/phguo/BendersLib/pull/17>`_).
+-   Update ``coptpy`` Python version requirement from ``"coptpy>=8.0.2; python_version<='3.13'"`` to
+    ``"coptpy>=8.0.2; python_version<='3.14'"``
+    (`#19 <https://github.com/phguo/BendersLib/pull/19>`_).
 
 Version 0.5.1 (Beta) - 2026-04-29
 -------------------------------------
