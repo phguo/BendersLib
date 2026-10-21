@@ -199,7 +199,7 @@ demonstrates how to define and register both types of callbacks.
 .. admonition:: Example
     :class: seealso
 
-    More examples of callbacks can be found in the :doc:`../examples/expert/index`.
+    More callback examples can be found in the :doc:`Examples (tag: callback) <../_tags/callback>`.
 
 Registering Multiple Callbacks
 ------------------------------------
