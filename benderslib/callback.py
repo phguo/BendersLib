@@ -93,7 +93,7 @@ class CallbackBase(ABC):
     .. seealso::
 
         - See :ref:`callbacks-timeline` for the precise timeline of when each callback is triggered.
-        - See :doc:`../examples/expert/index` for callback usage examples.
+        - See :doc:`Examples (tag: callback) <../_tags/callback>` for callback usage examples.
 
     Example
     ---------------
