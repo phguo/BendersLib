@@ -96,7 +96,7 @@ supported are not limited to the ones below.
      - :doc:`Example <examples/basic/bnc_cbd>`
    * - :doc:`Others <tutorials/enhance>`
      -
-     -
+     - :doc:`Example <_tags/enhancement>`
 
 BendersLib works with a variety of solvers through its built-in interfaces.
 See :ref:`solver-table` for a comprehensive list of features
