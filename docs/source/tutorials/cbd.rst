@@ -197,7 +197,7 @@ as this is problem-dependent and crucial for the algorithm's efficiency.
     *   Combinatorial Benders Decomposition for assembly line balancing (without using BendersLib): `GitHub/hw23 <https://github.com/phguo/hw23>`_
     *   BendersLib's implementation of optimality and feasibility cuts: :class:`CombinatorialOC` and :class:`NoGoodFC`.
     *   BendersLib's implementation of the Benders method: :class:`CombinatorialBenders`.
-    *   **Examples**: :doc:`../examples/basic/cbd` and :doc:`../examples/advanced/cbd_iis`.
+    *   **Examples**: :doc:`../examples/basic/cbd`, :doc:`../examples/advanced/cbd_iis`, and more (:doc:`benders: combinatorial <../_tags/benders-combinatorial>`).
 
 References
 --------------------------------------------

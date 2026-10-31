@@ -280,7 +280,7 @@ Users may formulate their problems to deterministic equivalents manually for com
     * BendersLib's implementation of the feasibility cut: :class:`ClassicalFC`.
     * BendersLib's implementation of the L-shaped methods:
       :class:`LShaped` (linear recourse) and :class:`GeneLShaped` (convex recourse).
-    * **Examples**: :doc:`../examples/basic/lshaped` and :doc:`../examples/basic/glshaped`.
+    * **Examples**: :doc:`../examples/basic/lshaped`, :doc:`../examples/basic/glshaped`, and more (:doc:`benders: l-shaped <../_tags/benders-l-shaped>`).
 
 
 References

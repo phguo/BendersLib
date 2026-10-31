@@ -229,7 +229,7 @@ The iterative procedure combines the loops of the :doc:`lshaped` method with the
     *   See :doc:`cbd` for the basis for the no-good cut and combinatorial optimality cut.
     * BendersLib's implementation of optimality and feasibility cuts: :class:`CombinatorialOC` and :class:`NoGoodFC`.
     * BendersLib's implementation of the Integer L-shaped method: :class:`IntegerLShaped`.
-    * **Examples**: :doc:`../examples/basic/ilshaped` and :doc:`../examples/advanced/ilshaped_iis`.
+    * **Examples**: :doc:`../examples/basic/ilshaped`, :doc:`../examples/advanced/ilshaped_iis`, and more (:doc:`benders: integer l-shaped <../_tags/benders-integer-l-shaped>`).
 
 
 References

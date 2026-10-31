@@ -213,7 +213,7 @@ The main challenge in applying LBBD is to design a problem-specific cut generati
     * Hooker's book [3]_ that comprehensively covers LBBD theory and applications.
     * LBBD for planning and scheduling with specific examples and logic-based Benders cuts [4]_.
     * LBBD for stochastic optimization with specific examples and logic-based Benders cuts [5]_.
-    * **Examples**: :doc:`../examples/advanced/lbbd`, :doc:`../examples/advanced/lbbd_sp`, :doc:`../examples/advanced/lbbd_lshaped`, and :doc:`../examples/benchmarks/lbbd_location`.
+    * **Examples**: :doc:`../examples/advanced/lbbd`, :doc:`../examples/advanced/lbbd_sp`, :doc:`../examples/advanced/lbbd_lshaped`, :doc:`../examples/benchmarks/lbbd_location`, and more (:doc:`benders: lbbd <../_tags/benders-lbbd>`).
 
 References
 ----------
