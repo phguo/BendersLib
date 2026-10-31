@@ -417,7 +417,7 @@ and specify which variables are complicating variables.
     - **Papers using GBD**: facility location [#]_; budgeting [#]_; inventory management [#]_.
     - BendersLib's implementation of optimality and feasibility cuts: :class:`GeneralizedOC` and :class:`GeneralizedFC`.
     - BendersLib's implementation of the Benders method: :class:`GeneralizedBenders`.
-    - **Example**: :doc:`../examples/basic/gbd`.
+    - **Examples**: :doc:`../examples/basic/gbd`, and more (:doc:`benders: generalized <../_tags/benders-generalized>`).
 
 References
 --------------------------------------------
