@@ -37,7 +37,8 @@ Version 0.6.0 (Beta) - Forthcoming
     `#20 <https://github.com/phguo/BendersLib/pull/20>`_,
     `#21 <https://github.com/phguo/BendersLib/pull/21>`_,
     `#22 <https://github.com/phguo/BendersLib/pull/22>`_,
-    `#23 <https://github.com/phguo/BendersLib/pull/23>`_).
+    `#23 <https://github.com/phguo/BendersLib/pull/23>`_,
+    `#26 <https://github.com/phguo/BendersLib/pull/26>`_,).
 
 **Fixed**
 
