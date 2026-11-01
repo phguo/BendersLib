@@ -35,8 +35,12 @@ jobs:
 
       - name: Display CPU information
         run: |
-          lscpu
-          cat /proc/cpuinfo
+          if command -v lscpu >/dev/null; then
+            lscpu
+            cat /proc/cpuinfo
+          else
+            sysctl -a | grep -E '^(hw\.(model|ncpu|memsize)|machdep\.cpu)'
+          fi
 
       - name: Run tests and generate coverage report
         run: |
