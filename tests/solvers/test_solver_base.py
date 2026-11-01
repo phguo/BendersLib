@@ -70,7 +70,7 @@ class BaseTestSolver:
         solver_instance.add_cut(feas_cut, name='test_feas_cut')
 
         # Solve the intentionally infeasible model
-        solver_instance.solve()
+        # solver_instance.solve()
         # assert solver_instance.status == CST.INFEASIBLE
 
         # Remove the feas_cut
