@@ -17,7 +17,8 @@ Version 0.6.0 (Beta) - Forthcoming
 
 **Added**
 
--   Add COPT benchmarks (`#15 <https://github.com/phguo/BendersLib/pull/15>`_).
+-   Add COPT benchmarks
+    (`#15 <https://github.com/phguo/BendersLib/pull/15>`_).
 -   Add Oracle mode for combined custom subproblem solving and cut generation
     (`#24 <https://github.com/phguo/BendersLib/pull/24>`_).
 
@@ -30,7 +31,17 @@ Version 0.6.0 (Beta) - Forthcoming
 -   Update ``coptpy`` Python version requirement from ``"coptpy>=8.0.2; python_version<='3.13'"`` to
     ``"coptpy>=8.0.2; python_version<='3.14'"``
     (`#19 <https://github.com/phguo/BendersLib/pull/19>`_).
--   Run CI tests on macOS to stabilize COPT solver testing
+-   [docs] Improve documentation
+    (`#11 <https://github.com/phguo/BendersLib/pull/11>`_,
+    `#16 <https://github.com/phguo/BendersLib/pull/16>`_,
+    `#20 <https://github.com/phguo/BendersLib/pull/20>`_,
+    `#21 <https://github.com/phguo/BendersLib/pull/21>`_,
+    `#22 <https://github.com/phguo/BendersLib/pull/22>`_,
+    `#23 <https://github.com/phguo/BendersLib/pull/23>`_).
+
+**Fixed**
+
+-   [test] Run CI tests on macOS to stabilize COPT solver testing
     (`#25 <https://github.com/phguo/BendersLib/pull/25>`_).
 
 Version 0.5.1 (Beta) - 2026-04-29
