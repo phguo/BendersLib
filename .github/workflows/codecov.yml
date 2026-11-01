@@ -7,7 +7,7 @@ on:
 
 jobs:
   test:
-    runs-on: ubuntu-latest
+    runs-on: macos-14
     strategy:
       fail-fast: false
       matrix:
@@ -35,8 +35,12 @@ jobs:
 
       - name: Display CPU information
         run: |
-          lscpu
-          cat /proc/cpuinfo
+          if command -v lscpu >/dev/null; then
+            lscpu
+            cat /proc/cpuinfo
+          else
+            sysctl -a | grep -E '^(hw\.(model|ncpu|memsize)|machdep\.cpu)'
+          fi
 
       - name: Run tests and generate coverage report
         run: |
