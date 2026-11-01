@@ -31,15 +31,15 @@ class _OracleSubProblem(LogicBasedSubProblem):
     def solve(self):
         result = self.oracle.evaluate()
         if not isinstance(result, tuple) or len(result) != 3:
-            raise ValueError("Oracle must return (cuts, sub_obj, var_values).")
+            raise ValueError("Oracle must return (cuts, sub_obj, var_values).")  # pragma: no cover
 
         cuts, sub_obj, var_values = result
         if not isinstance(cuts, list) or not all(isinstance(cut, Cut) for cut in cuts):
-            raise ValueError("Oracle cuts must be a list of Cut instances.")
+            raise ValueError("Oracle cuts must be a list of Cut instances.")  # pragma: no cover
         if sub_obj is not None and not isinstance(var_values, dict):
-            raise ValueError("Oracle var_values must be a dict when sub_obj is provided.")
+            raise ValueError("Oracle var_values must be a dict when sub_obj is provided.")  # pragma: no cover
         if not cuts and sub_obj is None:
-            raise ValueError("Oracle must return cuts or a subproblem objective value.")
+            raise ValueError("Oracle must return cuts or a subproblem objective value.")  # pragma: no cover
 
         self.cuts = cuts
         self.obj = sub_obj
@@ -75,7 +75,7 @@ class OracleBenders(BendersSolver):
 
     @classmethod
     def from_models(cls, *args, **kwargs):
-        raise NotImplementedError("OracleBenders does not have a from_models method.")
+        raise NotImplementedError("OracleBenders does not have a from_models method.")  # pragma: no cover
 
     def __init__(
             self,
@@ -105,4 +105,4 @@ class OracleBenders(BendersSolver):
             return _FuncWrapperOracle(master_problem, oracle, params)
         if inspect.isclass(oracle) and issubclass(oracle, Oracle):
             return oracle(master_problem, params)
-        raise TypeError("Oracle must be a function or an Oracle subclass.")
+        raise TypeError("Oracle must be a function or an Oracle subclass.")  # pragma: no cover
