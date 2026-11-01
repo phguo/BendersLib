@@ -511,6 +511,7 @@ if __name__ == "__main__":
 # .. seealso::
 #
 #     * Tutorial of the Logic-based Benders Decomposition: :doc:`../../tutorials/lbbd`
+#     * Manual of the Logic-based Benders Decomposition: :ref:`Logic-based Benders Decomposition <manual_logic_based_benders>`
 #     * This example uses the following class: :class:`~benderslib.LogicBasedBenders`
 #
 # .. tags:: benders: lbbd, solver: gurobi, deterministic, custom: subproblem, custom: cut, branch-and-check

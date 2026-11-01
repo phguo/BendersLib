@@ -6,6 +6,8 @@
 Oracle Mode for Facility Location
 ============================================
 
+.. currentmodule:: benderslib
+
 This example solves a capacitated facility location problem. The master problem
 selects facilities, while an oracle checks capacity, assigns demand, and returns
 Benders cuts in one step.
@@ -144,5 +146,7 @@ class_benders.solve()
 # .. seealso::
 #
 #    - Tutorial of the Logic-based Benders Decomposition: :doc:`../../tutorials/lbbd`
+#    - Manual of Oracle mode: :ref:`Oracle mode <manual_oracle>`
+#    - This example uses the following classes: :class:`Oracle`, :class:`OracleBenders`
 #
 # .. tags:: benders: lbbd, solver: gurobi, deterministic, custom: cut, custom: subproblem

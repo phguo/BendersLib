@@ -247,7 +247,9 @@ Finally, it uses the specified Benders method (:class:`ClassicalBenders` in this
     :ref:`manual_decompose_solve`, :doc:`../examples/basic/annotated_benders`, :doc:`../examples/api/decompose`,
     :doc:`../examples/basic/cbd`
 
-Customization
+.. _manual_logic_based_benders:
+
+Logic-based Benders Decomposition
 -------------------------------------------
 
 BendersLib is highly customizable, allowing you to tailor the decomposition process to your specific needs.
