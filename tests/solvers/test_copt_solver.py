@@ -26,7 +26,11 @@ class TestCopt(BaseTestSolver):
         env = cp.Envr()
         model = env.createModel()
         model.readLp(LP_FILE)
-        return Copt(model)
+        try:
+            yield Copt(model)
+        finally:
+            model.dispose()
+            env.dispose()
 
     @pytest.fixture
     def infeasible_solver_instance(self):
@@ -36,11 +40,19 @@ class TestCopt(BaseTestSolver):
         x1 = model.getVarByName("x1")
         x2 = model.getVarByName("x2")
         model.addConstr(x1 + x2 <= 3)
-        return Copt(model)
+        try:
+            yield Copt(model)
+        finally:
+            model.dispose()
+            env.dispose()
 
     @pytest.fixture
     def unbounded_solver_instance(self):
         env = cp.Envr()
         model = env.createModel()
         model.readLp(UBD_LP_FILE)
-        return Copt(model)
+        try:
+            yield Copt(model)
+        finally:
+            model.dispose()
+            env.dispose()
