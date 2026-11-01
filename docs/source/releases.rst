@@ -28,6 +28,8 @@ Version 0.6.0 (Beta) - Forthcoming
 -   Update ``coptpy`` Python version requirement from ``"coptpy>=8.0.2; python_version<='3.13'"`` to
     ``"coptpy>=8.0.2; python_version<='3.14'"``
     (`#19 <https://github.com/phguo/BendersLib/pull/19>`_).
+-   Run CI tests on macOS to stabilize COPT solver testing
+    (`#25 <https://github.com/phguo/BendersLib/pull/25>`_).
 
 Version 0.5.1 (Beta) - 2026-04-29
 -------------------------------------
