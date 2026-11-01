@@ -18,6 +18,8 @@ Version 0.6.0 (Beta) - Forthcoming
 **Added**
 
 -   Add COPT benchmarks (`#15 <https://github.com/phguo/BendersLib/pull/15>`_).
+-   Add Oracle mode for combined custom subproblem solving and cut generation
+    (`#24 <https://github.com/phguo/BendersLib/pull/24>`_).
 
 **Changed**
 

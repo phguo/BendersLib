@@ -147,6 +147,7 @@ draw_curve(LBBD.result)
 # .. seealso::
 #
 #     * Tutorial of the Logic-based Benders Decomposition: :doc:`../../tutorials/lbbd`
+#     * Manual of the Logic-based Benders Decomposition: :ref:`Logic-based Benders Decomposition <manual_logic_based_benders>`
 #     * Tutorial of the L-shaped method: :doc:`../../tutorials/lshaped`
 #     * This example uses the following class: :class:`LogicBasedBenders`
 #     * Example of the L-shaped method: :doc:`../basic/lshaped`

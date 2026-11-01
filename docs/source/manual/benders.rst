@@ -6,9 +6,10 @@ Benders Methods
 Create a Benders Decomposition Instance
 -------------------------------------------
 
-To create a Benders decomposition instance, you need to provide :ref:`a master problem <manual_master_create>`,
+For most Benders decomposition methods, you need to provide :ref:`a master problem <manual_master_create>`,
 :ref:`a subproblem <manual_sub_create>`, and a list of complicating variable names.
 BendersLib will then build a Benders decomposition framework to your problem.
+For the oracle-based LBBD interface, see :ref:`manual_oracle`.
 
 .. code-block:: python
 
@@ -53,7 +54,7 @@ creating :class:`MasterProblem` and :class:`SubProblem` objects.
 
 BendersLib offers several built-in Benders decomposition methods, each designed for specific problem structures.
 These methods are subclasses of :class:`BendersSolver` and come pre-configured with appropriate cut generators.
-Each of the classes (except :class:`LogicBasedBenders`)
+Each of the classes (except :class:`LogicBasedBenders` and :class:`OracleBenders`)
 is a ready-to-use implementation of a Benders decomposition variant.
 
 .. _manual_builtin_benders:
@@ -68,6 +69,7 @@ is a ready-to-use implementation of a Benders decomposition variant.
    ~LShaped
    ~IntegerLShaped
    ~LogicBasedBenders
+   ~OracleBenders
    ~GeneralizedBenders
    ~GeneLShaped
 
@@ -245,7 +247,9 @@ Finally, it uses the specified Benders method (:class:`ClassicalBenders` in this
     :ref:`manual_decompose_solve`, :doc:`../examples/basic/annotated_benders`, :doc:`../examples/api/decompose`,
     :doc:`../examples/basic/cbd`
 
-Customization
+.. _manual_logic_based_benders:
+
+Logic-based Benders Decomposition
 -------------------------------------------
 
 BendersLib is highly customizable, allowing you to tailor the decomposition process to your specific needs.
@@ -289,6 +293,35 @@ Here is a code snippet showing how to set up a :class:`LogicBasedBenders` instan
     BD = LogicBasedBenders(mp, sp, complicating_vars, optimality_cut=MyOptimalityCutGenerator)
     BD.solve()
 
+.. _manual_oracle:
+
+BendersLib also allows you to combine subproblem-solving and cut-generation logic in a single component, called **oracle mode**. :class:`Oracle` = subproblem solver + cut generator (optimality and feasibility). :class:`OracleBenders` is an additive LBBD interface.
+
+An oracle is either a function or an :class:`Oracle` subclass. It returns
+``(cuts, sub_obj, var_values)``: ``cuts`` is a list of valid :class:`Cut`
+instances whose ``ctype`` determines their existing classification;
+``sub_obj`` is the recourse objective used to update the upper bound, or
+``None`` when no incumbent is available; and ``var_values`` maps subproblem
+variable names to their values when ``sub_obj`` is provided.
+
+.. code-block:: python
+
+    from benderslib import Oracle, OracleBenders
+
+    def my_oracle(master_problem):
+        master_values = master_problem.get_var_values()
+        # Evaluate master_values and create valid Cut instances.
+        return cuts, sub_obj, var_values
+
+    benders = OracleBenders(master_problem, my_oracle, complicating_vars)
+    benders.solve()
+
+    class MyOracle(Oracle):
+        def evaluate(self):
+            return my_oracle(self.master_problem)
+
+    benders = OracleBenders(master_problem, MyOracle, complicating_vars)
+
 .. seealso::
 
     - Abstract base classes for customization:
@@ -296,8 +329,10 @@ Here is a code snippet showing how to set up a :class:`LogicBasedBenders` instan
     - Class- and function-based customization manul:
       :ref:`Custom Cut (Generator) <manual_custom_cut>` and :ref:`Custom Subproblem(s) <manual_custom_sub>`.
     - The class :class:`LogicBasedBenders` for logic-based Benders decomposition.
-    - **Executable Examples** (logic-based Benders decomposition):
-      :doc:`../examples/advanced/lbbd_sp`, :doc:`../examples/advanced/lbbd_lshaped`, and :doc:`../examples/benchmarks/lbbd_location`.
+    - The classes :class:`Oracle` and :class:`OracleBenders` for oracle-based LBBD.
+    - **Executable Examples** (logic-based and oracle-based Benders decomposition):
+      :doc:`../examples/advanced/lbbd_sp`, :doc:`../examples/advanced/lbbd_lshaped`,
+      :doc:`../examples/benchmarks/lbbd_location`, and :doc:`../examples/advanced/oracle`.
 
 ====
 

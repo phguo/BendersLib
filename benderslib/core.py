@@ -1177,6 +1177,41 @@ class CutGenerator(ABC):
         return cuts
 
 
+class Oracle(ABC):
+    """The base class for an oracle in Logic-based Benders Decomposition.
+
+    An oracle combines subproblem evaluation and cut generation. It receives the
+    current :class:`MasterProblem` and returns ``(cuts, sub_obj, var_values)``.
+    ``sub_obj`` can be ``None`` when the current master solution is infeasible.
+    """
+
+    def __init__(
+            self,
+            master_problem: MasterProblem,
+            params: BendersParams | None = None
+    ):
+        self.master_problem = master_problem
+        """The master problem instance."""
+        self.params = params if params is not None else BendersParams()
+        """The Benders parameters."""
+
+    @abstractmethod
+    def evaluate(self) -> tuple[list[Cut], float | None, dict]:
+        """Evaluate the current master solution and return ``(cuts, sub_obj, var_values)``."""
+        ...
+
+
+class _FuncWrapperOracle(Oracle):
+    """A wrapper class to allow using a function as an oracle."""
+
+    def __init__(self, master_problem, func: Callable, params: BendersParams | None = None):
+        self._func = func
+        super().__init__(master_problem, params)
+
+    def evaluate(self):
+        return self._func(self.master_problem)
+
+
 class _FuncWrapperCut(CutGenerator):
     """A wrapper class to allow using a function as a cut generator."""
 
