@@ -35,6 +35,12 @@ Benders Methods
     :show-inheritance:
     :exclude-members: master_problem, sub_problem, complicating_vars, optimality_cut, feasibility_cut, params, result
 
+.. autoclass:: OracleBenders
+    :inherited-members:
+    :show-inheritance:
+    :exclude-members: master_problem, sub_problem, complicating_vars, optimality_cut, feasibility_cut, params, result,
+                      from_models
+
 .. autoclass:: GeneLShaped
     :inherited-members:
     :show-inheritance:

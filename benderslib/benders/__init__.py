@@ -10,6 +10,7 @@ from .ilshaped import IntegerLShaped
 from .logicbased import LogicBasedBenders
 from .generalized import GeneralizedBenders
 from .glshaped import GeneLShaped
+from .oracle import OracleBenders
 
 __all__ = [
     "AnnotatedBenders",
@@ -19,5 +20,6 @@ __all__ = [
     "IntegerLShaped",
     "LogicBasedBenders",
     "GeneralizedBenders",
-    "GeneLShaped"
+    "GeneLShaped",
+    "OracleBenders"
 ]

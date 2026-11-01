@@ -26,6 +26,7 @@ from .core import (
     OptimalityCut,
     FeasibilityCut,
     CutGenerator,
+    Oracle,
     BendersSolver
 )
 
@@ -62,7 +63,8 @@ from .benders import (
     IntegerLShaped,
     LogicBasedBenders,
     GeneralizedBenders,
-    GeneLShaped
+    GeneLShaped,
+    OracleBenders
 )
 
 from .callback import (
@@ -91,6 +93,7 @@ __all__ = [
     "OptimalityCut",
     "FeasibilityCut",
     "CutGenerator",
+    "Oracle",
     "BendersSolver",
 
     # Cut types
@@ -125,6 +128,7 @@ __all__ = [
     "LogicBasedBenders",
     "GeneralizedBenders",
     "GeneLShaped",
+    "OracleBenders",
 
     # Callbacks
     "BendersContext",

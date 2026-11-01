@@ -59,7 +59,7 @@ supported are not limited to the ones below.
      - :class:`~benderslib.IntegerLShaped`
      - :doc:`Example <_tags/benders-integer-l-shaped>`
    * - :doc:`tutorials/lbbd`
-     - :class:`~benderslib.LogicBasedBenders`
+     - :class:`~benderslib.LogicBasedBenders`, :class:`~benderslib.OracleBenders`
      - :doc:`Example <_tags/benders-lbbd>`
    * - **Extensibility Features**
      -
@@ -73,6 +73,9 @@ supported are not limited to the ones below.
    * - :ref:`Custom Subproblem Solver <manual_custom_sub>`
      - :class:`~benderslib.LogicBasedSubProblem`
      - :doc:`Example <_tags/custom-subproblem>`
+   * - :ref:`Oracle Mode <manual_oracle>`
+     - :class:`~benderslib.Oracle`, :class:`~benderslib.OracleBenders`
+     - :doc:`Example <examples/advanced/oracle>`
    * - :doc:`Callback Functions </manual/callbacks>`
      - :class:`~benderslib.CallbackBase`, :class:`~benderslib.BendersContext`
      - :doc:`Example <_tags/callback>`

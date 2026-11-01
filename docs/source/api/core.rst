@@ -26,6 +26,10 @@ Benders Cut
    :show-inheritance:
    :exclude-members: _generate
 
+.. autoclass:: Oracle
+   :inherited-members:
+   :show-inheritance:
+
 Master and Sub Problem
 -----------------------------------------
 
