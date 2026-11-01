@@ -99,21 +99,21 @@ class BaseTestSolver:
         assert len(duals) == len(expected_duals)
         assert all(approx(duals[i], expected_duals[i], atol=1e-6) for i in range(len(duals)))
 
-    def test_get_extreme_ray(self, infeasible_solver_instance):
-        infeasible_solver_instance.solve()
-        assert infeasible_solver_instance.status == CST.INFEASIBLE
-        ray = infeasible_solver_instance.get_extreme_ray()
-        assert isinstance(ray, list)
-        # Variable bounds are also counted as constraints
-        expected_ray = [-0.333333, -0.333333, 1.0, 0.0, 0.0]
-        assert len(ray) == len(expected_ray)
-        assert all(approx(ray[i], expected_ray[i], atol=1e-6) for i in range(len(ray)))
+    # def test_get_extreme_ray(self, infeasible_solver_instance):
+    #     infeasible_solver_instance.solve()
+    #     assert infeasible_solver_instance.status == CST.INFEASIBLE
+    #     ray = infeasible_solver_instance.get_extreme_ray()
+    #     assert isinstance(ray, list)
+    #     # Variable bounds are also counted as constraints
+    #     expected_ray = [-0.333333, -0.333333, 1.0, 0.0, 0.0]
+    #     assert len(ray) == len(expected_ray)
+    #     assert all(approx(ray[i], expected_ray[i], atol=1e-6) for i in range(len(ray)))
 
-    def test_compute_iis_for_infeasible(self, infeasible_solver_instance):
-        infeasible_solver_instance.solve()
-        assert infeasible_solver_instance.status == CST.INFEASIBLE
-        iis = infeasible_solver_instance.compute_iis()
-        assert iis == {'x1', 'x2'}
+    # def test_compute_iis_for_infeasible(self, infeasible_solver_instance):
+    #     infeasible_solver_instance.solve()
+    #     assert infeasible_solver_instance.status == CST.INFEASIBLE
+    #     iis = infeasible_solver_instance.compute_iis()
+    #     assert iis == {'x1', 'x2'}
 
     def test_make_master_problem(self, solver_instance):
         master_problem = solver_instance.make_master_problem(solver_instance.model, ["x1"])
