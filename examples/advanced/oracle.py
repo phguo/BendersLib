@@ -18,8 +18,8 @@ Benders cuts in one step.
 
 from benderslib import CombinatorialOC, MasterProblem, NoGoodFC, Oracle, OracleBenders
 from benderslib.solvers import Gurobi
-from gurobipy import GRB, Model
 
+from gurobipy import GRB, Model, quicksum
 
 FACILITIES = {
     "north": {"capacity": 6, "open_cost": 4, "shipping_cost": 3},
@@ -36,7 +36,7 @@ def make_master_problem():
         for name in FACILITIES
     }
     model.setObjective(
-        sum(FACILITIES[name]["open_cost"] * var for name, var in open_facility.items()),
+        quicksum(FACILITIES[name]["open_cost"] * var for name, var in open_facility.items()),
         GRB.MINIMIZE,
     )
     model.update()
@@ -56,23 +56,22 @@ def solve_original_problem():
         name: model.addVar(lb=0, name=f"ship_{name}")
         for name in FACILITIES
     }
+
     model.addConstr(sum(shipment.values()) == DEMAND, name="demand")
     for name in FACILITIES:
         model.addConstr(
             shipment[name] <= FACILITIES[name]["capacity"] * open_facility[name],
             name=f"capacity_{name}",
         )
+
     model.setObjective(
-        sum(FACILITIES[name]["open_cost"] * open_facility[name] for name in FACILITIES)
-        + sum(FACILITIES[name]["shipping_cost"] * shipment[name] for name in FACILITIES),
+        quicksum(FACILITIES[name]["open_cost"] * open_facility[name] for name in FACILITIES)
+        + quicksum(FACILITIES[name]["shipping_cost"] * shipment[name] for name in FACILITIES),
         GRB.MINIMIZE,
     )
+
     model.optimize()
     return model
-
-
-original_model = solve_original_problem()
-print(f"Original problem objective: {original_model.ObjVal}")
 
 
 # %%
@@ -111,17 +110,8 @@ def evaluate_facilities(master_problem):
 
 
 # %%
-# Use the function-based oracle without Branch-and-check.
+# Define a class-based oracle.
 
-master_problem, complicating_vars = make_master_problem()
-function_benders = OracleBenders(master_problem, evaluate_facilities, complicating_vars)
-function_benders.params.use_bnc = False
-function_benders.solve()
-
-
-# %%
-# Use the same logic in a stateful oracle class. This form is useful when the
-# oracle needs to cache data or maintain information between iterations.
 
 class FacilityOracle(Oracle):
 
@@ -137,10 +127,16 @@ class FacilityOracle(Oracle):
 # %%
 # Solve with the class-based oracle and Branch-and-check.
 
+# original_model = solve_original_problem()
+
 master_problem, complicating_vars = make_master_problem()
-class_benders = OracleBenders(master_problem, FacilityOracle, complicating_vars)
-class_benders.params.use_bnc = True
-class_benders.solve()
+benders = OracleBenders(master_problem, FacilityOracle, complicating_vars)
+
+# Function-based oracle can also be used:
+# benders = OracleBenders(master_problem, evaluate_facilities, complicating_vars)
+
+benders.params.use_bnc = True
+benders.solve()
 
 # %%
 # .. seealso::
@@ -149,4 +145,4 @@ class_benders.solve()
 #    - Manual of :ref:`oracle mode <manual_oracle>`
 #    - This example uses the following classes: :class:`Oracle`, :class:`OracleBenders`
 #
-# .. tags:: benders: lbbd, benders: oracle, solver: gurobi, deterministic, custom: cut, custom: subproblem
+# .. tags:: benders: lbbd, benders: oracle, solver: gurobi, deterministic
