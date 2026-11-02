@@ -333,7 +333,6 @@ variable names to their values when ``sub_obj`` is provided.
       :doc:`benders: lbbd <../_tags/benders-lbbd>`
     - **Executable Examples** (oracle mode of logic-based Benders decomposition):
       :doc:`benders: oracle <../_tags/benders-oracle>`
-====
 
 Attributes & Methods
 -------------------------------------------
