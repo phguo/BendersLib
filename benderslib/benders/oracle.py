@@ -32,11 +32,6 @@ class _OracleSubProblem(LogicBasedSubProblem):
         result = self.oracle.evaluate()
         cuts, sub_obj, var_values = result
 
-        if not isinstance(cuts, list) or not all(isinstance(cut, Cut) for cut in cuts):
-            raise ValueError("Oracle cuts must be a list of Cut instances.")  # pragma: no cover
-        if not cuts and sub_obj is None:
-            raise ValueError("Oracle must return cuts or a subproblem objective value.")  # pragma: no cover
-
         self.cuts = cuts
         self.obj = sub_obj
         self.var_values = var_values
