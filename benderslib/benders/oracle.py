@@ -30,16 +30,7 @@ class _OracleSubProblem(LogicBasedSubProblem):
 
     def solve(self):
         result = self.oracle.evaluate()
-        if not isinstance(result, tuple) or len(result) != 3:
-            raise ValueError("Oracle must return (cuts, sub_obj, var_values).")  # pragma: no cover
-
         cuts, sub_obj, var_values = result
-        if not isinstance(cuts, list) or not all(isinstance(cut, Cut) for cut in cuts):
-            raise ValueError("Oracle cuts must be a list of Cut instances.")  # pragma: no cover
-        if sub_obj is not None and not isinstance(var_values, dict):
-            raise ValueError("Oracle var_values must be a dict when sub_obj is provided.")  # pragma: no cover
-        if not cuts and sub_obj is None:
-            raise ValueError("Oracle must return cuts or a subproblem objective value.")  # pragma: no cover
 
         self.cuts = cuts
         self.obj = sub_obj
@@ -55,7 +46,7 @@ class _OracleCutGenerator(CutGenerator):
 
 
 class OracleBenders(BendersSolver):
-    """An oracle-based implementation of :doc:`../tutorials/lbbd`.
+    """An :ref:`oracle-mode <manual_oracle>` implementation of :doc:`../tutorials/lbbd`.
 
     This is an additive alternative to :class:`LogicBasedBenders`. An oracle
     evaluates the current master solution and generates its cuts in one step.
@@ -71,6 +62,36 @@ class OracleBenders(BendersSolver):
         Names of the complicating variables.
     params : BendersParams, optional
         The Benders parameters.
+
+    Example
+    ----------
+
+    .. code-block:: python
+
+        from benderslib import Oracle, OracleBenders, MasterProblem
+        from benderslib.solvers import Gurobi
+
+        # Define master problem model
+        master_model = ...  # Define your master problem model here
+        mp = MasterProblem(Gurobi(master_model))
+
+        # Define a custom oracle
+        class MyOracle(Oracle):
+            def evaluate(self):
+                master_values = self.master_problem.get_var_values()
+                sub_obj = 2 * master_values['x']
+                var_values = {'y': master_values['x']}
+
+                # Add any valid Cut instances required by your logic.
+                cuts = []
+                return cuts, sub_obj, var_values
+
+        # Define complicating variables
+        complicating_vars = ['x']
+
+        # Initialize and solve
+        BD = OracleBenders(mp, MyOracle, complicating_vars)
+        BD.solve()
     """
 
     @classmethod
@@ -85,7 +106,7 @@ class OracleBenders(BendersSolver):
             params: BendersParams | None = None,
     ):
         params = params if params is not None else BendersParams()
-        oracle = self._initialize_oracle(oracle, master_problem, params)
+        oracle = self.__initialize_oracle(oracle, master_problem, params)
         sub_problem = _OracleSubProblem(complicating_vars, oracle, params)
 
         super().__init__(
@@ -96,11 +117,9 @@ class OracleBenders(BendersSolver):
             _OracleCutGenerator,
             params,
         )
-        self.oracle = oracle
-        """The oracle instance used to evaluate master solutions."""
 
     @staticmethod
-    def _initialize_oracle(oracle, master_problem, params):
+    def __initialize_oracle(oracle, master_problem, params):
         if inspect.isfunction(oracle):
             return _FuncWrapperOracle(master_problem, oracle, params)
         if inspect.isclass(oracle) and issubclass(oracle, Oracle):

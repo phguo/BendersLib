@@ -75,7 +75,7 @@ supported are not limited to the ones below.
      - :doc:`Example <_tags/custom-subproblem>`
    * - :ref:`Oracle Mode <manual_oracle>`
      - :class:`~benderslib.Oracle`, :class:`~benderslib.OracleBenders`
-     - :doc:`Example <examples/advanced/oracle>`
+     - :doc:`Example <_tags/benders-oracle>`
    * - :doc:`Callback Functions </manual/callbacks>`
      - :class:`~benderslib.CallbackBase`, :class:`~benderslib.BendersContext`
      - :doc:`Example <_tags/callback>`

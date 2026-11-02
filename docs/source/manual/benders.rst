@@ -9,7 +9,6 @@ Create a Benders Decomposition Instance
 For most Benders decomposition methods, you need to provide :ref:`a master problem <manual_master_create>`,
 :ref:`a subproblem <manual_sub_create>`, and a list of complicating variable names.
 BendersLib will then build a Benders decomposition framework to your problem.
-For the oracle-based LBBD interface, see :ref:`manual_oracle`.
 
 .. code-block:: python
 
@@ -330,9 +329,9 @@ variable names to their values when ``sub_obj`` is provided.
       :ref:`Custom Cut (Generator) <manual_custom_cut>` and :ref:`Custom Subproblem(s) <manual_custom_sub>`.
     - The class :class:`LogicBasedBenders` for logic-based Benders decomposition.
     - The classes :class:`Oracle` and :class:`OracleBenders` for oracle-based LBBD.
-    - **Executable Examples** (logic-based and oracle-based Benders decomposition):
-      :doc:`../examples/advanced/lbbd_sp`, :doc:`../examples/advanced/lbbd_lshaped`,
-      :doc:`../examples/benchmarks/lbbd_location`, and :doc:`../examples/advanced/oracle`.
+    - **Executable Examples**:
+      :doc:`benders: lbbd <../_tags/benders-lbbd>`,
+      :doc:`benders: oracle <../_tags/benders-oracle>`
 
 ====
 
