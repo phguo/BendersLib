@@ -75,7 +75,7 @@ class OracleBenders(BendersSolver):
         The Benders parameters.
 
     Example
-    -------
+    ----------
 
     .. code-block:: python
 
@@ -117,7 +117,7 @@ class OracleBenders(BendersSolver):
             params: BendersParams | None = None,
     ):
         params = params if params is not None else BendersParams()
-        oracle = self._initialize_oracle(oracle, master_problem, params)
+        oracle = self.__initialize_oracle(oracle, master_problem, params)
         sub_problem = _OracleSubProblem(complicating_vars, oracle, params)
 
         super().__init__(
@@ -128,11 +128,9 @@ class OracleBenders(BendersSolver):
             _OracleCutGenerator,
             params,
         )
-        self.oracle = oracle
-        """The oracle instance used to evaluate master solutions (see :class:`Oracle`)."""
 
     @staticmethod
-    def _initialize_oracle(oracle, master_problem, params):
+    def __initialize_oracle(oracle, master_problem, params):
         if inspect.isfunction(oracle):
             return _FuncWrapperOracle(master_problem, oracle, params)
         if inspect.isclass(oracle) and issubclass(oracle, Oracle):
