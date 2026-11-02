@@ -73,6 +73,36 @@ class OracleBenders(BendersSolver):
         Names of the complicating variables.
     params : BendersParams, optional
         The Benders parameters.
+
+    Example
+    -------
+
+    .. code-block:: python
+
+        from benderslib import Oracle, OracleBenders, MasterProblem
+        from benderslib.solvers import Gurobi
+
+        # Define master problem model
+        master_model = ...  # Define your master problem model here
+        mp = MasterProblem(Gurobi(master_model))
+
+        # Define a custom oracle
+        class MyOracle(Oracle):
+            def evaluate(self):
+                master_values = self.master_problem.get_var_values()
+                sub_obj = 2 * master_values['x']
+                var_values = {'y': master_values['x']}
+
+                # Add any valid Cut instances required by your logic.
+                cuts = []
+                return cuts, sub_obj, var_values
+
+        # Define complicating variables
+        complicating_vars = ['x']
+
+        # Initialize and solve
+        BD = OracleBenders(mp, MyOracle, complicating_vars)
+        BD.solve()
     """
 
     @classmethod

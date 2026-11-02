@@ -1200,6 +1200,23 @@ class Oracle(ABC):
 
     An oracle combines subproblem solving and cut generation. It receives the
     current :class:`MasterProblem` and returns ``(cuts, sub_obj, var_values)``.
+
+    Example
+    -------
+
+    .. code-block:: python
+
+        from benderslib import Oracle
+
+        class MyOracle(Oracle):
+            def evaluate(self):
+                master_values = self.master_problem.get_var_values()
+                sub_obj = 2 * master_values['x']
+                var_values = {'y': master_values['x']}
+
+                # Add any valid Cut instances required by your logic.
+                cuts = []
+                return cuts, sub_obj, var_values
     """
 
     def __init__(
