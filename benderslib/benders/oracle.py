@@ -30,16 +30,10 @@ class _OracleSubProblem(LogicBasedSubProblem):
 
     def solve(self):
         result = self.oracle.evaluate()
-
-        if not isinstance(result, tuple) or len(result) != 3:
-            raise ValueError("Oracle must return (cuts, sub_obj, var_values).")  # pragma: no cover
-
         cuts, sub_obj, var_values = result
 
         if not isinstance(cuts, list) or not all(isinstance(cut, Cut) for cut in cuts):
             raise ValueError("Oracle cuts must be a list of Cut instances.")  # pragma: no cover
-        if sub_obj is not None and not isinstance(var_values, dict):
-            raise ValueError("Oracle var_values must be a dict when sub_obj is provided.")  # pragma: no cover
         if not cuts and sub_obj is None:
             raise ValueError("Oracle must return cuts or a subproblem objective value.")  # pragma: no cover
 
