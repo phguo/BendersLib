@@ -57,7 +57,7 @@ class _OracleCutGenerator(CutGenerator):
 
 
 class OracleBenders(BendersSolver):
-    """An :ref:`oracle mode <manual_oracle>` implementation of :doc:`../tutorials/lbbd`.
+    """An :ref:`oracle-mode <manual_oracle>` implementation of :doc:`../tutorials/lbbd`.
 
     This is an additive alternative to :class:`LogicBasedBenders`. An oracle
     evaluates the current master solution and generates its cuts in one step.

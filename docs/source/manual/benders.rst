@@ -329,9 +329,8 @@ variable names to their values when ``sub_obj`` is provided.
       :ref:`Custom Cut (Generator) <manual_custom_cut>` and :ref:`Custom Subproblem(s) <manual_custom_sub>`.
     - The class :class:`LogicBasedBenders` for logic-based Benders decomposition.
     - The classes :class:`Oracle` and :class:`OracleBenders` for oracle-based LBBD.
-    - **Executable Examples** (logic-based Benders decomposition):
-      :doc:`benders: lbbd <../_tags/benders-lbbd>`
-    - **Executable Examples** (oracle mode of logic-based Benders decomposition):
+    - **Executable Examples**:
+      :doc:`benders: lbbd <../_tags/benders-lbbd>`,
       :doc:`benders: oracle <../_tags/benders-oracle>`
 
 ====
