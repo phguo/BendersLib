@@ -1,5 +1,5 @@
 # This workflow only validates documentation builds; Read the Docs builds and publishes the docs.
-name: Build Documentation
+name: Check Documentation
 
 on:
   push:
