@@ -30,10 +30,12 @@ class _OracleSubProblem(LogicBasedSubProblem):
 
     def solve(self):
         result = self.oracle.evaluate()
+
         if not isinstance(result, tuple) or len(result) != 3:
             raise ValueError("Oracle must return (cuts, sub_obj, var_values).")  # pragma: no cover
 
         cuts, sub_obj, var_values = result
+
         if not isinstance(cuts, list) or not all(isinstance(cut, Cut) for cut in cuts):
             raise ValueError("Oracle cuts must be a list of Cut instances.")  # pragma: no cover
         if sub_obj is not None and not isinstance(var_values, dict):
@@ -97,7 +99,7 @@ class OracleBenders(BendersSolver):
             params,
         )
         self.oracle = oracle
-        """The oracle instance used to evaluate master solutions."""
+        """The oracle instance used to evaluate master solutions (see :class:`Oracle`)."""
 
     @staticmethod
     def _initialize_oracle(oracle, master_problem, params):

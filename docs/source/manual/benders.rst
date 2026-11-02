@@ -9,7 +9,6 @@ Create a Benders Decomposition Instance
 For most Benders decomposition methods, you need to provide :ref:`a master problem <manual_master_create>`,
 :ref:`a subproblem <manual_sub_create>`, and a list of complicating variable names.
 BendersLib will then build a Benders decomposition framework to your problem.
-For the oracle-based LBBD interface, see :ref:`manual_oracle`.
 
 .. code-block:: python
 

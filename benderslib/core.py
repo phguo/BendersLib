@@ -1129,7 +1129,7 @@ class CutGenerator(ABC):
             params: BendersParams | None = None
     ):
         self.master_problem = master_problem
-        """The master problem instance."""
+        """The master problem instance (see :class:`MasterProblem`)."""
         self.sub_problem = sub_problem
         """The subproblem instance."""
         self.complicating_vars = master_problem.complicating_vars
@@ -1177,41 +1177,6 @@ class CutGenerator(ABC):
         return cuts
 
 
-class Oracle(ABC):
-    """The base class for an oracle in Logic-based Benders Decomposition.
-
-    An oracle combines subproblem evaluation and cut generation. It receives the
-    current :class:`MasterProblem` and returns ``(cuts, sub_obj, var_values)``.
-    ``sub_obj`` can be ``None`` when the current master solution is infeasible.
-    """
-
-    def __init__(
-            self,
-            master_problem: MasterProblem,
-            params: BendersParams | None = None
-    ):
-        self.master_problem = master_problem
-        """The master problem instance."""
-        self.params = params if params is not None else BendersParams()
-        """The Benders parameters."""
-
-    @abstractmethod
-    def evaluate(self) -> tuple[list[Cut], float | None, dict]:
-        """Evaluate the current master solution and return ``(cuts, sub_obj, var_values)``."""
-        ...
-
-
-class _FuncWrapperOracle(Oracle):
-    """A wrapper class to allow using a function as an oracle."""
-
-    def __init__(self, master_problem, func: Callable, params: BendersParams | None = None):
-        self._func = func
-        super().__init__(master_problem, params)
-
-    def evaluate(self):
-        return self._func(self.master_problem)
-
-
 class _FuncWrapperCut(CutGenerator):
     """A wrapper class to allow using a function as a cut generator."""
 
@@ -1228,6 +1193,50 @@ class _FuncWrapperCut(CutGenerator):
 
     def generate(self):
         return self._func(self.master_problem, self.sub_problem)
+
+
+class Oracle(ABC):
+    """The base class for an oracle in Logic-based Benders Decomposition.
+
+    An oracle combines subproblem solving and cut generation. It receives the
+    current :class:`MasterProblem` and returns ``(cuts, sub_obj, var_values)``.
+    """
+
+    def __init__(
+            self,
+            master_problem: MasterProblem,
+            params: BendersParams | None = None
+    ):
+        self.master_problem = master_problem
+        """The master problem instance (see :class:`MasterProblem`)."""
+        self.params = params if params is not None else BendersParams()
+        """The parameters that can be set by the user (see :class:`BendersParams`)."""
+
+    @abstractmethod
+    def evaluate(self) -> tuple[list[Cut], float | None, dict]:
+        """Evaluate the current master solution and return ``(cuts, sub_obj, var_values)``.
+
+        * ``cuts`` is a list of :class:`Cut` instances, which can be either
+          :class:`OptimalityCut` or :class:`FeasibilityCut`.
+          The types of cuts are used for statistical purposes.
+        * ``sub_obj`` is used to determine the status of the subproblem.
+          ``sub_obj`` can be ``None`` when the current master solution is infeasible;
+          if it is not ``None``, it is used to update the upper bound.
+        * ``var_values`` is a dictionary of variable values in the subproblem,
+          which can be used to save the final solution.
+        """
+        ...
+
+
+class _FuncWrapperOracle(Oracle):
+    """A wrapper class to allow using a function as an oracle."""
+
+    def __init__(self, master_problem, func: Callable, params: BendersParams | None = None):
+        self._func = func
+        super().__init__(master_problem, params)
+
+    def evaluate(self):
+        return self._func(self.master_problem)
 
 
 class BendersSolver:
@@ -1278,7 +1287,7 @@ class BendersSolver:
     def __init__(
             self,
             master_problem: MasterProblem,
-            sub_problem: SubProblem | SubProblems,
+            sub_problem: SubProblem | SubProblems | LogicBasedSubProblem,
             complicating_vars: list[str],
             optimality_cut=None,
             feasibility_cut=None,
