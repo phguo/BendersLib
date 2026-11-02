@@ -1196,7 +1196,7 @@ class _FuncWrapperCut(CutGenerator):
 
 
 class Oracle(ABC):
-    """The base class for an oracle in Logic-based Benders Decomposition.
+    """The base class for an oracle in Logic-based Benders Decomposition (:class:`OracleBenders`).
 
     An oracle combines subproblem solving and cut generation. It receives the
     current :class:`MasterProblem` and returns ``(cuts, sub_obj, var_values)``.

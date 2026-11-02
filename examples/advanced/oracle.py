@@ -3,7 +3,7 @@
 # Copyright (c) 2021-2026 Peng-Hui Guo <m@guo.ph>
 
 """
-Oracle Mode for Facility Location
+Oracle Mode
 ============================================
 
 .. currentmodule:: benderslib
@@ -146,7 +146,7 @@ class_benders.solve()
 # .. seealso::
 #
 #    - Tutorial of the Logic-based Benders Decomposition: :doc:`../../tutorials/lbbd`
-#    - Manual of Oracle mode: :ref:`Oracle mode <manual_oracle>`
+#    - Manual of :ref:`oracle mode <manual_oracle>`
 #    - This example uses the following classes: :class:`Oracle`, :class:`OracleBenders`
 #
-# .. tags:: benders: lbbd, solver: gurobi, deterministic, custom: cut, custom: subproblem
+# .. tags:: benders: lbbd, benders: oracle, solver: gurobi, deterministic, custom: cut, custom: subproblem
