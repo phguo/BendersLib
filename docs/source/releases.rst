@@ -39,7 +39,8 @@ Version 0.6.0 (Beta) - Forthcoming
     `#21 <https://github.com/phguo/BendersLib/pull/21>`_,
     `#22 <https://github.com/phguo/BendersLib/pull/22>`_,
     `#23 <https://github.com/phguo/BendersLib/pull/23>`_,
-    `#26 <https://github.com/phguo/BendersLib/pull/26>`_).
+    `#26 <https://github.com/phguo/BendersLib/pull/26>`_,
+    `#29 <https://github.com/phguo/BendersLib/pull/29>`_).
 -   [docs] Add a GitHub Actions check for documentation builds
     (`#28 <https://github.com/phguo/BendersLib/pull/28>`_).
 
