@@ -25,9 +25,9 @@ class _ScipConshdlr(Conshdlr):
         # We are only interested in integer feasible solutions.
         # getBestSol() gives us the best integer solution found so far.
 
-        sol = self.model.getBestSol()
-        if sol is None:
-            return {"result": SCIP_RESULT.DIDNOTRUN}
+        # sol = self.model.getBestSol()
+        # if sol is None:
+        #     return {"result": SCIP_RESULT.DIDNOTRUN}
 
         benders_result = self.solver._callback_handler(self.solver)
 
