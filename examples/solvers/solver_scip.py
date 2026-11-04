@@ -81,6 +81,7 @@ model.freeTransform()
 
 BD = AnnotatedBenders(model, solver=Scip, complicating_vars=master_vars, benders=CombinatorialBenders)
 BD.params.use_iis_cut = True
+BD.params.use_bnc = True
 BD.bnc_solve()
 
 # %%
