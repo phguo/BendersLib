@@ -22,6 +22,8 @@ Version 0.6.0 (Beta) - Forthcoming
 -   Add Oracle mode for combined custom subproblem solving and cut generation
     (`#24 <https://github.com/phguo/BendersLib/pull/24>`_,
     `#27 <https://github.com/phguo/BendersLib/pull/27>`_).
+-   [test] Add solution consistency tests
+    (`#30 <https://github.com/phguo/BendersLib/pull/30>`_).
 
 **Changed**
 
@@ -46,6 +48,10 @@ Version 0.6.0 (Beta) - Forthcoming
 
 **Fixed**
 
+-   Fix SCIP interface bugs in branch-and-check, IIS extraction, and equality constraint handling
+    (`#30 <https://github.com/phguo/BendersLib/pull/30>`_).
+-   Fix COPT reoptimization after an infeasible solve when variable bounds change
+    (`#30 <https://github.com/phguo/BendersLib/pull/30>`_).
 -   [test] Run CI tests on macOS to stabilize COPT solver testing
     (`#25 <https://github.com/phguo/BendersLib/pull/25>`_).
 

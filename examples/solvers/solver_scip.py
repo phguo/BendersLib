@@ -69,8 +69,8 @@ model.freeTransform()
 
 model, master_vars = make_original_problem()
 BD = AnnotatedBenders(model, solver=Scip, complicating_vars=master_vars, benders=ClassicalBenders)
+BD.params.use_bnc = True
 BD.solve()
-draw_curve(BD.result)
 
 # %%
 # Combinatorial Benders decomposition.
@@ -81,7 +81,8 @@ model.freeTransform()
 
 BD = AnnotatedBenders(model, solver=Scip, complicating_vars=master_vars, benders=CombinatorialBenders)
 BD.params.use_iis_cut = True
-BD.bnc_solve()
+# BD.params.use_bnc = True
+BD.solve()
 
 # %%
 #

@@ -20,28 +20,20 @@ class _ScipConshdlr(Conshdlr):
 
     def consenfolp(self, constraints, n_useful_conss, sol_infeasible):
         self.solver._callback_where = CST.INCUMBENT
-
-        # SCIP may call this with sol=None, which means the current LP solution.
-        # We are only interested in integer feasible solutions.
-        # getBestSol() gives us the best integer solution found so far.
-
-        sol = self.model.getBestSol()
-        if sol is None:
-            return {"result": SCIP_RESULT.DIDNOTRUN}
-
+        nconss = self.model.getNConss()
         benders_result = self.solver._callback_handler(self.solver)
 
         if benders_result == CST.TERMINATE:
             self.model.interruptSolve()
             return {"result": SCIP_RESULT.FEASIBLE}
 
-        return {"result": SCIP_RESULT.INFEASIBLE}
+        if self.model.getNConss() > nconss:
+            return {"result": SCIP_RESULT.CONSADDED}
+        else:
+            return {"result": SCIP_RESULT.FEASIBLE}
 
     def conslock(self, constraint, locktype, nlockspos, nlocksneg):
-        # Lock all master problem variables.
-        # DOC: https://www.scipopt.org/doc/html/CONS.php
-        for var in self.solver._vars_map.values():
-            self.model.addVarLocks(var, nlockspos + nlocksneg, nlockspos + nlocksneg)
+        pass
 
 
 class Scip(SolverBase):
@@ -195,7 +187,10 @@ class Scip(SolverBase):
         res = []
         self._sense = []
         for l, r in zip(lhs, rhs):
-            if l <= -self.__SCIP_VAR_UB:
+            if l == r:
+                res.append(r)
+                self._sense.append('=')
+            elif l <= -self.__SCIP_VAR_UB:
                 res.append(r)
                 self._sense.append('<=')
             elif r >= self.__SCIP_VAR_UB:
@@ -273,7 +268,7 @@ class Scip(SolverBase):
         self._update_status('SCIP', self.model.getStatus().lower())
 
     def _cb_get_obj(self):
-        obj = self.model.getObjVal()
+        obj = self.model.getSolObjVal(None)
         return obj
 
     def _cb_get_bound(self):
@@ -282,13 +277,18 @@ class Scip(SolverBase):
 
     def _cb_get_var_values(self, vars: list[str] | None = None) -> dict[str, float]:
         vars_to_get = vars or self._all_vars
-        sol = self.model.getBestSol()
+        sol = None  # consenfolp checks the current LP solution, not the incumbent.
 
         return {var: self.model.getSolVal(sol, self._vars_map[var]) for var in vars_to_get}
 
     def _cb_add_cut(self, cut) -> None:
-
         lhs = sum(coef * self._vars_map[var] for var, coef in zip(cut.vars, cut.coefs))
+
+        value = self.model.getSolVal(None, lhs)
+        if ((cut.sense == CST.EQ and self.model.isFeasEQ(value, cut.rhs)) or
+                (cut.sense == CST.LE and self.model.isFeasLE(value, cut.rhs)) or
+                (cut.sense == CST.GE and self.model.isFeasGE(value, cut.rhs))):
+            return
 
         if cut.sense == CST.EQ:
             self.model.addCons(lhs == cut.rhs)
@@ -306,10 +306,10 @@ class Scip(SolverBase):
 
         # Constraints
         for cons in iis_scip.getConss():
-            for var in self.model.getConsVars(cons):
+            for var in iis_scip.getConsVars(cons):
                 vars.add(var.name)
 
-        # Variables
+        # Variable Bounds
         for var in iis_scip.getVars():
             vars.add(var.name)
 
