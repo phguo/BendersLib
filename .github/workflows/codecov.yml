@@ -56,7 +56,7 @@ jobs:
           path: coverage-${{ matrix.python-version }}.xml
           retention-days: 1
 
-  upload-coverage:
+  upload:
     runs-on: ubuntu-latest
     needs: test
 
