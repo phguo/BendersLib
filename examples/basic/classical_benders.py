@@ -92,6 +92,7 @@ BD = ClassicalBenders.from_models(master_model, Gurobi, sub_model, Gurobi, compl
 # BD.params.use_bnc = True
 
 BD.solve()
+BD.save("benders_result.json")
 
 print(f"Benders Decomposition Obj: {BD.result.obj}")
 
