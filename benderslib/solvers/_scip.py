@@ -187,7 +187,10 @@ class Scip(SolverBase):
         res = []
         self._sense = []
         for l, r in zip(lhs, rhs):
-            if l <= -self.__SCIP_VAR_UB:
+            if l == r:
+                res.append(r)
+                self._sense.append('=')
+            elif l <= -self.__SCIP_VAR_UB:
                 res.append(r)
                 self._sense.append('<=')
             elif r >= self.__SCIP_VAR_UB:

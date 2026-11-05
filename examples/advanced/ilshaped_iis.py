@@ -173,12 +173,12 @@ L_IIS.solve()
 print(f"Sol. Time (IIS vs Naive): {L_IIS.result.runtime:.4f}, {L.result.runtime:.4f}")
 print(f"Num. Cuts (IIS vs Naive): {L_IIS.result.n_cuts}, {L.result.n_cuts}")
 
-plt.style.use('seaborn-v0_8')
-plt.figure(dpi=600)
-plt.bar(['IIS-based Cuts', 'Naive Cuts'], [L_IIS.result.n_cuts, L.result.n_cuts])
-plt.ylabel('Number of Feasibility Cuts Added')
-plt.title('Comparison of Feasibility Cuts Added')
-plt.show()
+# plt.style.use('seaborn-v0_8')
+# plt.figure(dpi=600)
+# plt.bar(['IIS-based Cuts', 'Naive Cuts'], [L_IIS.result.n_cuts, L.result.n_cuts])
+# plt.ylabel('Number of Feasibility Cuts Added')
+# plt.title('Comparison of Feasibility Cuts Added')
+# plt.show()
 
 # %%
 #

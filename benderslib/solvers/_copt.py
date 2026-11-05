@@ -214,6 +214,9 @@ class Copt(SolverBase):
         self.model.remove(con)
 
     def solve(self) -> None:
+        # COPT 8.0.4 can retain infeasibility after variable bounds change.
+        if self.status == CST.INFEASIBLE:
+            self.model.reset()
         self.model.solve()
         self._update_status('COPT', self.model.status)
 

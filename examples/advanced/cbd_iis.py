@@ -114,12 +114,12 @@ BD_.solve()
 print(f"Sol. Time (IIS vs Naive): {BD.result.runtime:.4f}, {BD_.result.runtime:.4f}")
 print(f"Num. Cuts (IIS vs Naive): {BD.result.n_cuts}, {BD_.result.n_cuts}")
 
-plt.style.use('seaborn-v0_8')
-plt.figure(dpi=600)
-plt.bar(['IIS-based Cuts', 'Naive Cuts'], [BD.result.n_cuts, BD_.result.n_cuts])
-plt.ylabel('Number of Benders Cuts Added')
-plt.title('Comparison of Benders Cuts Added')
-plt.show()
+# plt.style.use('seaborn-v0_8')
+# plt.figure(dpi=600)
+# plt.bar(['IIS-based Cuts', 'Naive Cuts'], [BD.result.n_cuts, BD_.result.n_cuts])
+# plt.ylabel('Number of Benders Cuts Added')
+# plt.title('Comparison of Benders Cuts Added')
+# plt.show()
 
 # %%
 #
