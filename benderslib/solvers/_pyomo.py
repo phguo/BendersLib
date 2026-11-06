@@ -47,7 +47,10 @@ class Pyomo(SolverBase):
         self.model = model
         self.status = CST.UNSOLVED
 
-        self._sense = CST.MIN if model.obj.sense == pyo.minimize else CST.MAX
+        objectives = list(model.component_data_objects(Objective, active=True))
+        if len(objectives) != 1:
+            raise BendersBackendError("Pyomo models must have exactly one active objective.")
+        self._sense = CST.MIN if objectives[0].sense == pyo.minimize else CST.MAX
         self._all_vars = [v.name for v in model.component_data_objects(Var)]
         self._bin_vars = [v.name for v in model.component_data_objects(Var) if v.is_binary()]
         self._int_vars = [v.name for v in model.component_data_objects(Var) if v.is_integer() and not v.is_binary()]
@@ -116,7 +119,7 @@ class Pyomo(SolverBase):
         obj = next(self.model.component_data_objects(Objective, active=True))
 
         for name, p in zip(estimators, prob):
-            var = Var(within=pyo.NonNegativeReals, initialize=lb)
+            var = Var(within=pyo.Reals, bounds=(lb, None))
             self.model.add_component(name, var)
             obj.expr += p * self.model.find_component(name)
 
@@ -168,14 +171,13 @@ class Pyomo(SolverBase):
         cons = self.model.component_data_objects(Constraint, active=True)
         rhs = []
         for c in cons:
-            if c.equality:
-                rhs.append(pyo.value(c.lower))
+            if c.equality or (c.has_lb() and not c.has_ub()):
+                bound = c.lower
             elif c.has_ub() and not c.has_lb():
-                rhs.append(pyo.value(c.upper))
-            elif c.has_lb() and not c.has_ub():
-                rhs.append(pyo.value(c.lower))
+                bound = c.upper
             else:
-                raise BendersBackendError(f"Constraint has both bounds ({c.lower, c.upper}). Cannot determine RHS.")
+                raise BendersBackendError(f"Constraint has both bounds ({c.lower}, {c.upper}). Cannot determine RHS.")
+            rhs.append(pyo.value(bound) - generate_standard_repn(c.body).constant)
         return rhs
 
     def get_dual_values(self) -> list[float]:
@@ -219,6 +221,8 @@ class Pyomo(SolverBase):
             self.solver_factory.add_constraint(cons)
 
     def remove_cut(self, cut_name: str) -> None:
+        if self.__is_persistent:
+            self.solver_factory.remove_constraint(self.model.find_component(cut_name))
         self.model.del_component(cut_name)
 
     def solve(self) -> None:
