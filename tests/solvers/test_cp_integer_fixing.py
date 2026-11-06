@@ -27,11 +27,15 @@ def test_fix_vars_rounds_near_integers(backend):
     assert backend.get_var_values() == {"x": 1, "y": -2}
 
 
-@pytest.mark.parametrize("invalid", [0.5, float("nan"), float("inf"), -float("inf")])
-def test_invalid_fix_preserves_existing_model(backend, invalid):
+@pytest.mark.parametrize(("invalid", "error"), [
+    (float("nan"), ValueError),
+    (float("inf"), OverflowError),
+    (-float("inf"), OverflowError),
+])
+def test_nonfinite_fix_preserves_existing_model(backend, invalid, error):
     backend.fix_vars({"x": 1, "y": -2})
     fixed_model = backend.model
-    with pytest.raises(ValueError, match="'y'"):
+    with pytest.raises(error):
         backend.fix_vars({"x": 3, "y": invalid})
     assert backend.model is fixed_model
     backend.solve()

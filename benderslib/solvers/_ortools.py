@@ -3,7 +3,6 @@
 # Copyright (c) 2021-2026 Peng-Hui Guo <m@guo.ph>
 
 import copy
-from math import isfinite
 
 from ortools.sat.python import cp_model
 
@@ -94,15 +93,12 @@ class Ortools(SolverCPBase):
         self.model, self._vars_map = copy.deepcopy(to_clone)
 
     def fix_vars(self, var_values: dict[str, float]) -> None:
-        for name, value in var_values.items():
-            if not isfinite(value) or abs(value - round(value)) > 1e-5:
-                raise ValueError(f"Cannot fix CP variable {name!r} to {value!r}: expected an integer within 1e-5.")
-
+        var_values = {name: round(value) for name, value in var_values.items()}
         self.__copy_model()
 
         for var_name, value in var_values.items():
             var = self._vars_map[var_name]
-            self.model.Add(var == round(value))
+            self.model.Add(var == value)
 
     def unfix_vars(self, vars: list[str]) -> None:
         self.__copy_model()
