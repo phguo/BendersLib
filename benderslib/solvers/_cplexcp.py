@@ -2,6 +2,8 @@
 # SPDX-License-Identifier: Apache-2.0
 # Copyright (c) 2021-2026 Peng-Hui Guo <m@guo.ph>
 
+from math import isfinite
+
 from ..consts import BendersConsts as CST
 from ._base import SolverCPBase
 from ..errors import BendersNotImplementedError
@@ -81,12 +83,15 @@ class CplexCP(SolverCPBase):
         self.model = self._original_model.clone()
 
     def fix_vars(self, var_values: dict[str, float]) -> None:
-        var_values = self._integer_fix_values(var_values)
+        for name, value in var_values.items():
+            if not isfinite(value) or abs(value - round(value)) > 1e-5:
+                raise ValueError(f"Cannot fix CP variable {name!r} to {value!r}: expected an integer within 1e-5.")
+
         self.__copy_model()
 
         for var_name, value in var_values.items():
             var = self._vars_map[var_name]
-            self.model.add((var == value).set_name(f'__fix_{var_name}'))
+            self.model.add((var == round(value)).set_name(f'__fix_{var_name}'))
 
             self._cons_vars[f'__fix_{var_name}'] = [var_name]
 
