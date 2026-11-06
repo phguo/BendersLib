@@ -81,10 +81,10 @@ class CplexCP(SolverCPBase):
         self.model = self._original_model.clone()
 
     def fix_vars(self, var_values: dict[str, float]) -> None:
-        # CP Optimizer supports floating-point expressions, but the variables fixed here
-        # have integer domains. The master solver can return 0.999999999 for a decision of 1.
-        # Round here so the fixing constraint is an integer equality x == k. Python round()
-        # returns the nearest int (ties to even) and raises on NaN or infinity before cloning.
+        # CP Optimizer accepts float expressions, but x == 0.999999999 is infeasible
+        # for an integer x. Round master values to the nearest int before fixing them
+        # (e.g. 0.999999999 -> 1). Python round() breaks ties toward even and raises
+        # on NaN or infinity before cloning the model.
         var_values = {name: round(value) for name, value in var_values.items()}
         self.__copy_model()
 
