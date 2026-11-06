@@ -1539,18 +1539,7 @@ class BendersSolver:
         _new_ub_found = self.result.ub < self.result.obj
         if _new_ub_found:
             self.result.obj = self.result.ub
-            master_values = {
-                name: value for name, value in self.master_problem.get_var_values().items()
-                if name not in estimator_vals
-            }
-            sub_values = self.sub_problem.get_var_values()
-            if isinstance(self.sub_problem, SubProblems):
-                self.result.solution = {
-                    scenario: {**master_values, **values}
-                    for scenario, values in sub_values.items()
-                }
-            else:
-                self.result.solution = {**master_values, **sub_values}
+            self.result.solution = self.sub_problem.get_var_values()
 
         # ------ Update Gap ------
 
@@ -1740,7 +1729,7 @@ class BendersSolver:
         if self.__trigger_callbacks_and_terminate(EVENTS.ON_ITERATION_END): return CST.TERMINATE
 
     def bnc_solve(self):
-        """Solve the problem using Branch-and-check method. Create a new instance for each solve.
+        """Solve the problem using Branch-and-check method.
 
         :ref:`branch-and-check <enhance_branch_and_check>`, or branch-and-Benders-cut, is a
         modern implementation of the Benders decomposition
