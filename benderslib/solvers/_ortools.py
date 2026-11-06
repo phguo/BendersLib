@@ -93,8 +93,8 @@ class Ortools(SolverCPBase):
         self.model, self._vars_map = copy.deepcopy(to_clone)
 
     def fix_vars(self, var_values: dict[str, float]) -> None:
+        var_values = {name: round(value) for name, value in var_values.items()}
         self.__copy_model()
-        var_values = {n: int(v) for n, v in var_values.items()}
 
         for var_name, value in var_values.items():
             var = self._vars_map[var_name]
