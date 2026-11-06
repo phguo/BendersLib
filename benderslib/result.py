@@ -54,12 +54,12 @@ class BendersResult:
     """Number of feasibility cuts added."""
     n_cuts: int = 0
     """Total number of optimality cuts and feasibility cuts added."""
-    status = CST.UNSOLVED
-    """Final status of the Benders decomposition process, see :class:`BendersConsts` for possible values."""
 
     # Values of decision variables in the best solution
     solution: dict = field(default_factory=dict)
-    """Dictionary of variable names to their values in the best solution found."""
+    """Best solution as a variable dictionary, or a dictionary of solutions by scenario index."""
+    status: str = CST.UNSOLVED
+    """Final status of the Benders decomposition process, see :class:`BendersConsts` for possible values."""
 
     def save(self, filename: str) -> None:
         """Save the result to a JSON file.

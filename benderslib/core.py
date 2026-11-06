@@ -17,7 +17,7 @@ from .solvers import SolverBase
 from .logger import BendersLogger
 from .callback import BendersContext, CallbackBase, _CallbackEvents as EVENTS, _CallbackManager
 from .utils import normalize_cut
-from .errors import UnexpectedMasterStatusError, UnexpectedSubStatusError, UnsupportedCutError
+from .errors import BendersSolverError, UnexpectedMasterStatusError, UnexpectedSubStatusError, UnsupportedCutError
 
 
 class ProblemBase:
@@ -1348,6 +1348,7 @@ class BendersSolver:
         # Private attributes
         self.__logger = BendersLogger(self)
         """An instance of :class:`BendersLogger` for handling logging."""
+        self.__solve_started = False
         self.__prob = self.sub_problem.prob if isinstance(self.sub_problem, SubProblems) else None
 
         # Callbacks
@@ -1538,7 +1539,18 @@ class BendersSolver:
         _new_ub_found = self.result.ub < self.result.obj
         if _new_ub_found:
             self.result.obj = self.result.ub
-            self.result.solution = self.sub_problem.get_var_values()
+            master_values = {
+                name: value for name, value in self.master_problem.get_var_values().items()
+                if name not in estimator_vals
+            }
+            sub_values = self.sub_problem.get_var_values()
+            if isinstance(self.sub_problem, SubProblems):
+                self.result.solution = {
+                    scenario: {**master_values, **values}
+                    for scenario, values in sub_values.items()
+                }
+            else:
+                self.result.solution = {**master_values, **sub_values}
 
         # ------ Update Gap ------
 
@@ -1588,6 +1600,10 @@ class BendersSolver:
         return False
 
     def __preprocess(self):
+        if self.__solve_started:
+            raise BendersSolverError("Create a new BendersSolver instance to solve again.")
+        self.__solve_started = True
+
         # Add estimators to the master problem
         if isinstance(self.sub_problem, SubProblem) or not self.params.multi_opti_cut:
             # Deterministic problem, or stochastic problem with a single estimator
@@ -1724,7 +1740,7 @@ class BendersSolver:
         if self.__trigger_callbacks_and_terminate(EVENTS.ON_ITERATION_END): return CST.TERMINATE
 
     def bnc_solve(self):
-        """Solve the problem using Branch-and-check method.
+        """Solve the problem using Branch-and-check method. Create a new instance for each solve.
 
         :ref:`branch-and-check <enhance_branch_and_check>`, or branch-and-Benders-cut, is a
         modern implementation of the Benders decomposition
@@ -1784,8 +1800,9 @@ class BendersSolver:
         """
 
         # Initialize
-        self.__time_start = time.perf_counter()
+        time_start = time.perf_counter()
         self.__preprocess()
+        self.__time_start = time_start
         if self.__trigger_callbacks_and_terminate(EVENTS.ON_MASTER_BUILD): return
         if self.__trigger_callbacks_and_terminate(EVENTS.ON_SUB_BUILD): return
         if self.__trigger_callbacks_and_terminate(EVENTS.ON_BENDERS_START): return
