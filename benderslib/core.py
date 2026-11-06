@@ -470,15 +470,11 @@ class MasterProblem(ProblemBase):
 
                 problem.remove_cut('BendersOC_1')
         """
-        # Remove from MasterProblem
-        # Set.discard will not raise KeyError if the cut does not exist, unlike Set.remove
-        self.optimality_cuts.discard(self.cuts[cut_name])
-        self.feasibility_cuts.discard(self.cuts[cut_name])
-        # Dict.pop will raise KeyError if the cut does not exist
-        self.cuts.pop(cut_name)
-
-        # Remove from the solver model
+        cut = self.cuts[cut_name]
         self.solver.remove_cut(cut_name)
+        self.optimality_cuts.discard(cut)
+        self.feasibility_cuts.discard(cut)
+        del self.cuts[cut_name]
 
 
 class SubProblem(ProblemBase):

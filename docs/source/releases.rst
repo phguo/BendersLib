@@ -45,9 +45,13 @@ Version 0.6.0 (Beta) - Forthcoming
     `#29 <https://github.com/phguo/BendersLib/pull/29>`_).
 -   [docs] Add a GitHub Actions check for documentation builds
     (`#28 <https://github.com/phguo/BendersLib/pull/28>`_).
+-   [ci] Update the GitHub Actions runner from macOS 14 to macOS 15
+    (`#34 <https://github.com/phguo/BendersLib/pull/34>`_).
 
 **Fixed**
 
+-   Correct Pyomo constraint offsets, estimator bounds, persistent cut removal, and active objective detection
+    (`#34 <https://github.com/phguo/BendersLib/pull/34>`_).
 -   Fix SCIP interface bugs in branch-and-check, IIS extraction, and equality constraint handling
     (`#30 <https://github.com/phguo/BendersLib/pull/30>`_).
 -   Fix COPT reoptimization after an infeasible solve when variable bounds change
