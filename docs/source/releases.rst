@@ -60,6 +60,9 @@ Version 0.6.0 (Beta) - Forthcoming
     (`#30 <https://github.com/phguo/BendersLib/pull/30>`_).
 -   [test] Run CI tests on macOS to stabilize COPT solver testing
     (`#25 <https://github.com/phguo/BendersLib/pull/25>`_).
+-   Save the final solve status in JSON results and reject repeated calls to
+    ``solve()`` or ``bnc_solve()`` on the same ``BendersSolver`` instance
+    (`#35 <https://github.com/phguo/BendersLib/pull/35>`_).
 
 Version 0.5.1 (Beta) - 2026-04-29
 -------------------------------------
