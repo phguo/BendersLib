@@ -93,10 +93,6 @@ class Ortools(SolverCPBase):
         self.model, self._vars_map = copy.deepcopy(to_clone)
 
     def fix_vars(self, var_values: dict[str, float]) -> None:
-        # CP-SAT fixes an integer variable with an integer equality x == k.
-        # The master solver can return integer decisions as floats, e.g. 0.999999999 for 1.
-        # Round here before building the equality. Python round() returns the nearest int
-        # (ties to even) and raises on NaN or infinity before we copy the model.
         var_values = {name: round(value) for name, value in var_values.items()}
         self.__copy_model()
 
