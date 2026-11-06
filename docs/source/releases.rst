@@ -27,7 +27,6 @@ Version 0.6.0 (Beta) - Forthcoming
 
 **Changed**
 
--   [ci] Update the GitHub Actions runner from macOS 14 to macOS 15.
 -   Remove ``PyYAML>=6.0.0`` dependency by replacing ``config.yaml`` with ``config.py``
     (`#9 <https://github.com/phguo/BendersLib/pull/9>`_).
 -   Bump ``sphinx>=8.2.3`` dependency to ``sphinx>=9.0.0``
@@ -46,6 +45,8 @@ Version 0.6.0 (Beta) - Forthcoming
     `#29 <https://github.com/phguo/BendersLib/pull/29>`_).
 -   [docs] Add a GitHub Actions check for documentation builds
     (`#28 <https://github.com/phguo/BendersLib/pull/28>`_).
+-   [ci] Update the GitHub Actions runner from macOS 14 to macOS 15
+    (`#34 <https://github.com/phguo/BendersLib/pull/34>`_).
 
 **Fixed**
 
