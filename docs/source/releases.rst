@@ -24,6 +24,8 @@ Version 0.6.0 (Beta) - Forthcoming
     `#27 <https://github.com/phguo/BendersLib/pull/27>`_).
 -   [test] Add solution consistency tests
     (`#30 <https://github.com/phguo/BendersLib/pull/30>`_).
+-   [ci] Add a GitHub Actions check for documentation builds
+    (`#28 <https://github.com/phguo/BendersLib/pull/28>`_).
 
 **Changed**
 
@@ -43,10 +45,10 @@ Version 0.6.0 (Beta) - Forthcoming
     `#23 <https://github.com/phguo/BendersLib/pull/23>`_,
     `#26 <https://github.com/phguo/BendersLib/pull/26>`_,
     `#29 <https://github.com/phguo/BendersLib/pull/29>`_).
--   [docs] Add a GitHub Actions check for documentation builds
-    (`#28 <https://github.com/phguo/BendersLib/pull/28>`_).
 -   [ci] Update the GitHub Actions runner from macOS 14 to macOS 15
     (`#34 <https://github.com/phguo/BendersLib/pull/34>`_).
+-   [test] Exclude ``raise`` statements from coverage reports
+    (`#36 <https://github.com/phguo/BendersLib/pull/36>`_).
 
 **Fixed**
 
@@ -58,11 +60,11 @@ Version 0.6.0 (Beta) - Forthcoming
     (`#33 <https://github.com/phguo/BendersLib/pull/33>`_).
 -   Fix COPT reoptimization after an infeasible solve when variable bounds change
     (`#30 <https://github.com/phguo/BendersLib/pull/30>`_).
--   [test] Run CI tests on macOS to stabilize COPT solver testing
-    (`#25 <https://github.com/phguo/BendersLib/pull/25>`_).
 -   Save the final solve status in JSON results and reject repeated calls to
     ``solve()`` or ``bnc_solve()`` on the same ``BendersSolver`` instance
     (`#35 <https://github.com/phguo/BendersLib/pull/35>`_).
+-   [test] Run CI tests on macOS to stabilize COPT solver testing
+    (`#25 <https://github.com/phguo/BendersLib/pull/25>`_).
 
 Version 0.5.1 (Beta) - 2026-04-29
 -------------------------------------

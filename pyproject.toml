@@ -49,6 +49,9 @@ package-data = { "benderslib" = [] }
 [tool.coverage.run]
 source = ["benderslib"]
 
+[tool.coverage.report]
+exclude_also = ['^[ \t]*raise\b']
+
 [project.optional-dependencies]
 plot = ["matplotlib>=3.10.5"]
 doc = [
