@@ -4,6 +4,7 @@
 
 from abc import ABC, abstractmethod
 from copy import deepcopy
+from math import isfinite
 
 from ..consts import BendersConsts as CST
 from ..config import config as solver_config
@@ -456,6 +457,15 @@ class SolverCPBase(SolverBase):
 
     def __init__(self, model, solver_options: dict = None) -> None:
         super().__init__(model, solver_options)
+
+    @staticmethod
+    def _integer_fix_values(var_values: dict[str, float]) -> dict[str, int]:
+        rounded = {}
+        for name, value in var_values.items():
+            if not isfinite(value) or abs(value - round(value)) > 1e-5:
+                raise ValueError(f"Cannot fix CP variable {name!r} to {value!r}: expected an integer within 1e-5.")
+            rounded[name] = round(value)
+        return rounded
 
     # Below are functions required when using this solver as a master problem solver.
     # Using CP solver for master problem is not common, so these functions are left unimplemented.

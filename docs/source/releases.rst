@@ -50,6 +50,7 @@ Version 0.6.0 (Beta) - Forthcoming
 
 -   Fix SCIP interface bugs in branch-and-check, IIS extraction, and equality constraint handling
     (`#30 <https://github.com/phguo/BendersLib/pull/30>`_).
+-   Validate and round integer values when fixing CP subproblem variables.
 -   Fix COPT reoptimization after an infeasible solve when variable bounds change
     (`#30 <https://github.com/phguo/BendersLib/pull/30>`_).
 -   [test] Run CI tests on macOS to stabilize COPT solver testing

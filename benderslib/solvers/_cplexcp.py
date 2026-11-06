@@ -81,8 +81,8 @@ class CplexCP(SolverCPBase):
         self.model = self._original_model.clone()
 
     def fix_vars(self, var_values: dict[str, float]) -> None:
+        var_values = self._integer_fix_values(var_values)
         self.__copy_model()
-        var_values = {n: int(v) for n, v in var_values.items()}
 
         for var_name, value in var_values.items():
             var = self._vars_map[var_name]
