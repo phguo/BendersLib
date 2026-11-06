@@ -81,6 +81,7 @@ class CplexCP(SolverCPBase):
         self.model = self._original_model.clone()
 
     def fix_vars(self, var_values: dict[str, float]) -> None:
+        # Integer master solutions may have small floating-point errors.
         var_values = {name: round(value) for name, value in var_values.items()}
         self.__copy_model()
 
