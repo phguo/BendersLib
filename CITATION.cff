@@ -14,8 +14,8 @@ authors:
 identifiers:
   - type: url
     value: 'https://github.com/phguo/BendersLib'
-version: 0.5.1
-date-released: 2026-4-17
+version: 0.6.0
+date-released: 2026-11-08
 repository-code: 'https://github.com/phguo/BendersLib'
 url: 'https://benders.dev'
 license: Apache-2.0

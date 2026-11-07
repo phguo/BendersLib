@@ -18,7 +18,7 @@ today_year = __import__('datetime').datetime.now().year
 
 project = 'BendersLib'
 author = 'Peng-Hui Guo'
-release = '0.5.1'
+release = '0.6.0'
 copyright = f'2021-{today_year} {author}'
 html_last_updated_fmt = '%Y-%m-%d'
 
