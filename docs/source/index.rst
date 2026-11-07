@@ -167,7 +167,7 @@ The output will be similar to the following, showing the Benders decomposition p
 .. code-block:: console
 
     ====================================================================================
-    BendersLib (v0.5.1, Apache-2.0, https://benders.dev) (C) 2021-2026 Peng-Hui Guo
+    BendersLib (v0.6.0, Apache-2.0, https://benders.dev) (C) 2021-2026 Peng-Hui Guo
     ------------------------------------------------------------------------------------
     Benders Decomposition:
      - Method:                  ClassicalBenders

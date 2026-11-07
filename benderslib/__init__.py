@@ -2,7 +2,7 @@
 # SPDX-License-Identifier: Apache-2.0
 # Copyright (c) 2021-2026 Peng-Hui Guo <m@guo.ph>
 
-__version__ = "0.5.1"
+__version__ = "0.6.0"
 __author__ = "Peng-Hui Guo"
 __email__ = "m@guo.ph"
 __license__ = "Apache-2.0"

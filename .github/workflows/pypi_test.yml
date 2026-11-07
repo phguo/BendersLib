@@ -1,0 +1,135 @@
+name: TestPyPI Preflight
+
+on:
+  push:
+    branches: ['release/**']
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    outputs:
+      version: ${{ steps.version.outputs.version }}
+    steps:
+      - uses: actions/checkout@v6
+      - uses: actions/setup-python@v6
+        with:
+          python-version: '3.12'
+
+      - name: Set preflight version in the CI working copy
+        id: version
+        run: |
+          python - <<'PY'
+          import os
+          import re
+          import tomllib
+          from pathlib import Path
+
+          project = Path('pyproject.toml')
+          base = tomllib.loads(project.read_text())['project']['version']
+          # Include the attempt so reruns do not overwrite an existing upload.
+          version = f"{base}.dev{os.environ['GITHUB_RUN_ID']}{int(os.environ['GITHUB_RUN_ATTEMPT']):04d}"
+          for path, pattern in (
+              (project, r'^version = "[^"]+"$'),
+              (Path('benderslib/__init__.py'), r'^__version__ = "[^"]+"$'),
+          ):
+              text, count = re.subn(pattern, lambda m: m[0].split('=')[0] + f'= "{version}"', path.read_text(), flags=re.MULTILINE)
+              assert count == 1, f'Expected one version declaration in {path}'
+              path.write_text(text)
+          with open(os.environ['GITHUB_OUTPUT'], 'a') as output:
+              output.write(f'version={version}\n')
+          with open(os.environ['GITHUB_STEP_SUMMARY'], 'a') as summary:
+              summary.write(f"Preflight version: {version}\n\nCommit: {os.environ['GITHUB_SHA']}\n")
+          PY
+
+      - name: Build and check distributions
+        run: |
+          python -m pip install build twine
+          python -m build
+          python -m twine check dist/*
+
+      - uses: actions/upload-artifact@v7
+        with:
+          name: testpypi-dists
+          path: dist/
+          if-no-files-found: error
+
+  publish:
+    needs: build
+    runs-on: ubuntu-latest
+    permissions:
+      id-token: write
+    environment:
+      name: testpypi
+      url: https://test.pypi.org/project/benderslib/${{ needs.build.outputs.version }}/
+    steps:
+      - uses: actions/download-artifact@v8
+        with:
+          name: testpypi-dists
+          path: dist/
+      - name: Publish to TestPyPI
+        uses: pypa/gh-action-pypi-publish@release/v1
+        with:
+          repository-url: https://test.pypi.org/legacy/
+          packages-dir: dist/
+
+  test:
+    needs: [build, publish]
+    runs-on: macos-15
+    strategy:
+      fail-fast: false
+      matrix:
+        python-version: ['3.10', '3.11', '3.12', '3.13', '3.14']
+    env:
+      PREFLIGHT_VERSION: ${{ needs.build.outputs.version }}
+    steps:
+      - uses: actions/checkout@v6
+      - uses: actions/setup-python@v6
+        with:
+          python-version: ${{ matrix.python-version }}
+
+      - name: Download the exact wheel from TestPyPI
+        shell: bash
+        run: |
+          python -m pip install --upgrade pip
+          for attempt in {1..6}; do
+            if python -m pip download --index-url https://test.pypi.org/simple/ --no-deps --only-binary=:all: --no-cache-dir --dest "$RUNNER_TEMP/wheels" "benderslib==$PREFLIGHT_VERSION"; then
+              break
+            fi
+            if [ "$attempt" -eq 6 ]; then exit 1; fi
+            sleep 20
+          done
+
+      - name: Install the downloaded wheel and dependencies from PyPI
+        shell: bash
+        run: |
+          wheels=("$RUNNER_TEMP"/wheels/*.whl)
+          python -m pip install --index-url https://pypi.org/simple/ "${wheels[0]}[plot,all-solvers,test]"
+          python -m pip check
+
+      - name: Prepare tests outside the source checkout
+        shell: bash
+        run: |
+          mkdir -p "$RUNNER_TEMP/installed-tests"
+          cp -R tests examples "$RUNNER_TEMP/installed-tests/"
+
+      - name: Verify the installed package and run all tests
+        working-directory: ${{ runner.temp }}/installed-tests
+        run: |
+          python - <<'PY'
+          import os
+          import sysconfig
+          from importlib.metadata import version
+          from pathlib import Path
+          import benderslib
+
+          expected = os.environ['PREFLIGHT_VERSION']
+          assert version('benderslib') == benderslib.__version__ == expected
+          location = Path(benderslib.__file__).resolve()
+          assert location.is_relative_to(Path(sysconfig.get_path('purelib')).resolve()), location
+          print(f'Testing {expected} from {location}')
+          PY
+          python -m pytest -ra tests

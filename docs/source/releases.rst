@@ -12,16 +12,19 @@ Release Notes
     - **Major version zero (0.y.z) is for beta releases. Anything may change at any time.
       The public API should not be considered stable till version 1.y.z.**
 
-Version 0.6.0 (Beta) - Forthcoming
+Version 0.6.0 (Beta) - 2026-11-08
 ------------------------------------
+
+This release introduces Oracle Mode, which combines custom subproblem solving
+and cut generation in a single interface.
 
 **Added**
 
--   Add COPT benchmarks
-    (`#15 <https://github.com/phguo/BendersLib/pull/15>`_).
--   Add Oracle mode for combined custom subproblem solving and cut generation
+-   Add Oracle Mode for combined custom subproblem solving and cut generation
     (`#24 <https://github.com/phguo/BendersLib/pull/24>`_,
     `#27 <https://github.com/phguo/BendersLib/pull/27>`_).
+-   Add COPT benchmarks
+    (`#15 <https://github.com/phguo/BendersLib/pull/15>`_).
 -   [test] Add solution consistency tests
     (`#30 <https://github.com/phguo/BendersLib/pull/30>`_).
 -   [ci] Add a GitHub Actions check for documentation builds
@@ -29,13 +32,17 @@ Version 0.6.0 (Beta) - Forthcoming
 
 **Changed**
 
--   Remove ``PyYAML>=6.0.0`` dependency by replacing ``config.yaml`` with ``config.py``
+-   Remove the PyYAML dependency
     (`#9 <https://github.com/phguo/BendersLib/pull/9>`_).
--   Bump ``sphinx>=8.2.3`` dependency to ``sphinx>=9.0.0``
+-   Require Sphinx 9.0.0 or later
     (`#17 <https://github.com/phguo/BendersLib/pull/17>`_).
--   Update ``coptpy`` Python version requirement from ``"coptpy>=8.0.2; python_version<='3.13'"`` to
-    ``"coptpy>=8.0.2; python_version<='3.14'"``
+-   Extend COPT support to Python 3.14
     (`#19 <https://github.com/phguo/BendersLib/pull/19>`_).
+-   [ci] Run tests on macOS 15 to stabilize COPT testing
+    (`#25 <https://github.com/phguo/BendersLib/pull/25>`_,
+    `#34 <https://github.com/phguo/BendersLib/pull/34>`_).
+-   [test] Exclude raise statements from coverage reports
+    (`#36 <https://github.com/phguo/BendersLib/pull/36>`_).
 -   [docs] Improve documentation
     (`#11 <https://github.com/phguo/BendersLib/pull/11>`_,
     `#16 <https://github.com/phguo/BendersLib/pull/16>`_,
@@ -45,26 +52,19 @@ Version 0.6.0 (Beta) - Forthcoming
     `#23 <https://github.com/phguo/BendersLib/pull/23>`_,
     `#26 <https://github.com/phguo/BendersLib/pull/26>`_,
     `#29 <https://github.com/phguo/BendersLib/pull/29>`_).
--   [ci] Update the GitHub Actions runner from macOS 14 to macOS 15
-    (`#34 <https://github.com/phguo/BendersLib/pull/34>`_).
--   [test] Exclude ``raise`` statements from coverage reports
-    (`#36 <https://github.com/phguo/BendersLib/pull/36>`_).
 
 **Fixed**
 
--   Correct Pyomo constraint offsets, estimator bounds, persistent cut removal, and active objective detection
+-   Fix Pyomo constraint offsets, estimator bounds, cut removal, and active objective detection
     (`#34 <https://github.com/phguo/BendersLib/pull/34>`_).
 -   Fix SCIP interface bugs in branch-and-check, IIS extraction, and equality constraint handling
     (`#30 <https://github.com/phguo/BendersLib/pull/30>`_).
--   Round fixed values to the nearest integer in CP subproblems
+-   Fix integer rounding when fixing values in CP subproblems
     (`#33 <https://github.com/phguo/BendersLib/pull/33>`_).
 -   Fix COPT reoptimization after an infeasible solve when variable bounds change
     (`#30 <https://github.com/phguo/BendersLib/pull/30>`_).
--   Save the final solve status in JSON results and reject repeated calls to
-    ``solve()`` or ``bnc_solve()`` on the same ``BendersSolver`` instance
+-   Fix missing final solve status in JSON results and reject repeated solves on the same solver instance
     (`#35 <https://github.com/phguo/BendersLib/pull/35>`_).
--   [test] Run CI tests on macOS to stabilize COPT solver testing
-    (`#25 <https://github.com/phguo/BendersLib/pull/25>`_).
 
 Version 0.5.1 (Beta) - 2026-04-29
 -------------------------------------
