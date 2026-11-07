@@ -12,6 +12,14 @@ Release Notes
     - **Major version zero (0.y.z) is for beta releases. Anything may change at any time.
       The public API should not be considered stable till version 1.y.z.**
 
+Version #.#.# (Beta) - Forthcoming
+------------------------------------
+
+**Added**
+
+-   [ci] Add release wheel tests before publishing to PyPI
+    (`#38 <https://github.com/phguo/BendersLib/pull/38>`_).
+
 Version 0.6.0 (Beta) - 2026-11-08
 ------------------------------------
 

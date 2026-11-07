@@ -38,10 +38,84 @@ jobs:
           name: release-dists
           path: dist/
 
+  release-test:
+    runs-on: macos-15
+    needs: release-build
+    strategy:
+      fail-fast: false
+      matrix:
+        python-version: ['3.10', '3.11', '3.12', '3.13', '3.14']
+
+    steps:
+      - uses: actions/checkout@v6
+
+      - uses: actions/setup-python@v6
+        with:
+          python-version: ${{ matrix.python-version }}
+
+      - name: Retrieve release distributions
+        uses: actions/download-artifact@v8
+        with:
+          name: release-dists
+          path: dist/
+
+      - name: Install the release wheel and dependencies
+        run: |
+          python -m pip install --upgrade pip
+          python - <<'PY'
+          import os
+          import subprocess
+          import sys
+          from email.parser import BytesParser
+          from pathlib import Path
+          from zipfile import ZipFile
+
+          wheels = list(Path('dist').glob('*.whl'))
+          assert len(wheels) == 1, f'Expected one release wheel, found {len(wheels)}'
+          wheel = wheels[0].resolve()
+          with ZipFile(wheel) as archive:
+              metadata_files = [name for name in archive.namelist() if name.endswith('.dist-info/METADATA')]
+              assert len(metadata_files) == 1, 'Expected one wheel METADATA file'
+              metadata = BytesParser().parsebytes(archive.read(metadata_files[0]))
+          assert metadata['Name'] == 'benderslib', metadata['Name']
+          assert metadata['Version'], 'Missing release version'
+          with open(os.environ['GITHUB_ENV'], 'a') as output:
+              output.write(f"RELEASE_VERSION={metadata['Version']}\n")
+          subprocess.run([
+              sys.executable, '-m', 'pip', 'install', '--index-url', 'https://pypi.org/simple/',
+              f'{wheel}[plot,all-solvers,test]',
+          ], check=True)
+          PY
+          python -m pip check
+
+      - name: Prepare tests outside the source checkout
+        run: |
+          mkdir -p "$RUNNER_TEMP/installed-tests"
+          cp -R tests examples "$RUNNER_TEMP/installed-tests/"
+
+      - name: Verify the installed release and run all tests
+        working-directory: ${{ runner.temp }}/installed-tests
+        run: |
+          python - <<'PY'
+          import os
+          import sysconfig
+          from importlib.metadata import version
+          from pathlib import Path
+          import benderslib
+
+          expected = os.environ['RELEASE_VERSION']
+          assert version('benderslib') == benderslib.__version__ == expected
+          location = Path(benderslib.__file__).resolve()
+          assert location.is_relative_to(Path(sysconfig.get_path('purelib')).resolve()), location
+          print(f'Testing {expected} from {location}')
+          PY
+          python -m pytest -ra tests
+
   pypi-publish:
     runs-on: ubuntu-latest
     needs:
       - release-build
+      - release-test
     permissions:
       # IMPORTANT: this permission is mandatory for trusted publishing
       id-token: write
