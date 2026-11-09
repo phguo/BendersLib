@@ -108,6 +108,36 @@ def is_all_integer(vals: list[float], tol=1e-5) -> bool:
     return True
 
 
+def is_all_binary(vals: list[float], tol=1e-5) -> bool:
+    """Check if all values in a list are 0 or 1 within a specified tolerance.
+
+    Parameters
+    ----------
+    vals : list of float
+        The list of values to check.
+    tol : float, optional
+        The absolute tolerance for checking if a value is close enough to 0 or 1.
+        Must be finite and in ``[0, 0.5)``; otherwise, ``ValueError`` is raised.
+
+    Example
+    ----------
+
+    .. code-block:: python
+
+        from benderslib.utils import is_all_binary
+
+        vals = [0.0, 1.000001, -0.000001]
+
+        print(is_all_binary(vals))
+    """
+    if not math.isfinite(tol) or not 0 <= tol < 0.5:
+        raise ValueError("tol_binary must be finite and satisfy 0 <= tol_binary < 0.5.")
+    for v in vals:
+        if not (abs(v) <= tol or abs(v - 1) <= tol):
+            return False
+    return True
+
+
 def normalize_cut(cut: 'Cut', max_norm: float = 1e5) -> 'Cut':
     """
     Normalize a Benders cut if its L2 norm exceeds a threshold.

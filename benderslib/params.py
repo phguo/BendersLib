@@ -52,6 +52,15 @@ class BendersParams:
 
     # Numerical
 
+    tol_binary: float = 1e-5
+    """Absolute tolerance for accepting variable values as 0 or 1 in built-in binary cuts.
+
+    Must be finite and satisfy ``0 <= tol_binary < 0.5``. Set to zero to require exact
+    binary values. Values outside this tolerance raise
+    :class:`~benderslib.errors.NonBinaryVariableValueError` during cut construction.
+    This parameter does not change the backend solver's integrality tolerance.
+    """
+
     tol_obj_diff: float = 1e-6
     """Tolerance for estimator values and subproblem objective values comparison.
     

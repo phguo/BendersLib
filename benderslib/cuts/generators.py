@@ -74,7 +74,7 @@ class CombinatorialFCGen(CutGenerator):
         var_names = list(set(var_names) & set(self.complicating_vars))
         var_values = self.master_problem.get_var_values(var_names)
 
-        cut = NoGoodFC(var_values)
+        cut = NoGoodFC(var_values, tol_binary=self.params.tol_binary)
         return [cut]
 
 
@@ -94,7 +94,11 @@ class CombinatorialOCGen(CutGenerator):
         estimator = self.master_problem.estimators[0]
         theta_lb = self.master_problem.get_estimator_values()[estimator]
 
-        cut = CombinatorialOC(var_values, sub_obj, big_m=sub_obj - theta_lb)
+        cut = CombinatorialOC(
+            var_values, sub_obj,
+            big_m=sub_obj - theta_lb, estimator=estimator,
+            tol_binary=self.params.tol_binary
+        )
         return [cut]
 
 
@@ -200,14 +204,17 @@ class IntegerLShapedOCGen(CutGenerator):
         This method generates a single :class:`CombinatorialOC` optimality cut aggregating all subproblems (scenarios).
         """
         bin_var_values = self.master_problem.get_var_values(self.complicating_vars)
-        bin_var_values = {var: round(value) for var, value in bin_var_values.items()}
         sub_obj = self.sub_problem.get_obj()
         estimator = self.master_problem.estimators[0]
         theta_lb = self.master_problem.get_estimator_values()[estimator]
 
         cuts = []
         if sub_obj - theta_lb > self.params.tol_obj_diff:
-            cut = CombinatorialOC(bin_var_values, sub_obj, big_m=sub_obj - theta_lb, estimator=estimator)
+            cut = CombinatorialOC(
+                bin_var_values, sub_obj,
+                big_m=sub_obj - theta_lb, estimator=estimator,
+                tol_binary=self.params.tol_binary
+            )
             cuts.append(cut)
 
         return cuts
@@ -226,7 +233,11 @@ class IntegerLShapedOCGen(CutGenerator):
 
             # Add the cut only if it is violated
             if sub_obj - theta > self.params.tol_obj_diff:
-                cut = CombinatorialOC(bin_var_values, sub_obj, big_m=sub_obj - theta, estimator=estimator)
+                cut = CombinatorialOC(
+                    bin_var_values, sub_obj,
+                    big_m=sub_obj - theta, estimator=estimator,
+                    tol_binary=self.params.tol_binary
+                )
                 cuts.append(cut)
 
         return cuts
@@ -253,7 +264,7 @@ class IntegerLShapedFCGen(CutGenerator):
         complicating variables in the master problem.
         """
         bin_var_values = self.master_problem.get_var_values(self.complicating_vars)
-        cut = NoGoodFC(bin_var_values)
+        cut = NoGoodFC(bin_var_values, tol_binary=self.params.tol_binary)
 
         return [cut]
 
