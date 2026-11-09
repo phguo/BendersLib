@@ -325,6 +325,7 @@ class Copt(SolverBase):
     @staticmethod
     def make_sub_problem(original_model: Model, master_vars: list[str]) -> Model:
         sub = original_model.clone()
+        sub.setObjConst(0)
 
         # Set master variables to continuous & remove them from objective
         for var_name in master_vars:

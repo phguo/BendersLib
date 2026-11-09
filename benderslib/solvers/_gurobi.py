@@ -325,6 +325,7 @@ class Gurobi(SolverBase):
     def make_sub_problem(original_model: Model, master_vars: list[str]) -> Model:
         original_model.update()
         sub = original_model.copy()
+        sub.ObjCon = 0
 
         # Set master variables to continuous & remove them from objective
         for var_name in master_vars:

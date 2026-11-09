@@ -132,6 +132,7 @@ class AnnotatedBenders(BendersSolver):
         It conducts automatic decomposition based on the given master variable names,
         using the methods :meth:`~benderslib.SolverBase.make_master_problem` and
         :meth:`~benderslib.SolverBase.make_sub_problem` provided by the solver interfaces.
+        The original objective constant is retained only in the master problem.
 
         .. admonition:: Master problem variables vs. complicating variables
             :class: note
