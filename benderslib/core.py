@@ -19,7 +19,7 @@ from .callback import BendersContext, CallbackBase, _CallbackEvents as EVENTS, _
 from .utils import normalize_cut
 from .errors import (
     BendersSolverError, UnboundedMasterError, UnexpectedMasterStatusError,
-    UnexpectedSubStatusError, UnsupportedCutError,
+    UnexpectedSubStatusError, UnsupportedCutError, MismatchedProbabilityError,
 )
 
 
@@ -727,9 +727,15 @@ class SubProblems:
         A list of probabilities (weights) associated with each subproblem.
         The length of ``prob`` should match that of ``sub_problems``.
         If ``None``, equal weights are assigned to all subproblems.
+        They do not need to sum to 1 and are not normalized.
     params : BendersParams, optional
         The parameters that can be set by the user (see :class:`BendersParams`).
         If not provided, default parameters will be used.
+
+    Raises
+    ---------------
+    MismatchedProbabilityError
+        If the number of probabilities (weights) does not match the number of scenarios.
 
     Example
     ---------------
@@ -757,11 +763,13 @@ class SubProblems:
     ):
         self.sub_problems = list(sub_problems)
         """A list of :class:`SubProblem` or :class:`LogicBasedSubProblem` instances."""
-        self.prob = prob or [1.0 / len(self.sub_problems)] * len(self.sub_problems)
-        """A list of probabilities or weights associated with each subproblem. 
-        
-        If ``None``, equal weights are assumed.
-        """
+        self.prob = [1.0 / len(self.sub_problems)] * len(self.sub_problems) if prob is None else list(prob)
+        """A list of probabilities (weights) associated with subproblem. If ``None``, equal weights are assumed."""
+
+        if len(self.prob) != len(self.sub_problems):
+            raise MismatchedProbabilityError(
+                f"Length of <prob>({len(self.prob)}) must match length of <sub_problems>({len(self.sub_problems)}).")
+
         self.params: BendersParams | None = params if params is not None else BendersParams()
         """The parameters that can be set by the user (see :class:`BendersParams`)."""
         self.status = CST.UNSOLVED

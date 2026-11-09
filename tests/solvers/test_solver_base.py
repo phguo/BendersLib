@@ -42,9 +42,14 @@ class BaseTestSolver:
         assert approx(x1_value, 2.0, atol=1e-6)
         assert approx(x2_value, 2.0, atol=1e-6)
 
-    def test_add_estimators(self, solver_instance):
+    @pytest.mark.parametrize("prob, added_obj", [(None, 3.0), ([2.0, 1.0], 8.0)])
+    def test_add_estimators(self, solver_instance, prob, added_obj):
         solver_instance.add_estimators(["theta"], prob=[1.0], lb=0.0)
         solver_instance.add_estimators(["theta1", "theta2"], prob=[0.5, 0.5], lb=0.0)
+        solver_instance.add_estimators(["weighted_theta1", "weighted_theta2"], prob=prob)
+        solver_instance.fix_vars({"weighted_theta1": 2.0, "weighted_theta2": 4.0})
+        solver_instance.solve()
+        assert solver_instance.get_obj() == pytest.approx(12.0 + added_obj)
 
     def test_fix_unfix_vars(self, solver_instance):
         # Fix x1 to 1 and solve
