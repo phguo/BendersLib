@@ -299,7 +299,7 @@ class Pyomo(SolverBase):
             if var.name in master_vars
         )
         master.del_component(obj)
-        master.obj = Objective(expr=new_expr, sense=pyo.minimize)
+        master.obj = Objective(expr=new_expr + repn.constant, sense=pyo.minimize)
 
         # Remove constraints that contains non-master variables
         _cons_to_remove_idx = []

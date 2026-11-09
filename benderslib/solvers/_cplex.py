@@ -298,6 +298,7 @@ class Cplex(SolverBase):
     @staticmethod
     def make_sub_problem(original_model: CplexModel, master_vars: list[str]) -> CplexModel:
         sub = CplexModel(original_model)
+        sub.objective.set_offset(0.0)
 
         # Set master variables to continuous & remove them from objective
         for var_name in master_vars:

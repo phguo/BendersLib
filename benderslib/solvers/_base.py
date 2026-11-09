@@ -361,7 +361,8 @@ class SolverBase(ABC):
         The master problem is built from a copy of the original problem, following these steps.
 
         1. In the variable set, remove all non-master variables.
-        2. In the objective function, remove all terms involving non-master variables.
+        2. In the objective function, remove all terms involving non-master variables,
+           retaining the original objective constant.
         3. In the constraints, remove constraints that contains non-master variables.
 
         .. admonition:: Master problem variables vs. complicating variables
@@ -404,7 +405,8 @@ class SolverBase(ABC):
 
         1. In the variable set, make the master variables be continuous variables.
            They will be fixed later when solving the subproblem.
-        2. In the objective function, remove all terms involving master variables.
+        2. In the objective function, remove all terms involving master variables
+           and set the objective constant to zero.
         3. In the constraints, remove constraints that contains only master variables.
 
         .. admonition:: Master problem variables vs. complicating variables
