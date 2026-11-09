@@ -7,6 +7,9 @@ from itertools import zip_longest
 
 from ..consts import BendersConsts as CST
 from ..core import OptimalityCut, FeasibilityCut
+from ..errors import NonBinaryVariableValueError
+from ..params import BendersParams
+from ..utils import is_all_binary
 
 
 class ClassicalOC(OptimalityCut):
@@ -150,6 +153,13 @@ class NoGoodFC(FeasibilityCut):
     ----------
     bin_var_values : dict
         A dictionary mapping binary variable names to their values in the current master problem solution.
+    tol_binary : float, optional, default=1e-5
+        Absolute tolerance for accepting values as 0 or 1. Must be finite and in ``[0, 0.5)``.
+
+    Raises
+    ----------
+    NonBinaryVariableValueError
+        If a variable value is not within :attr:`~benderslib.BendersParams.tol_binary` of 0 or 1.
 
     Example
     ----------
@@ -174,7 +184,10 @@ class NoGoodFC(FeasibilityCut):
         only including those that are relevant to the infeasibility of the subproblem.
     """
 
-    def __init__(self, bin_var_values: dict):
+    def __init__(self, bin_var_values: dict, tol_binary: float = BendersParams.tol_binary):
+        if not is_all_binary(list(bin_var_values.values()), tol_binary):
+            raise NonBinaryVariableValueError(tol_binary=tol_binary)
+
         var_zeros = [var for var, val in bin_var_values.items() if val <= 0.5]
         var_ones = [var for var, val in bin_var_values.items() if val > 0.5]
 
@@ -225,6 +238,13 @@ class CombinatorialOC(OptimalityCut):
         A large constant used in the cut formulation.
     estimator : str, optional
         The name of the master problem variable representing the subproblem's cost.
+    tol_binary : float, optional, default=1e-5
+        Absolute tolerance for accepting values as 0 or 1. Must be finite and in ``[0, 0.5)``.
+
+    Raises
+    ----------
+    NonBinaryVariableValueError
+        If a variable value is not within :attr:`~benderslib.BendersParams.tol_binary` of 0 or 1.
 
     Example
     ----------
@@ -250,8 +270,12 @@ class CombinatorialOC(OptimalityCut):
             bin_var_values: dict,
             sub_obj: float,
             big_m: float = None,
-            estimator: str = CST.ESTIMATOR_NAME
+            estimator: str = CST.ESTIMATOR_NAME,
+            tol_binary: float = BendersParams.tol_binary
     ):
+        if not is_all_binary(list(bin_var_values.values()), tol_binary):
+            raise NonBinaryVariableValueError(tol_binary=tol_binary)
+
         var_zeros = [var for var, val in bin_var_values.items() if val <= 0.5]
         var_ones = [var for var, val in bin_var_values.items() if val > 0.5]
         big_m = sub_obj if big_m is None else big_m
@@ -338,7 +362,6 @@ class LShapedOC(OptimalityCut):
             var_coefs_list: list[dict],
             estimator=CST.ESTIMATOR_NAME
     ):
-
         # Vectorized implementation
         probs_v = np.array(probs)
         duals_m = np.array(duals)

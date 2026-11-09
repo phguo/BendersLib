@@ -128,6 +128,12 @@ class UnsupportedCutError(BendersCutError):
     description = "The specified cut type is not supported."
 
 
+class NonBinaryVariableValueError(BendersCutError):
+    """Raised when a binary cut receives a value outside :attr:`~benderslib.BendersParams.tol_binary` of 0 or 1."""
+    code = 5002
+    description = "Binary cuts require variable values to be 0 or 1 within tol_binary."
+
+
 # Callback Errors
 
 class BendersCallbackError(BendersError):

@@ -30,6 +30,8 @@ v0.6.1 (Beta) - Forthcoming
     (`#41 <https://github.com/phguo/BendersLib/pull/41>`_).
 -   Fix objective constant handling in annotated decomposition
     (`#42 <https://github.com/phguo/BendersLib/pull/42>`_).
+-   Fix binary cut validation to reject non-binary variable values
+    (`#43 <https://github.com/phguo/BendersLib/pull/43>`_).
 
 v0.6.0 (Beta) - 2026-11-08
 ------------------------------------
