@@ -12,7 +12,7 @@ Release Notes
     - **Major version zero (0.y.z) is for beta releases. Anything may change at any time.
       The public API should not be considered stable till version 1.y.z.**
 
-Version #.#.# (Beta) - Forthcoming
+v0.6.1 (Beta) - Forthcoming
 ------------------------------------
 
 **Added**
@@ -20,7 +20,12 @@ Version #.#.# (Beta) - Forthcoming
 -   [ci] Add release wheel tests before publishing to PyPI
     (`#38 <https://github.com/phguo/BendersLib/pull/38>`_).
 
-Version 0.6.0 (Beta) - 2026-11-08
+**Fixed**
+
+-   Raise an error when the master relaxation is unbounded
+    (`#39 <https://github.com/phguo/BendersLib/pull/39>`_).
+
+v0.6.0 (Beta) - 2026-11-08
 ------------------------------------
 
 This release introduces Oracle Mode, which combines custom subproblem solving
@@ -37,6 +42,8 @@ and cut generation in a single interface.
     (`#30 <https://github.com/phguo/BendersLib/pull/30>`_).
 -   [ci] Add a GitHub Actions check for documentation builds
     (`#28 <https://github.com/phguo/BendersLib/pull/28>`_).
+-   [ci] Add TestPyPI publishing
+    (`#37 <https://github.com/phguo/BendersLib/pull/37>`_).
 
 **Changed**
 
@@ -74,7 +81,7 @@ and cut generation in a single interface.
 -   Fix missing final solve status in JSON results and reject repeated solves on the same solver instance
     (`#35 <https://github.com/phguo/BendersLib/pull/35>`_).
 
-Version 0.5.1 (Beta) - 2026-04-29
+v0.5.1 (Beta) - 2026-04-29
 -------------------------------------
 
 **Added**
@@ -94,7 +101,7 @@ Version 0.5.1 (Beta) - 2026-04-29
 
 -   Fix a bug caused by inconsistent placeholder solver names.
 
-Version 0.5.0 (Beta) - 2026-04-17
+v0.5.0 (Beta) - 2026-04-17
 -------------------------------------
 
 We are excited to announce the first public beta release of *BendersLib*,

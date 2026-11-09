@@ -87,6 +87,12 @@ class MismatchedProbabilityError(BendersMasterError):
     description = "The number of estimator variables does not match the number of scenarios."
 
 
+class UnboundedMasterError(BendersMasterError):
+    """Raised when the master relaxation is unbounded without proving the original problem unbounded."""
+    code = 3003
+    description = "The master problem is unbounded: add valid constraints or bounds."
+
+
 # Subproblem Errors
 
 
