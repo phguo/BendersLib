@@ -26,6 +26,8 @@ v0.6.1 (Beta) - Forthcoming
     (`#39 <https://github.com/phguo/BendersLib/pull/39>`_).
 -   Fix scenario weight count validation and estimator weights in Pyomo
     (`#40 <https://github.com/phguo/BendersLib/pull/40>`_).
+-   Fix estimator name conflicts with master problem variables
+    (`#41 <https://github.com/phguo/BendersLib/pull/41>`_).
 -   Fix objective constant handling in automatic problem decomposition
     (`#42 <https://github.com/phguo/BendersLib/pull/42>`_).
 
