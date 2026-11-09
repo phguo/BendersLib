@@ -20,6 +20,7 @@ from .utils import normalize_cut
 from .errors import (
     BendersSolverError, UnboundedMasterError, UnexpectedMasterStatusError,
     UnexpectedSubStatusError, UnsupportedCutError, MismatchedProbabilityError,
+    ReservedVariableNameError,
 )
 
 
@@ -393,7 +394,16 @@ class MasterProblem(ProblemBase):
             Default is ``None``.
         lb : float, optional
             The lower bound for the estimator variable(s). Default is ``0.0``.
+
+        Raises
+        ---------------
+        ~benderslib.errors.ReservedVariableNameError
+            If an existing variable name starts with the reserved prefix for estimators.
         """
+
+        conflicts = [name for name in self.solver._all_vars if name.startswith(CST.ESTIMATOR_NAME)]
+        if conflicts:
+            raise ReservedVariableNameError(variable_names=conflicts[:10], conflict_count=len(conflicts))
 
         # Number of estimator variables
         _num = len(prob) if multiple else 1
