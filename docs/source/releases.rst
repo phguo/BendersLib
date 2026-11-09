@@ -28,7 +28,7 @@ v0.6.1 (Beta) - Forthcoming
     (`#40 <https://github.com/phguo/BendersLib/pull/40>`_).
 -   Fix estimator name conflicts with master problem variables
     (`#41 <https://github.com/phguo/BendersLib/pull/41>`_).
--   Fix objective constant handling in automatic problem decomposition
+-   Fix objective constant handling in annotated decomposition
     (`#42 <https://github.com/phguo/BendersLib/pull/42>`_).
 
 v0.6.0 (Beta) - 2026-11-08
