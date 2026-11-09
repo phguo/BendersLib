@@ -9,6 +9,7 @@ import pytest
 from benderslib import (
     AnnotatedBenders, BendersParams, ClassicalBenders, CombinatorialBenders, CST,
 )
+from benderslib.errors import UnboundedMasterError
 
 
 MODEL_CASES = [
@@ -102,3 +103,39 @@ class BaseTestModel:
             assert result.n_feas_cuts > 0
         if benders is CombinatorialBenders:
             assert result.n_opt_cuts > 0
+
+    @pytest.mark.parametrize("model_name", ["bd_master_unbounded"])
+    def test_unbounded_master_does_not_prove_original_unbounded(
+        self, model_name, model_pair, solver_class
+    ):
+        direct_model, benders_model = model_pair
+        assert self.solve_direct(direct_model) == pytest.approx(0.0, abs=1e-6)
+
+        bd = AnnotatedBenders(
+            benders_model,
+            solver=solver_class,
+            complicating_vars=["x"],
+            benders=ClassicalBenders,
+            params=BendersParams(theta_lb=0, time_limit=30),
+        )
+        with pytest.raises(UnboundedMasterError) as exc_info:
+            bd.solve()
+        assert exc_info.value.context["status"] == CST.UNBOUNDED
+        assert bd.master_problem.status == CST.UNBOUNDED
+        assert bd.result.status == CST.UNKNOWN
+
+    @pytest.mark.parametrize("model_name", ["bd_master_infeasible"])
+    def test_infeasible_master_proves_original_infeasible(
+        self, model_name, model_pair, solver_class
+    ):
+        _, benders_model = model_pair
+        bd = AnnotatedBenders(
+            benders_model,
+            solver=solver_class,
+            complicating_vars=["x"],
+            benders=ClassicalBenders,
+            params=BendersParams(theta_lb=0, time_limit=30),
+        )
+        bd.solve()
+        assert bd.master_problem.status == CST.INFEASIBLE
+        assert bd.result.status == CST.INFEASIBLE

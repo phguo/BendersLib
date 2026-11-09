@@ -17,7 +17,10 @@ from .solvers import SolverBase
 from .logger import BendersLogger
 from .callback import BendersContext, CallbackBase, _CallbackEvents as EVENTS, _CallbackManager
 from .utils import normalize_cut
-from .errors import BendersSolverError, UnexpectedMasterStatusError, UnexpectedSubStatusError, UnsupportedCutError
+from .errors import (
+    BendersSolverError, UnboundedMasterError, UnexpectedMasterStatusError,
+    UnexpectedSubStatusError, UnsupportedCutError,
+)
 
 
 class ProblemBase:
@@ -1605,6 +1608,15 @@ class BendersSolver:
 
         After calling this method, the results and statistics of the Benders decomposition process can be accessed
         through the :attr:`BendersSolver.result` attribute, which is an instance of :class:`BendersResult`.
+
+        Raises
+        ------
+        ~benderslib.errors.UnboundedMasterError
+            If the master relaxation is unbounded. The result status is set to ``UNKNOWN``,
+            since this does not prove that the original problem is unbounded.
+        ~benderslib.errors.UnexpectedMasterStatusError
+            If the master status is neither ``OPTIMAL``, ``INFEASIBLE``, nor ``UNBOUNDED``,
+            setting the result status to ``UNKNOWN``.
         """
         if self.params.use_bnc:
             # Return to avoid running code outside the while loop
@@ -1669,10 +1681,10 @@ class BendersSolver:
                 self.result.status = CST.INFEASIBLE
                 break
 
-            # Master problem is unbounded -> original problem is unbounded
+            # Master problem is unbounded -> unknown original problem status
             elif self.master_problem.status == CST.UNBOUNDED:
-                self.result.status = CST.UNBOUNDED
-                break
+                self.result.status = CST.UNKNOWN
+                raise UnboundedMasterError(status=self.master_problem.status)
 
             # Master problem is neither infeasible nor optimal -> error
             else:
