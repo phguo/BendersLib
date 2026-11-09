@@ -735,9 +735,7 @@ class SubProblems:
     Raises
     ---------------
     MismatchedProbabilityError
-        If the number of weights does not match the number of scenarios.
-    ValueError
-        If scenarios are empty.
+        If the number of probabilities (weights) does not match the number of scenarios.
 
     Example
     ---------------
