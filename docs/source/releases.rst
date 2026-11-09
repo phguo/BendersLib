@@ -22,8 +22,10 @@ v0.6.1 (Beta) - Forthcoming
 
 **Fixed**
 
--   Raise an error when the master relaxation is unbounded
+-   Fix handling of unbounded master relaxations by raising an error
     (`#39 <https://github.com/phguo/BendersLib/pull/39>`_).
+-   Fix scenario weight count validation and estimator weights in Pyomo
+    (`#40 <https://github.com/phguo/BendersLib/pull/40>`_).
 
 v0.6.0 (Beta) - 2026-11-08
 ------------------------------------

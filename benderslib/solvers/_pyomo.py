@@ -111,7 +111,10 @@ class Pyomo(SolverBase):
 
     def add_estimators(self, estimators: list[str], prob: list[float] = None, lb: float = 0) -> None:
         if prob is None:
-            prob = [1.0] * len(estimators)
+            if len(estimators) == 1:
+                prob = [1]
+            else:
+                prob = [1 / len(estimators)] * len(estimators)
 
         if len(prob) != len(estimators):
             raise MismatchedProbabilityError("Length of <prob> must match length of <estimators>.")
