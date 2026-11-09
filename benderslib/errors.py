@@ -93,6 +93,12 @@ class UnboundedMasterError(BendersMasterError):
     description = "The master problem is unbounded: add valid constraints or bounds."
 
 
+class ReservedVariableNameError(BendersMasterError):
+    """Raised when existing master variables use the reserved estimator prefix."""
+    code = 3004
+    description = "Variable names starting with 'theta' are reserved for estimators; rename these variables."
+
+
 # Subproblem Errors
 
 
