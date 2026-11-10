@@ -19,6 +19,8 @@ v0.6.1 (Beta) - Forthcoming
 
 -   [ci] Add release wheel tests before publishing to PyPI
     (`#38 <https://github.com/phguo/BendersLib/pull/38>`_).
+-   [docs] Add a how-to guide for converting models between solvers
+    (`#44 <https://github.com/phguo/BendersLib/pull/44>`_).
 
 **Fixed**
 
