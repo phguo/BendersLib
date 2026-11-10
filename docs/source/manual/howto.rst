@@ -153,3 +153,33 @@ The following example shows how to read a ``.lp`` file using Gurobi and then app
     # We can also use the make_master_problem and make_sub_problem methods
     master_model = Gurobi.make_master_problem(model, complicating_vars)
     sub_model = Gurobi.make_sub_problem(model, complicating_vars)
+
+How to convert models between solvers?
+--------------------------------------------------------------
+
+To move a mathematical programming model to a different solver, choose a file format
+that both solvers support, such as ``.mps`` or ``.lp``.
+Use the source solver's built-in writer to export the model and the target solver's
+built-in reader to load it. The following example converts a Gurobi model to a SCIP model.
+
+.. code-block:: python
+
+    from gurobipy import Model as GurobiModel, GRB
+    from pyscipopt import Model as ScipModel
+
+
+    # Create and export a Gurobi model
+    model = GurobiModel()
+    x = model.addVar(name="x", vtype=GRB.INTEGER)
+    y = model.addVar(name="y")
+    model.addConstr(x + y >= 15)
+    model.setObjective(3 * x + 4 * y)
+    model.write("model.mps")
+
+    # Read the model into SCIP
+    scip_model = ScipModel()
+    scip_model.readProblem("model.mps")
+
+You can then use ``scip_model`` with the :class:`~.solvers.Scip` interface in BendersLib.
+Pyomo has no built-in reader for importing LP or MPS files into a Pyomo model.
+You can export a Pyomo model to ``.lp`` or ``.mps`` and load it into a solver that supports the format.
