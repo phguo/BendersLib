@@ -38,6 +38,8 @@ v0.6.1 (Beta) - Forthcoming
     (`#45 <https://github.com/phguo/BendersLib/pull/45>`_).
 -   Fix JSON result export by converting non-finite values to null
     (`#46 <https://github.com/phguo/BendersLib/pull/46>`_).
+-   Fix propagation of parameters and complicating variables to scenario subproblems
+    (`#47 <https://github.com/phguo/BendersLib/pull/47>`_).
 
 v0.6.0 (Beta) - 2026-11-08
 ------------------------------------
