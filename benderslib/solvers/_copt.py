@@ -79,14 +79,13 @@ class Copt(SolverBase):
         self._callback_where = None
 
     def __standardize(self):
-        self.__sense_to_minimize()
+        self.__check_objective_sense(self.model)
         self.__bounds_to_constrs()
 
-    def __sense_to_minimize(self):
-        # BendersLib will automatically convert maximization problems to minimization problems
-        if self.model.objsense == COPT.MAXIMIZE:
+    @staticmethod
+    def __check_objective_sense(model):
+        if model.objsense == COPT.MAXIMIZE:
             raise BendersNotImplementedError("BendersLib currently only supports minimization problems.")
-            # self.model.setObjective(-self.model.getObjective(), sense=COPT.MINIMIZE)
 
     def __bounds_to_constrs(self):
         if any([lb < 0 or ub < 0 for lb, ub in self._var_bounds.values()]):
@@ -296,6 +295,7 @@ class Copt(SolverBase):
 
     @staticmethod
     def make_master_problem(original_model: Model, master_vars: list[str]) -> Model:
+        Copt.__check_objective_sense(original_model)
         master = original_model.clone()
 
         # Remove non-master variables & remove them from objective (will be handled automatically)
@@ -324,6 +324,7 @@ class Copt(SolverBase):
 
     @staticmethod
     def make_sub_problem(original_model: Model, master_vars: list[str]) -> Model:
+        Copt.__check_objective_sense(original_model)
         sub = original_model.clone()
         sub.setObjConst(0)
 

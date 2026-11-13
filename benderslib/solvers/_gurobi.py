@@ -54,14 +54,13 @@ class Gurobi(SolverBase):
         self.__setup_model(solver_options)
 
     def __standardize(self):
-        self.__sense_to_minimize()
+        self.__check_objective_sense(self.model)
         self.__bounds_to_constrs()
 
-    def __sense_to_minimize(self):
-        # BendersLib will automatically convert maximization problems to minimization problems
-        if self.model.ModelSense == GRB.MAXIMIZE:
+    @staticmethod
+    def __check_objective_sense(model):
+        if model.ModelSense == GRB.MAXIMIZE:
             raise BendersNotImplementedError("BendersLib currently only supports minimization problems.")
-            # self.model.setObjective(-self.model.getObjective(), sense=GRB.MINIMIZE)
 
     def __bounds_to_constrs(self):
         if any([lb < 0 or ub < 0 for lb, ub in self._var_bounds.values()]):
@@ -294,6 +293,7 @@ class Gurobi(SolverBase):
     @staticmethod
     def make_master_problem(original_model: Model, master_vars: list[str]) -> Model:
         original_model.update()
+        Gurobi.__check_objective_sense(original_model)
         master = original_model.copy()
 
         # Remove non-master variables & remove them from objective (will be handled automatically)
@@ -324,6 +324,7 @@ class Gurobi(SolverBase):
     @staticmethod
     def make_sub_problem(original_model: Model, master_vars: list[str]) -> Model:
         original_model.update()
+        Gurobi.__check_objective_sense(original_model)
         sub = original_model.copy()
         sub.ObjCon = 0
 

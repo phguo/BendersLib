@@ -86,12 +86,12 @@ class Pyomo(SolverBase):
         return solver_factory
 
     def __standardize(self):
-        self.__sense_to_minimize()
+        self.__check_objective_sense(self.model)
         self.__bounds_to_constrs()
 
-    def __sense_to_minimize(self):
-        # BendersLib will automatically convert maximization problems to minimization problems
-        if self._sense == CST.MAX:
+    @staticmethod
+    def __check_objective_sense(model):
+        if next(model.component_data_objects(Objective, active=True)).sense == pyo.maximize:
             raise BendersNotImplementedError("BendersLib currently only supports minimization problems.")
 
     def __bounds_to_constrs(self):
@@ -288,6 +288,7 @@ class Pyomo(SolverBase):
 
     @staticmethod
     def make_master_problem(original_model: pyo.ConcreteModel, master_vars: list[str]) -> pyo.ConcreteModel:
+        Pyomo.__check_objective_sense(original_model)
         master = original_model.clone()
 
         # Remove non-master variables from objective (ONLY handle linear case)
@@ -334,6 +335,7 @@ class Pyomo(SolverBase):
 
     @staticmethod
     def make_sub_problem(original_model: pyo.ConcreteModel, master_vars: list[str]) -> pyo.ConcreteModel:
+        Pyomo.__check_objective_sense(original_model)
         sub = original_model.clone()
 
         # Set master variables to continuous

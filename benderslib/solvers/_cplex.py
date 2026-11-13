@@ -61,12 +61,12 @@ class Cplex(SolverBase):
         self.__setup_model(solver_options)
 
     def __standardize(self):
-        self.__sense_to_minimize()
+        self.__check_objective_sense(self.model)
         self.__bounds_to_constrs()
 
-    def __sense_to_minimize(self):
-        # BendersLib will automatically convert maximization problems to minimization problems
-        if self._sense == CST.MAX:
+    @staticmethod
+    def __check_objective_sense(model):
+        if model.objective.get_sense() == model.objective.sense.maximize:
             raise BendersNotImplementedError("BendersLib currently only supports minimization problems.")
 
     def __bounds_to_constrs(self):
@@ -272,6 +272,7 @@ class Cplex(SolverBase):
 
     @staticmethod
     def make_master_problem(original_model: CplexModel, master_vars: list[str]) -> CplexModel:
+        Cplex.__check_objective_sense(original_model)
         master = CplexModel(original_model)
         non_master_vars = list(set(master.variables.get_names()) - set(master_vars))
 
@@ -297,6 +298,7 @@ class Cplex(SolverBase):
 
     @staticmethod
     def make_sub_problem(original_model: CplexModel, master_vars: list[str]) -> CplexModel:
+        Cplex.__check_objective_sense(original_model)
         sub = CplexModel(original_model)
         sub.objective.set_offset(0.0)
 

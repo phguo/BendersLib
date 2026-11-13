@@ -8,6 +8,7 @@ import sys
 import pytest
 
 from benderslib import AnnotatedBenders, BendersParams, ClassicalBenders, CST
+from benderslib.errors import BendersNotImplementedError
 
 
 @pytest.fixture(params=["gurobi", "copt", "cplex", "scip", "pyomo"])
@@ -112,13 +113,36 @@ def objective_model(request, constant):
                     v.name: pyo.value(c) for v, c in zip(repn.linear_vars, repn.linear_coefs)
                 }
 
-        yield solver, model, objective
+        def sense(m, maximize=False):
+            if request.param == "gurobi":
+                if maximize:
+                    m.ModelSense = gp.GRB.MAXIMIZE
+                m.update()
+                return m.ModelSense == gp.GRB.MAXIMIZE
+            if request.param == "copt":
+                if maximize:
+                    m.setObjSense(cp.COPT.MAXIMIZE)
+                return m.objsense == cp.COPT.MAXIMIZE
+            if request.param == "cplex":
+                if maximize:
+                    m.objective.set_sense(m.objective.sense.maximize)
+                return m.objective.get_sense() == m.objective.sense.maximize
+            if request.param == "scip":
+                if maximize:
+                    m.setMaximize()
+                return m.getObjectiveSense() == "maximize"
+            obj = next(m.component_data_objects(pyo.Objective, active=True))
+            if maximize:
+                obj.sense = pyo.maximize
+            return obj.sense == pyo.maximize
+
+        yield solver, model, objective, sense
 
 
 @pytest.mark.parametrize("constant", [7, -7, 0])
 @pytest.mark.parametrize("entrypoint", ["adapter", "native", "wrapped"])
 def test_decomposition_objective_constant(objective_model, constant, entrypoint):
-    solver, original, objective = objective_model
+    solver, original, objective, sense = objective_model
     before = objective(original)
     if entrypoint == "adapter":
         master = solver.make_master_problem(original, ["x"])
@@ -130,6 +154,9 @@ def test_decomposition_objective_constant(objective_model, constant, entrypoint)
         if entrypoint == "wrapped":
             master, sub = master.model, sub.model
 
+    assert not sense(master)
+    assert not sense(sub)
+    assert not sense(original)
     master_offset, master_coefs = objective(master)
     sub_offset, sub_coefs = objective(sub)
     assert master_offset == pytest.approx(constant)
@@ -152,7 +179,7 @@ def test_decomposition_objective_constant(objective_model, constant, entrypoint)
 
 @pytest.mark.parametrize("constant", [7, -7, 0])
 def test_benders_objective_constant(objective_model, constant):
-    solver, original, objective = objective_model
+    solver, original, objective, sense = objective_model
     if solver.__name__ == "HighsPyomo":
         pytest.importorskip("highspy")
     before = objective(original)
@@ -166,4 +193,30 @@ def test_benders_objective_constant(objective_model, constant):
     assert bd.result.lb == pytest.approx(1 + constant)
     assert bd.result.ub == pytest.approx(1 + constant)
     assert bd.result.solution == pytest.approx({"x": 1, "y": 0})
+    assert objective(original) == before
+
+
+@pytest.mark.parametrize("constant", [7])
+@pytest.mark.parametrize("entrypoint", ["constructor", "master", "sub", "native", "wrapped"])
+def test_maximization_rejected_before_decomposition(objective_model, entrypoint):
+    solver, original, objective, sense = objective_model
+    sense(original, maximize=True)
+    before = objective(original)
+
+    with pytest.raises(
+        BendersNotImplementedError,
+        match=r"BendersLib currently only supports minimization problems\.",
+    ):
+        if entrypoint == "constructor":
+            solver(original)
+        elif entrypoint == "master":
+            solver.make_master_problem(original, ["x"])
+        elif entrypoint == "sub":
+            solver.make_sub_problem(original, ["x"])
+        else:
+            AnnotatedBenders.decompose(
+                original, solver, ["x"], solver_model=entrypoint == "native"
+            )
+
+    assert sense(original)
     assert objective(original) == before

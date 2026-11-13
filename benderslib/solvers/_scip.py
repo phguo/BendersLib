@@ -87,11 +87,12 @@ class Scip(SolverBase):
         self.__setup_model(solver_options)
 
     def __standardize(self):
-        self.__sense_to_minimize()
+        self.__check_objective_sense(self.model)
         self.__bounds_to_constrs()
 
-    def __sense_to_minimize(self):
-        if self.model.getObjectiveSense() == 'maximize':
+    @staticmethod
+    def __check_objective_sense(model):
+        if model.getObjectiveSense() == 'maximize':
             raise BendersNotImplementedError("BendersLib currently only supports minimization problems.")
 
     def __bounds_to_constrs(self):
@@ -317,6 +318,7 @@ class Scip(SolverBase):
 
     @staticmethod
     def make_master_problem(original_model: Model, master_vars: list[str]) -> Model:
+        Scip.__check_objective_sense(original_model)
         master = Model(sourceModel=original_model)
 
         # Remove non-master variables & remove them from objective (will be handled automatically)
@@ -348,6 +350,7 @@ class Scip(SolverBase):
 
     @staticmethod
     def make_sub_problem(original_model: Model, master_vars: list[str]) -> Model:
+        Scip.__check_objective_sense(original_model)
         sub = Model(sourceModel=original_model)
 
         # Set master variables to continuous & remove them from objective

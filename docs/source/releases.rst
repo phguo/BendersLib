@@ -34,6 +34,8 @@ v0.6.1 (Beta) - Forthcoming
     (`#42 <https://github.com/phguo/BendersLib/pull/42>`_).
 -   Fix binary cut validation to reject non-binary variable values
     (`#43 <https://github.com/phguo/BendersLib/pull/43>`_).
+-   Fix objective sense validation in automatic decomposition
+    (`#45 <https://github.com/phguo/BendersLib/pull/45>`_).
 
 v0.6.0 (Beta) - 2026-11-08
 ------------------------------------
