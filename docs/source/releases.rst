@@ -36,6 +36,8 @@ v0.6.1 (Beta) - Forthcoming
     (`#43 <https://github.com/phguo/BendersLib/pull/43>`_).
 -   Fix objective sense validation in automatic decomposition
     (`#45 <https://github.com/phguo/BendersLib/pull/45>`_).
+-   Fix JSON result export by converting non-finite values to null
+    (`#46 <https://github.com/phguo/BendersLib/pull/46>`_).
 
 v0.6.0 (Beta) - 2026-11-08
 ------------------------------------

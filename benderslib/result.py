@@ -3,6 +3,7 @@
 # Copyright (c) 2021-2026 Peng-Hui Guo <m@guo.ph>
 
 import json
+import math
 from dataclasses import dataclass, field, asdict
 
 from .consts import BendersConsts as CST
@@ -62,12 +63,23 @@ class BendersResult:
     def save(self, filename: str) -> None:
         """Save the result to a JSON file.
 
+        Non-finite floating-point values are exported as ``null``.
+
         Parameters
         -----------
 
         filename : str
             Path to the JSON file where the result will be saved.
         """
+        def json_value(value):
+            if isinstance(value, float) and not math.isfinite(value):
+                return None
+            if isinstance(value, dict):
+                return {k: json_value(v) for k, v in value.items()}
+            if isinstance(value, (list, tuple)):
+                return [json_value(v) for v in value]
+            return value
+
         with open(filename, 'w') as f:
             data = asdict(self)
             if self.solution:
@@ -79,7 +91,7 @@ class BendersResult:
                     }
                 else:
                     data['solution'] = {k: v for k, v in self.solution.items() if v != 0.0}
-            json.dump(data, f, indent=4)
+            json.dump(json_value(data), f, indent=4, allow_nan=False)
 
     def __str__(self):
         summary = (
