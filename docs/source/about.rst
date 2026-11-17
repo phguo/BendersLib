@@ -56,14 +56,28 @@ BendersLib is licensed under the `Apache-2.0 License <https://github.com/phguo/B
 Logo
 --------------------------------
 
-.. rubric:: Logo (horizontal)
+.. rubric:: Logo (horizontal, PNG)
 
 .. image:: _static/benderslib.png
    :align: center
 
-.. rubric:: Logo (vertical)
+.. rubric:: Logo (horizontal, SVG)
+
+.. image:: _static/benderslib.svg
+   :alt: BendersLib logo
+   :align: center
+
+.. rubric:: Logo (vertical, PNG)
 
 .. image:: _static/benderslib_v.png
+   :align: center
+   :height: 350px
+   :width: 350px
+
+.. rubric:: Logo (vertical, SVG)
+
+.. image:: _static/benderslib_v.svg
+   :alt: BendersLib vertical logo
    :align: center
    :height: 350px
    :width: 350px

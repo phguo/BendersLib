@@ -21,6 +21,8 @@ v0.6.1 (Beta) - Forthcoming
     (`#38 <https://github.com/phguo/BendersLib/pull/38>`_).
 -   [docs] Add a how-to guide for converting models between solvers
     (`#44 <https://github.com/phguo/BendersLib/pull/44>`_).
+-   [docs] Add horizontal and vertical SVG logos to the About page
+    (`#48 <https://github.com/phguo/BendersLib/pull/48>`_).
 
 **Fixed**
 
