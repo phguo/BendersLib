@@ -159,7 +159,7 @@ sphinx_gallery_conf = {
 # }
 
 html_theme = "furo"
-html_title = "BendersLib"
+html_title = "BendersLib: A Benders Decomposition Library in Python"
 html_favicon = '_static/icon.ico'
 navy_blue = "#0066CC"
 # nuaa_blue = "#0000ff"
