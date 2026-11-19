@@ -24,6 +24,11 @@ v0.6.1 (Beta) - Forthcoming
 -   [docs] Add horizontal and vertical SVG logos to the About page
     (`#48 <https://github.com/phguo/BendersLib/pull/48>`_).
 
+**Changed**
+
+-   [docs] Update the HTML title to "BendersLib: A Benders Decomposition Library in Python"
+    (`#49 <https://github.com/phguo/BendersLib/pull/49>`_).
+
 **Fixed**
 
 -   Fix handling of unbounded master relaxations by raising an error
